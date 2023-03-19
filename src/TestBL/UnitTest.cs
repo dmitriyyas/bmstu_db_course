@@ -6,6 +6,7 @@ namespace TestBL
         [TestMethod]
         public void TestMethod()
         {
+            Assert.AreEqual(1, 1);
         }
     }
 }
