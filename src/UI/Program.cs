@@ -1,5 +1,8 @@
 using System.Diagnostics;
-using BL.Models;
+using DataAccess.DBContext;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace dbcourse
 {
@@ -16,6 +19,36 @@ namespace dbcourse
 
             //ApplicationConfiguration.Initialize();
             //Application.Run(new Form1());
+
+            /*IConfiguration configuration = new ConfigurationBuilder().Build();
+            var builder = new HostBuilder().ConfigureServices((hostContext, services) =>
+            {
+                services.AddSingleton(configuration);
+                services.AddDbContext<AdminDbContext>();
+                services.AddDbContext<UserDbContext>();
+                services.AddDbContext<GuestDbContext>();
+                services.AddSingleton<DbContextFactory>();
+            });
+
+            var host = builder.Build();
+
+            using (var serviceScope = host.Services.CreateScope())
+            {
+                var services = serviceScope.ServiceProvider;
+                try
+                {
+                    var dbContextFactory = services.GetRequiredService<DbContextFactory>();
+                    var dbContext = dbContextFactory.getDbContext();
+                    int count = dbContext.Users.Count();
+
+                    Debug.WriteLine($"Success {count}");
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex);
+                }
+            }*/
+
         }
     }
 }

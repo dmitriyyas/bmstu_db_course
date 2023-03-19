@@ -95,7 +95,7 @@ namespace DataAccess.DBContext
                     .HasColumnName("name");
 
                 entity.Property(c => c.CountryId)
-                    .HasColumnName("id");
+                    .HasColumnName("country_id");
 
                 entity.Property(c => c.UserId)
                     .IsRequired()
@@ -134,6 +134,8 @@ namespace DataAccess.DBContext
             modelBuilder.Entity<TeamTournament>(entity =>
             {
                 entity.ToTable("team_tournamemts");
+
+                entity.HasNoKey();
 
                 entity.Property(c => c.TeamId)
                     .IsRequired()

@@ -28,7 +28,8 @@ namespace DataAccess.DBContext
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseNpgsql(_configuration.GetConnectionString("user"));
+                //optionsBuilder.UseNpgsql(_configuration.GetConnectionString("user"));
+                optionsBuilder.UseNpgsql("Server=localhost;Port=5432;Database=dbcourse;User Id=postgres;Password=1234;");
             }
         }
 
