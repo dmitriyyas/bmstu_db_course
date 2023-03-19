@@ -13,7 +13,7 @@ namespace BL.Models
         public string Password { get; set; }
         public string Permission { get;set ; }
 
-        public User(string login, string password, string permission = "authorized", int id = 1)
+        public User(string login, string password, string permission = "user", int id = 1)
         {
             Id = id;
             Login = login;
