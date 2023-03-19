@@ -25,6 +25,8 @@ namespace DataAccess.DBContext
             {
                 entity.ToTable("users");
 
+                entity.HasKey(u => u.Id);
+
                 entity.Property(u => u.Id)
                     .IsRequired()
                     .HasColumnName("id");
@@ -49,6 +51,8 @@ namespace DataAccess.DBContext
             {
                 entity.ToTable("countries");
 
+                entity.HasKey(u => u.Id);
+
                 entity.Property(c => c.Id)
                     .IsRequired()
                     .HasColumnName("id");
@@ -68,6 +72,8 @@ namespace DataAccess.DBContext
             {
                 entity.ToTable("teams");
 
+                entity.HasKey(u => u.Id);
+
                 entity.Property(c => c.Id)
                     .IsRequired()
                     .HasColumnName("id");
@@ -84,6 +90,8 @@ namespace DataAccess.DBContext
             modelBuilder.Entity<Tournament>(entity =>
             {
                 entity.ToTable("tournaments");
+
+                entity.HasKey(u => u.Id);
 
                 entity.Property(c => c.Id)
                     .IsRequired()
@@ -105,6 +113,8 @@ namespace DataAccess.DBContext
             modelBuilder.Entity<Match>(entity =>
             {
                 entity.ToTable("matches");
+
+                entity.HasKey(u => u.Id);
 
                 entity.Property(c => c.Id)
                     .IsRequired()

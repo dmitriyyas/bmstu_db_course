@@ -20,7 +20,11 @@ namespace dbcourse
             //ApplicationConfiguration.Initialize();
             //Application.Run(new Form1());
 
-            /*IConfiguration configuration = new ConfigurationBuilder().Build();
+            IConfiguration configuration = new ConfigurationBuilder()
+                                                .SetBasePath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\"))
+                                                .AddJsonFile("appsettings.json")
+                                                .Build();
+
             var builder = new HostBuilder().ConfigureServices((hostContext, services) =>
             {
                 services.AddSingleton(configuration);
@@ -47,7 +51,7 @@ namespace dbcourse
                 {
                     Debug.WriteLine(ex);
                 }
-            }*/
+            }
 
         }
     }
