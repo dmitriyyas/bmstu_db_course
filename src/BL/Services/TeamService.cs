@@ -13,9 +13,10 @@ namespace BL.Services
         private readonly ITeamRepository _teamRepository;
         private readonly ITournamentRepository _tournamentRepository;
 
-        public TeamService(ITeamRepository teamRepository)
+        public TeamService(ITeamRepository teamRepository, ITournamentRepository tournamentRepository)
         {
             _teamRepository = teamRepository;
+            _tournamentRepository = tournamentRepository;
         }
 
         public Team createTeam(string name, int countryId)
