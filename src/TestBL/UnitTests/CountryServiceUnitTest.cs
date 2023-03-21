@@ -51,7 +51,7 @@ namespace TestBL.UnitTests
         }
 
         [TestMethod]
-        public void TestGetByDefault()
+        public void TestGetByIdDefault()
         {
             Mock.clear();
             var countryMock = new CountryMock();
@@ -60,10 +60,10 @@ namespace TestBL.UnitTests
             string name = "Russia";
             string confederation = "UEFA";
 
-            Country country = countryService.createCountry(name, confederation);
-            Country gotCountry = countryMock.getById(country.Id);
+            Country country = new Country("Russia", "Uefa", 1);
+            countryMock.create(country);
 
-            compare(country, gotCountry);
+            compare(country, countryService.getCountry(1));
         }
 
         [TestMethod]
