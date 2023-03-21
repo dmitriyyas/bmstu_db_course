@@ -9,6 +9,13 @@ namespace TestBL.UnitTests
     [TestClass]
     public class CountryServiceUnitTest
     {
+        private void compare(Country x, Country y)
+        {
+            Assert.AreEqual(x.Id, y.Id);
+            Assert.AreEqual(x.Name, y.Name);
+            Assert.AreEqual(x.Confederation, y.Confederation);
+        }
+
         [TestMethod]
         public void TestCreateCountryDefault()
         {
@@ -21,10 +28,9 @@ namespace TestBL.UnitTests
 
             Country country = new Country(name, confederation);
             countryService.createCountry(name, confederation);
-            Country createdCountry = countryService.getCountry(country.Id);
+            Country createdCountry = countryMock.getById(country.Id);
 
-            Assert.AreEqual(country.Name, createdCountry.Name);
-            Assert.AreEqual(country.Confederation, createdCountry.Confederation);
+            compare(createdCountry, country);
         }
 
         [TestMethod]
@@ -45,12 +51,27 @@ namespace TestBL.UnitTests
         }
 
         [TestMethod]
-        public void TestGetByIdNotExist()
+        public void TestGetByDefault()
         {
             Mock.clear();
             var countryMock = new CountryMock();
             var countryService = new CountryService(countryMock, null, null);
 
+            string name = "Russia";
+            string confederation = "UEFA";
+
+            Country country = countryService.createCountry(name, confederation);
+            Country gotCountry = countryMock.getById(country.Id);
+
+            compare(country, gotCountry);
+        }
+
+        [TestMethod]
+        public void TestGetByIdNotExist()
+        {
+            Mock.clear();
+            var countryMock = new CountryMock();
+            var countryService = new CountryService(countryMock, null, null);
 
             Assert.ThrowsException<Exception>(() => countryService.getCountry(-1));
         }

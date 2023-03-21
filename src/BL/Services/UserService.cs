@@ -69,7 +69,7 @@ namespace BL.Services
             }
         }
 
-        public User GetUser(int userId)
+        public User getUser(int userId)
         {
             User user = _userRepository.getById(userId);
             if (user == null)
