@@ -1,5 +1,8 @@
 using System.Diagnostics;
+using BL.Models;
+using BL.RepositoryInterfaces;
 using DataAccess.DBContext;
+using DataAccess.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -21,7 +24,7 @@ namespace dbcourse
             //Application.Run(new Form1());
 
             IConfiguration configuration = new ConfigurationBuilder()
-                                                .SetBasePath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\"))
+                                                .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "..\\..\\..\\"))
                                                 .AddJsonFile("appsettings.json")
                                                 .Build();
 
@@ -32,6 +35,7 @@ namespace dbcourse
                 services.AddDbContext<UserDbContext>();
                 services.AddDbContext<GuestDbContext>();
                 services.AddSingleton<DbContextFactory>();
+                services.AddTransient<IUserRepository, UserRepository>();
             });
 
             var host = builder.Build();
@@ -41,11 +45,20 @@ namespace dbcourse
                 var services = serviceScope.ServiceProvider;
                 try
                 {
-                    var dbContextFactory = services.GetRequiredService<DbContextFactory>();
-                    var dbContext = dbContextFactory.getDbContext();
-                    int count = dbContext.Users.Count();
-
-                    Debug.WriteLine($"Success {count}");
+                    var userRepository = services.GetRequiredService<IUserRepository>();
+                    //userRepository.create(new BL.Models.User("asdf", "asdf"));
+                    //User user = userRepository.getByLogin("asdf");
+                    //user.Password = "password";
+                    //userRepository.update(user);
+                    //user = userRepository.getByLogin("asdf");
+                    var _user = userRepository.getById(2);
+                    _user.Password = "gghghghjhdfjhf";
+                    userRepository.update(_user);
+                    var users = userRepository.getAll();
+                    foreach(var user in users)
+                    {
+                        Debug.WriteLine($"{user.Id} {user.Password}");
+                    }
                 }
                 catch (Exception ex)
                 {

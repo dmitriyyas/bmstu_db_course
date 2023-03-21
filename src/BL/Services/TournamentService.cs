@@ -97,7 +97,7 @@ namespace BL.Services
             return _teamRepository.getByTournament(id);
         }
 
-        public List<TeamStatistics> getTournamentTable(int tournamentId)
+        public IEnumerable<TeamStatistics> getTournamentTable(int tournamentId)
         {
             List<TeamStatistics> table = new List<TeamStatistics>();
             IEnumerable<Team> teams = getTournamentTeams(tournamentId);
