@@ -57,9 +57,6 @@ namespace TestBL.UnitTests
             var countryMock = new CountryMock();
             var countryService = new CountryService(countryMock, null, null);
 
-            string name = "Russia";
-            string confederation = "UEFA";
-
             Country country = new Country("Russia", "Uefa", 1);
             countryMock.create(country);
 

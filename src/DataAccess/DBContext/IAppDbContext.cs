@@ -143,9 +143,9 @@ namespace DataAccess.DBContext
 
             modelBuilder.Entity<TeamTournament>(entity =>
             {
-                entity.ToTable("team_tournamemts");
+                entity.ToTable("team_tournaments");
 
-                entity.HasNoKey();
+                entity.HasKey(t => new {t.TeamId, t.TournamentId});
 
                 entity.Property(c => c.TeamId)
                     .IsRequired()

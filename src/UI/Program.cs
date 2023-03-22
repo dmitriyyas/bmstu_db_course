@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using BL.Models;
 using BL.RepositoryInterfaces;
+using BL.Services;
 using DataAccess.DBContext;
 using DataAccess.Repositories;
 using Microsoft.Extensions.Configuration;
@@ -35,7 +36,19 @@ namespace dbcourse
                 services.AddDbContext<UserDbContext>();
                 services.AddDbContext<GuestDbContext>();
                 services.AddSingleton<DbContextFactory>();
+
                 services.AddTransient<IUserRepository, UserRepository>();
+                services.AddTransient<ITeamTournamentRepository, TeamTournamentRepository>();
+                services.AddTransient<ITeamRepository, TeamRepository>();
+                services.AddTransient<ICountryRepository, CountryRepository>();
+                services.AddTransient<ITournamentRepository, TournamentRepository>();
+                services.AddTransient<IMatchRepository, MatchRepository>();
+
+                services.AddTransient<UserService>();
+                services.AddTransient<TeamService>();
+                services.AddTransient<TournamentService>();
+                services.AddTransient<MatchService>();
+                services.AddTransient<CountryService>();
             });
 
             var host = builder.Build();
@@ -45,20 +58,15 @@ namespace dbcourse
                 var services = serviceScope.ServiceProvider;
                 try
                 {
-                    var userRepository = services.GetRequiredService<IUserRepository>();
-                    //userRepository.create(new BL.Models.User("asdf", "asdf"));
-                    //User user = userRepository.getByLogin("asdf");
-                    //user.Password = "password";
-                    //userRepository.update(user);
-                    //user = userRepository.getByLogin("asdf");
-                    var _user = userRepository.getById(2);
-                    _user.Password = "gghghghjhdfjhf";
-                    userRepository.update(_user);
-                    var users = userRepository.getAll();
-                    foreach(var user in users)
-                    {
-                        Debug.WriteLine($"{user.Id} {user.Password}");
-                    }
+                    var countryService = services.GetRequiredService<CountryService>();
+                    var userService = services.GetRequiredService<UserService>();
+                    var teamService = services.GetRequiredService<TeamService>();
+                    var tournamentService = services.GetRequiredService<TournamentService>();
+
+                    var country = countryService.createCountry("Russia", "UEFA");
+                    var user = userService.register("test", "test");
+                    var team = teamService.createTeam("Dinamo", country.Id);
+                    var tournament = tournamentService.createTournament("RPL", user.Id, country.Id, new List<Team> { team });
                 }
                 catch (Exception ex)
                 {
