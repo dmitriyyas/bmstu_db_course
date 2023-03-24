@@ -6,8 +6,29 @@ using System.Threading.Tasks;
 
 namespace UI.ViewInterfaces
 {
-    public interface IMainFormView
+    public interface IMainFormView : IView
     {
+        bool LogInGroupBoxVisible { get; set; }
+        bool RegisterGroupBoxVisible { get; set; }
+        bool StartGroupBoxVisible { get; set; }
+        bool LogOutGroupBoxVisible { get; set; }
+
+        string LogInLogin { get; set; }
+        string LogInPassword { get; set; }
+        string RegisterLogin { get; set; }
+        string RegisterPassword { get; set; }
+        string RegisterConfirmPassword { get; set; }
+
+        string CurrentUserLogin { set; }
+
+        event EventHandler StartLogInClicked;
+        event EventHandler LogOutClicked;
+        event EventHandler StartRegisterClicked;
+        event EventHandler RegisterConfirmClicked;
+        event EventHandler LogInConfirmClicked;
+        event EventHandler LogInBackClicked;
+        event EventHandler RegisterBackClicked;
+        event EventHandler MainFormClosed;
 
     }
 }

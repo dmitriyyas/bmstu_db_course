@@ -34,7 +34,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.LogInPasswordTextBox = new System.Windows.Forms.TextBox();
-            this.LogInLogintextBox = new System.Windows.Forms.TextBox();
+            this.LogInLoginTextBox = new System.Windows.Forms.TextBox();
             this.RegisterGroupBox = new System.Windows.Forms.GroupBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -55,6 +55,8 @@
             this.ShowCountriesButton = new System.Windows.Forms.Button();
             this.ShowTeamsButton = new System.Windows.Forms.Button();
             this.ShowTournamentsButton = new System.Windows.Forms.Button();
+            this.RegisterBackButton = new System.Windows.Forms.Button();
+            this.LogInBackButton = new System.Windows.Forms.Button();
             this.LogInGroupBox.SuspendLayout();
             this.RegisterGroupBox.SuspendLayout();
             this.StartGroupBox.SuspendLayout();
@@ -63,7 +65,7 @@
             // 
             // ConfirmLogInButton
             // 
-            this.ConfirmLogInButton.Location = new System.Drawing.Point(130, 144);
+            this.ConfirmLogInButton.Location = new System.Drawing.Point(147, 144);
             this.ConfirmLogInButton.Name = "ConfirmLogInButton";
             this.ConfirmLogInButton.Size = new System.Drawing.Size(94, 29);
             this.ConfirmLogInButton.TabIndex = 0;
@@ -73,11 +75,12 @@
             // 
             // LogInGroupBox
             // 
+            this.LogInGroupBox.Controls.Add(this.LogInBackButton);
             this.LogInGroupBox.Controls.Add(this.label7);
             this.LogInGroupBox.Controls.Add(this.label6);
             this.LogInGroupBox.Controls.Add(this.label5);
             this.LogInGroupBox.Controls.Add(this.LogInPasswordTextBox);
-            this.LogInGroupBox.Controls.Add(this.LogInLogintextBox);
+            this.LogInGroupBox.Controls.Add(this.LogInLoginTextBox);
             this.LogInGroupBox.Controls.Add(this.ConfirmLogInButton);
             this.LogInGroupBox.Location = new System.Drawing.Point(27, 47);
             this.LogInGroupBox.Name = "LogInGroupBox";
@@ -119,16 +122,18 @@
             this.LogInPasswordTextBox.Name = "LogInPasswordTextBox";
             this.LogInPasswordTextBox.Size = new System.Drawing.Size(179, 27);
             this.LogInPasswordTextBox.TabIndex = 2;
+            this.LogInPasswordTextBox.UseSystemPasswordChar = true;
             // 
-            // LogInLogintextBox
+            // LogInLoginTextBox
             // 
-            this.LogInLogintextBox.Location = new System.Drawing.Point(174, 44);
-            this.LogInLogintextBox.Name = "LogInLogintextBox";
-            this.LogInLogintextBox.Size = new System.Drawing.Size(179, 27);
-            this.LogInLogintextBox.TabIndex = 1;
+            this.LogInLoginTextBox.Location = new System.Drawing.Point(174, 44);
+            this.LogInLoginTextBox.Name = "LogInLoginTextBox";
+            this.LogInLoginTextBox.Size = new System.Drawing.Size(179, 27);
+            this.LogInLoginTextBox.TabIndex = 1;
             // 
             // RegisterGroupBox
             // 
+            this.RegisterGroupBox.Controls.Add(this.RegisterBackButton);
             this.RegisterGroupBox.Controls.Add(this.label4);
             this.RegisterGroupBox.Controls.Add(this.label3);
             this.RegisterGroupBox.Controls.Add(this.label2);
@@ -193,6 +198,7 @@
             this.RegPasswordTextBox.Name = "RegPasswordTextBox";
             this.RegPasswordTextBox.Size = new System.Drawing.Size(179, 27);
             this.RegPasswordTextBox.TabIndex = 2;
+            this.RegPasswordTextBox.UseSystemPasswordChar = true;
             // 
             // RegConfirmPasswordTextBox
             // 
@@ -200,10 +206,11 @@
             this.RegConfirmPasswordTextBox.Name = "RegConfirmPasswordTextBox";
             this.RegConfirmPasswordTextBox.Size = new System.Drawing.Size(179, 27);
             this.RegConfirmPasswordTextBox.TabIndex = 1;
+            this.RegConfirmPasswordTextBox.UseSystemPasswordChar = true;
             // 
             // ConfirmRegisterButton
             // 
-            this.ConfirmRegisterButton.Location = new System.Drawing.Point(81, 179);
+            this.ConfirmRegisterButton.Location = new System.Drawing.Point(105, 179);
             this.ConfirmRegisterButton.Name = "ConfirmRegisterButton";
             this.ConfirmRegisterButton.Size = new System.Drawing.Size(179, 29);
             this.ConfirmRegisterButton.TabIndex = 0;
@@ -317,6 +324,26 @@
             this.ShowTournamentsButton.Text = "Турниры";
             this.ShowTournamentsButton.UseVisualStyleBackColor = true;
             // 
+            // RegisterBackButton
+            // 
+            this.RegisterBackButton.Location = new System.Drawing.Point(147, 212);
+            this.RegisterBackButton.Name = "RegisterBackButton";
+            this.RegisterBackButton.Size = new System.Drawing.Size(94, 29);
+            this.RegisterBackButton.TabIndex = 8;
+            this.RegisterBackButton.Text = "Назад";
+            this.RegisterBackButton.UseVisualStyleBackColor = true;
+            this.RegisterBackButton.Click += new System.EventHandler(this.RegisterBackButton_Click);
+            // 
+            // LogInBackButton
+            // 
+            this.LogInBackButton.Location = new System.Drawing.Point(145, 179);
+            this.LogInBackButton.Name = "LogInBackButton";
+            this.LogInBackButton.Size = new System.Drawing.Size(94, 29);
+            this.LogInBackButton.TabIndex = 6;
+            this.LogInBackButton.Text = "Назад";
+            this.LogInBackButton.UseVisualStyleBackColor = true;
+            this.LogInBackButton.Click += new System.EventHandler(this.LogInBackButton_Click);
+            // 
             // WinFormMainView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -326,12 +353,13 @@
             this.Controls.Add(this.ShowTeamsButton);
             this.Controls.Add(this.ShowCountriesButton);
             this.Controls.Add(this.ShowUsersButton);
-            this.Controls.Add(this.StartGroupBox);
             this.Controls.Add(this.LogInGroupBox);
             this.Controls.Add(this.RegisterGroupBox);
             this.Controls.Add(this.LogOutGroupBox);
+            this.Controls.Add(this.StartGroupBox);
             this.Name = "WinFormMainView";
-            this.Text = "WinFormMainView";
+            this.Text = "Меню";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WinFormMainView_FormClosing);
             this.LogInGroupBox.ResumeLayout(false);
             this.LogInGroupBox.PerformLayout();
             this.RegisterGroupBox.ResumeLayout(false);
@@ -357,7 +385,7 @@
         private Label label2;
         private Label label4;
         private TextBox LogInPasswordTextBox;
-        private TextBox LogInLogintextBox;
+        private TextBox LogInLoginTextBox;
         private Label label7;
         private Label label6;
         private Label label5;
@@ -372,5 +400,7 @@
         private Button ShowCountriesButton;
         private Button ShowTeamsButton;
         private Button ShowTournamentsButton;
+        private Button RegisterBackButton;
+        private Button LogInBackButton;
     }
 }
