@@ -7,8 +7,9 @@ using DataAccess.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using UI.WinFormViews;
 
-namespace dbcourse
+namespace UI
 {
     internal static class Program
     {
@@ -21,8 +22,8 @@ namespace dbcourse
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
 
-            //ApplicationConfiguration.Initialize();
-            //Application.Run(new Form1());
+            ApplicationConfiguration.Initialize();
+            Application.Run(new WinFormMainView());
 
             IConfiguration configuration = new ConfigurationBuilder()
                                                 .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "..\\..\\..\\"))
