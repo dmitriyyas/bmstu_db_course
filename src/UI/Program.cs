@@ -25,7 +25,7 @@ namespace UI
             ApplicationConfiguration.Initialize();
             Application.Run(new WinFormMainView());
 
-            IConfiguration configuration = new ConfigurationBuilder()
+            /*IConfiguration configuration = new ConfigurationBuilder()
                                                 .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "..\\..\\..\\"))
                                                 .AddJsonFile("appsettings.json")
                                                 .Build();
@@ -73,7 +73,7 @@ namespace UI
                 {
                     Debug.WriteLine(ex);
                 }
-            }
+            }*/
 
         }
     }

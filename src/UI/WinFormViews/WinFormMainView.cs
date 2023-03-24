@@ -28,5 +28,23 @@ namespace UI.WinFormViews
             RegisterGroupBox.Visible = true;
             StartGroupBox.Visible = false;
         }
+
+        private void ConfirmLogInButton_Click(object sender, EventArgs e)
+        {
+            LogInGroupBox.Visible = false;
+            LogOutGroupBox.Visible = true;
+        }
+
+        private void ConfirmRegisterButton_Click(object sender, EventArgs e)
+        {
+            RegisterGroupBox.Visible = false;
+            LogOutGroupBox.Visible = true;
+        }
+
+        private void LogOutButton_Click(object sender, EventArgs e)
+        {
+            LogOutGroupBox.Visible = false;
+            StartGroupBox.Visible = true;
+        }
     }
 }
