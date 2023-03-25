@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UI.Events;
 
 namespace UI.ViewInterfaces
 {
@@ -29,6 +30,8 @@ namespace UI.ViewInterfaces
         event EventHandler LogInBackClicked;
         event EventHandler RegisterBackClicked;
         event EventHandler MainFormClosed;
+
+        event EventHandler<UserClickedEventArgs> UserClicked;
 
     }
 }

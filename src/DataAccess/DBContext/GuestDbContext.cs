@@ -29,7 +29,8 @@ namespace DataAccess.DBContext
             if (!optionsBuilder.IsConfigured)
             {
                 //optionsBuilder.UseNpgsql(_configuration.GetConnectionString("guest"));
-                optionsBuilder.UseNpgsql(_configuration.GetConnectionString("admin"));
+                optionsBuilder.UseNpgsql(_configuration.GetConnectionString("admin"))
+                    .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
             }
         }
 

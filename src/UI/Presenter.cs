@@ -8,6 +8,7 @@ using BL.RepositoryInterfaces;
 using BL.Services;
 using Microsoft.Extensions.Configuration;
 using UI.ViewInterfaces;
+using UI.Events;
 
 namespace UI
 {
@@ -26,6 +27,7 @@ namespace UI
         private User currentUser;
 
         private IMainFormView? _mainFormView;
+        private IUserView? _userView;
 
         public ApplicationContext AppContext { get; set; }
 
@@ -39,6 +41,8 @@ namespace UI
             _viewFactory = viewFactory;
             _configuration = configuration;
             AppContext = context;
+
+            _configuration["DbConnection"] = "guest";
 
             OpenMainForm();
         }
@@ -55,6 +59,7 @@ namespace UI
             _mainFormView.MainFormClosed += MainFormClose;
             _mainFormView.LogInBackClicked += LogInBack;
             _mainFormView.RegisterBackClicked += RegisterBack;
+            _mainFormView.UserClicked += OpenUserForm;
 
             _mainFormView.Show();
         }
@@ -76,7 +81,7 @@ namespace UI
             try
             {
                 currentUser = _userService.logIn(_mainFormView.LogInLogin, _mainFormView.LogInPassword);
-                //change connection string
+                _configuration["DbConnection"] = currentUser.Permission;
 
                 _mainFormView.LogInGroupBoxVisible = false;
                 _mainFormView.LogInLogin = "";
@@ -115,7 +120,7 @@ namespace UI
                 }
 
                 currentUser = _userService.register(login, password);
-                //change connection string
+                _configuration["DbConnection"] = currentUser.Permission;
 
                 _mainFormView.RegisterGroupBoxVisible = false;
                 _mainFormView.RegisterLogin = "";
@@ -134,7 +139,10 @@ namespace UI
         public void LogOut(object sender, EventArgs e)
         {
             currentUser = null;
-            //change connection string
+            _configuration["DbConnection"] = "guest";
+
+            _userView?.Close();
+            _userView = null;
 
             _mainFormView.LogOutGroupBoxVisible = false;
             _mainFormView.StartGroupBoxVisible = true;
@@ -162,7 +170,79 @@ namespace UI
         public void MainFormClose(object sender, EventArgs e)
         {
             _mainFormView = null;
+            _userView?.Close();
             AppContext.ExitThread();
+        }
+
+        public void ChangePermissions(object sender, EventArgs e)
+        {
+            try
+            {
+                _userService.changeUserPermissions(_userView.UserProfile.Id);
+                _userView.Users = _userService.getAllUsers();
+                _userView.UserProfile = _userService.getUser(_userView.UserProfile.Id);
+                _userView.ChangePermsVisible = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка");
+            }
+
+        }
+
+        public void OpenUserForm(object sender, UserClickedEventArgs e)
+        {
+            try
+            {
+                if (_userView == null)
+                {
+                    _createUserForm();
+                }
+
+                if (e.user != null)
+                {
+                    _userView.UserProfile = e.user;
+                    _userView.UserTournaments = _userService.getUserTournaments(e.user.Id);
+                    _userView.UserProfileVisible = true;
+                    if (currentUser?.Permission == "admin" && e.user.Permission == "user")
+                    {
+                        _userView.ChangePermsVisible = true;
+                    }
+                    else
+                    {
+                        _userView.ChangePermsVisible = false;
+                    }
+                }
+                else if (currentUser != null)
+                {
+                    _userView.UserProfile = currentUser;
+                    _userView.UserTournaments = _userService.getUserTournaments(currentUser.Id);
+                    _userView.UserProfileVisible = true;
+                }
+
+                _userView.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка");
+            }
+        }
+
+        private void _createUserForm()
+        {
+            _userView = _viewFactory.createUserView();
+
+            //add handlers
+            _userView.UserClicked += OpenUserForm;
+            _userView.UserFormClosed += UserFormClosed;
+            _userView.ChangePermsClicked += ChangePermissions;
+
+            _userView.Users = _userService.getAllUsers();
+        }
+
+        public void UserFormClosed(object sender, EventArgs e)
+        {
+            _userView = null;
         }
 
     }

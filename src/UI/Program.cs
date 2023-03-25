@@ -45,18 +45,18 @@ namespace UI
                 services.AddSingleton(appContext);
                 services.AddSingleton<Presenter>();
 
-                services.AddTransient<IUserRepository, UserRepository>();
-                services.AddTransient<ITeamTournamentRepository, TeamTournamentRepository>();
-                services.AddTransient<ITeamRepository, TeamRepository>();
-                services.AddTransient<ICountryRepository, CountryRepository>();
-                services.AddTransient<ITournamentRepository, TournamentRepository>();
-                services.AddTransient<IMatchRepository, MatchRepository>();
+                services.AddScoped<IUserRepository, UserRepository>();
+                services.AddScoped<ITeamTournamentRepository, TeamTournamentRepository>();
+                services.AddScoped<ITeamRepository, TeamRepository>();
+                services.AddScoped<ICountryRepository, CountryRepository>();
+                services.AddScoped<ITournamentRepository, TournamentRepository>();
+                services.AddScoped<IMatchRepository, MatchRepository>();
 
-                services.AddTransient<UserService>();
-                services.AddTransient<TeamService>();
-                services.AddTransient<TournamentService>();
-                services.AddTransient<MatchService>();
-                services.AddTransient<CountryService>();
+                services.AddScoped<UserService>();
+                services.AddScoped<TeamService>();
+                services.AddScoped<TournamentService>();
+                services.AddScoped<MatchService>();
+                services.AddScoped<CountryService>();
             });
 
             var host = builder.Build();

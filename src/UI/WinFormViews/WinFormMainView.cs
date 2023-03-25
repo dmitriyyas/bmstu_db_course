@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using UI.Events;
 using UI.ViewInterfaces;
 
 namespace UI.WinFormViews
@@ -32,6 +33,7 @@ namespace UI.WinFormViews
         public event EventHandler MainFormClosed;
         public event EventHandler LogInBackClicked;
         public event EventHandler RegisterBackClicked;
+        public event EventHandler<UserClickedEventArgs> UserClicked;
 
         public WinFormMainView()
         {
@@ -76,6 +78,11 @@ namespace UI.WinFormViews
         private void LogInBackButton_Click(object sender, EventArgs e)
         {
             LogInBackClicked.Invoke(this, new EventArgs());
+        }
+
+        private void ShowUsersButton_Click(object sender, EventArgs e)
+        {
+            UserClicked.Invoke(this, new UserClickedEventArgs());
         }
     }
 }

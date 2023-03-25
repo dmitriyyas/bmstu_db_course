@@ -10,5 +10,7 @@ namespace UI
     public interface IViewFactory
     {
         IMainFormView createMainFormView();
+
+        IUserView createUserView();
     }
 }

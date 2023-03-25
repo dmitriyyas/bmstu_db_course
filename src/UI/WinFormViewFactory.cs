@@ -15,5 +15,10 @@ namespace UI
         {
             return new WinFormMainView();
         }
+
+        public IUserView createUserView()
+        {
+            return new WinFormUserView();
+        }
     }
 }

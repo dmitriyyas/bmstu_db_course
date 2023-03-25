@@ -30,12 +30,14 @@
         {
             this.ConfirmLogInButton = new System.Windows.Forms.Button();
             this.LogInGroupBox = new System.Windows.Forms.GroupBox();
+            this.LogInBackButton = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.LogInPasswordTextBox = new System.Windows.Forms.TextBox();
             this.LogInLoginTextBox = new System.Windows.Forms.TextBox();
             this.RegisterGroupBox = new System.Windows.Forms.GroupBox();
+            this.RegisterBackButton = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -55,8 +57,6 @@
             this.ShowCountriesButton = new System.Windows.Forms.Button();
             this.ShowTeamsButton = new System.Windows.Forms.Button();
             this.ShowTournamentsButton = new System.Windows.Forms.Button();
-            this.RegisterBackButton = new System.Windows.Forms.Button();
-            this.LogInBackButton = new System.Windows.Forms.Button();
             this.LogInGroupBox.SuspendLayout();
             this.RegisterGroupBox.SuspendLayout();
             this.StartGroupBox.SuspendLayout();
@@ -88,6 +88,16 @@
             this.LogInGroupBox.TabIndex = 1;
             this.LogInGroupBox.TabStop = false;
             this.LogInGroupBox.Visible = false;
+            // 
+            // LogInBackButton
+            // 
+            this.LogInBackButton.Location = new System.Drawing.Point(145, 179);
+            this.LogInBackButton.Name = "LogInBackButton";
+            this.LogInBackButton.Size = new System.Drawing.Size(94, 29);
+            this.LogInBackButton.TabIndex = 6;
+            this.LogInBackButton.Text = "Назад";
+            this.LogInBackButton.UseVisualStyleBackColor = true;
+            this.LogInBackButton.Click += new System.EventHandler(this.LogInBackButton_Click);
             // 
             // label7
             // 
@@ -148,6 +158,16 @@
             this.RegisterGroupBox.TabIndex = 2;
             this.RegisterGroupBox.TabStop = false;
             this.RegisterGroupBox.Visible = false;
+            // 
+            // RegisterBackButton
+            // 
+            this.RegisterBackButton.Location = new System.Drawing.Point(147, 212);
+            this.RegisterBackButton.Name = "RegisterBackButton";
+            this.RegisterBackButton.Size = new System.Drawing.Size(94, 29);
+            this.RegisterBackButton.TabIndex = 8;
+            this.RegisterBackButton.Text = "Назад";
+            this.RegisterBackButton.UseVisualStyleBackColor = true;
+            this.RegisterBackButton.Click += new System.EventHandler(this.RegisterBackButton_Click);
             // 
             // label4
             // 
@@ -296,6 +316,7 @@
             this.ShowUsersButton.TabIndex = 5;
             this.ShowUsersButton.Text = "Пользователи";
             this.ShowUsersButton.UseVisualStyleBackColor = true;
+            this.ShowUsersButton.Click += new System.EventHandler(this.ShowUsersButton_Click);
             // 
             // ShowCountriesButton
             // 
@@ -323,26 +344,6 @@
             this.ShowTournamentsButton.TabIndex = 8;
             this.ShowTournamentsButton.Text = "Турниры";
             this.ShowTournamentsButton.UseVisualStyleBackColor = true;
-            // 
-            // RegisterBackButton
-            // 
-            this.RegisterBackButton.Location = new System.Drawing.Point(147, 212);
-            this.RegisterBackButton.Name = "RegisterBackButton";
-            this.RegisterBackButton.Size = new System.Drawing.Size(94, 29);
-            this.RegisterBackButton.TabIndex = 8;
-            this.RegisterBackButton.Text = "Назад";
-            this.RegisterBackButton.UseVisualStyleBackColor = true;
-            this.RegisterBackButton.Click += new System.EventHandler(this.RegisterBackButton_Click);
-            // 
-            // LogInBackButton
-            // 
-            this.LogInBackButton.Location = new System.Drawing.Point(145, 179);
-            this.LogInBackButton.Name = "LogInBackButton";
-            this.LogInBackButton.Size = new System.Drawing.Size(94, 29);
-            this.LogInBackButton.TabIndex = 6;
-            this.LogInBackButton.Text = "Назад";
-            this.LogInBackButton.UseVisualStyleBackColor = true;
-            this.LogInBackButton.Click += new System.EventHandler(this.LogInBackButton_Click);
             // 
             // WinFormMainView
             // 
