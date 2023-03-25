@@ -28,6 +28,7 @@ namespace UI
 
         private IMainFormView? _mainFormView;
         private IUserView? _userView;
+        private ICountryView? _countryView;
 
         public ApplicationContext AppContext { get; set; }
 
@@ -60,6 +61,8 @@ namespace UI
             _mainFormView.LogInBackClicked += LogInBack;
             _mainFormView.RegisterBackClicked += RegisterBack;
             _mainFormView.UserClicked += OpenUserForm;
+            _mainFormView.CountryClicked += OpenCountryForm;
+            //add other form opens
 
             _mainFormView.Show();
         }
@@ -143,6 +146,9 @@ namespace UI
 
             _userView?.Close();
             _userView = null;
+            _countryView?.Close();
+            _countryView = null;
+            //close other forms
 
             _mainFormView.LogOutGroupBoxVisible = false;
             _mainFormView.StartGroupBoxVisible = true;
@@ -171,6 +177,8 @@ namespace UI
         {
             _mainFormView = null;
             _userView?.Close();
+            _countryView?.Close();
+            //close other forms
             AppContext.ExitThread();
         }
 
@@ -232,7 +240,7 @@ namespace UI
         {
             _userView = _viewFactory.createUserView();
 
-            //add handlers
+            //add tournament open
             _userView.UserClicked += OpenUserForm;
             _userView.UserFormClosed += UserFormClosed;
             _userView.ChangePermsClicked += ChangePermissions;
@@ -245,5 +253,96 @@ namespace UI
             _userView = null;
         }
 
+        private void _createCountryForm()
+        {
+            _countryView = _viewFactory.createCountryView();
+
+            _countryView.CountryClicked += OpenCountryForm;
+            _countryView.AddCountryClicked += AddCountryClicked;
+            _countryView.ConfirmAddCountryClicked += ConfirmAddCountryClicked;
+            _countryView.CountryFormClosed += CountryFormClosed;
+            //add team and tournament click
+
+            _countryView.Countries = _countryService.getAllCountries();
+            if (currentUser?.Permission == "admin")
+            {
+                _countryView.AddCountryVisible = true;
+            }
+        }
+
+        public void OpenCountryForm(object sender, CountryClickedEventArgs e)
+        {
+            try
+            {
+                if (_countryView == null)
+                {
+                    _createCountryForm();
+                }
+
+                if (e.country != null)
+                {
+                    _countryView.CountryProfile = e.country;
+                    _countryView.CountryTeams = _countryService.getCountryTeams(e.country.Id);
+                    _countryView.CountryTournaments = _countryService.getCountryTournaments(e.country.Id);
+                    _countryView.CountryProfileVisible = true;
+                    if (currentUser?.Permission == "admin")
+                    {
+                        _countryView.AddCountryVisible = true;
+                    }
+                }
+
+                _countryView.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка");
+            }
+        }
+
+        public void AddCountryClicked(object sender, EventArgs e)
+        {
+            _countryView.AddCountryVisible = false;
+            _countryView.CountryProfileVisible = false;
+            _countryView.AddCountryGroupBoxVisible = true;
+        }
+
+        public void ConfirmAddCountryClicked(object sender, EventArgs e)
+        {
+            try
+            {
+                string name = _countryView.NewCountryName;
+                string confederation = _countryView.NewCountryConfederation;
+
+                if (name.Length == 0)
+                {
+                    throw new Exception("Вы не ввели название страны!");
+                }
+
+                if (confederation.Length == 0)
+                {
+                    throw new Exception("Вы не ввели конфедерацию!");
+                }
+
+                Country country = _countryService.createCountry(name, confederation);
+                _countryView.CountryProfile = country;
+                _countryView.Countries = _countryService.getAllCountries();
+                _countryView.CountryTeams = _countryService.getCountryTeams(country.Id);
+                _countryView.CountryTournaments = _countryService.getCountryTournaments(country.Id);
+
+                _countryView.AddCountryVisible = false;
+                _countryView.CountryProfileVisible = true;
+                _countryView.AddCountryVisible = true;
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка");
+            }
+        }
+
+        public void CountryFormClosed(object sender, EventArgs e)
+        {
+            _countryView = null;
+        }
     }
 }

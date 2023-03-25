@@ -53,13 +53,13 @@
             this.UsersDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Login,
             this.Права});
-            this.UsersDataGridView.Location = new System.Drawing.Point(12, 55);
+            this.UsersDataGridView.Location = new System.Drawing.Point(12, 42);
             this.UsersDataGridView.Name = "UsersDataGridView";
             this.UsersDataGridView.ReadOnly = true;
             this.UsersDataGridView.RowHeadersVisible = false;
             this.UsersDataGridView.RowHeadersWidth = 51;
             this.UsersDataGridView.RowTemplate.Height = 29;
-            this.UsersDataGridView.Size = new System.Drawing.Size(253, 252);
+            this.UsersDataGridView.Size = new System.Drawing.Size(253, 457);
             this.UsersDataGridView.TabIndex = 0;
             this.UsersDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.UsersDataGridView_CellClick);
             // 
@@ -126,7 +126,7 @@
             this.TournamentName.MinimumWidth = 6;
             this.TournamentName.Name = "TournamentName";
             this.TournamentName.ReadOnly = true;
-            this.TournamentName.Width = 125;
+            this.TournamentName.Width = 120;
             // 
             // ChangePermsButton
             // 

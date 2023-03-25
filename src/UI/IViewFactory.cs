@@ -12,5 +12,7 @@ namespace UI
         IMainFormView createMainFormView();
 
         IUserView createUserView();
+
+        ICountryView createCountryView();
     }
 }

@@ -20,5 +20,10 @@ namespace UI
         {
             return new WinFormUserView();
         }
+
+        public ICountryView createCountryView()
+        {
+            return new WinFormCountryView();
+        }
     }
 }

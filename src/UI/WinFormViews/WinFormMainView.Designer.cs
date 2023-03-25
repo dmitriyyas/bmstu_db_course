@@ -326,6 +326,7 @@
             this.ShowCountriesButton.TabIndex = 6;
             this.ShowCountriesButton.Text = "Страны";
             this.ShowCountriesButton.UseVisualStyleBackColor = true;
+            this.ShowCountriesButton.Click += new System.EventHandler(this.ShowCountriesButton_Click);
             // 
             // ShowTeamsButton
             // 

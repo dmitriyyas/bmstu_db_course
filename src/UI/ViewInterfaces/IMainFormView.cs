@@ -32,6 +32,7 @@ namespace UI.ViewInterfaces
         event EventHandler MainFormClosed;
 
         event EventHandler<UserClickedEventArgs> UserClicked;
+        event EventHandler<CountryClickedEventArgs> CountryClicked;
 
     }
 }
