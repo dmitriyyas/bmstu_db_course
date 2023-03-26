@@ -35,6 +35,7 @@ namespace UI.WinFormViews
         public event EventHandler RegisterBackClicked;
         public event EventHandler<UserClickedEventArgs> UserClicked;
         public event EventHandler<CountryClickedEventArgs> CountryClicked;
+        public event EventHandler<TeamClickedEventArgs> TeamClicked;
 
         public WinFormMainView()
         {
@@ -89,6 +90,11 @@ namespace UI.WinFormViews
         private void ShowCountriesButton_Click(object sender, EventArgs e)
         {
             CountryClicked.Invoke(this, new CountryClickedEventArgs());
+        }
+
+        private void ShowTeamsButton_Click(object sender, EventArgs e)
+        {
+            TeamClicked.Invoke(this, new TeamClickedEventArgs());
         }
     }
 }

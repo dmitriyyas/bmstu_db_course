@@ -33,6 +33,7 @@ namespace UI.ViewInterfaces
 
         event EventHandler<UserClickedEventArgs> UserClicked;
         event EventHandler<CountryClickedEventArgs> CountryClicked;
+        event EventHandler<TeamClickedEventArgs> TeamClicked;
 
     }
 }

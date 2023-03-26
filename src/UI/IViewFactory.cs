@@ -14,5 +14,7 @@ namespace UI
         IUserView createUserView();
 
         ICountryView createCountryView();
+
+        ITeamView createTeamView();
     }
 }

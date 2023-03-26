@@ -336,6 +336,7 @@
             this.ShowTeamsButton.TabIndex = 7;
             this.ShowTeamsButton.Text = "Команды";
             this.ShowTeamsButton.UseVisualStyleBackColor = true;
+            this.ShowTeamsButton.Click += new System.EventHandler(this.ShowTeamsButton_Click);
             // 
             // ShowTournamentsButton
             // 

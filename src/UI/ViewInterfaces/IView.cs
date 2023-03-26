@@ -9,6 +9,8 @@ namespace UI.ViewInterfaces
     public interface IView
     {
         void Show();
+
+        void BringToFront();
         void Close();
     }
 }

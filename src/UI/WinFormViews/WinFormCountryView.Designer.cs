@@ -34,26 +34,26 @@
             this.CountryConfederation = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AddCountryButton = new System.Windows.Forms.Button();
             this.CountryProfileGroupBox = new System.Windows.Forms.GroupBox();
-            this.CountryNameLabel = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.ConfederationLabel = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.TournamentDataGridView = new System.Windows.Forms.DataGridView();
+            this.TournamentName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label4 = new System.Windows.Forms.Label();
             this.TeamDataGridView = new System.Windows.Forms.DataGridView();
             this.TeamName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TournamentDataGridView = new System.Windows.Forms.DataGridView();
-            this.label4 = new System.Windows.Forms.Label();
-            this.TournamentName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label3 = new System.Windows.Forms.Label();
+            this.ConfederationLabel = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.CountryNameLabel = new System.Windows.Forms.Label();
             this.AddCountryGroupBox = new System.Windows.Forms.GroupBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.NameTextBox = new System.Windows.Forms.TextBox();
-            this.ConfTextBox = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
             this.ConfirmAddCountryButton = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.ConfTextBox = new System.Windows.Forms.TextBox();
+            this.NameTextBox = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.CountryDataGridView)).BeginInit();
             this.CountryProfileGroupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.TeamDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TournamentDataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TeamDataGridView)).BeginInit();
             this.AddCountryGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -127,45 +127,40 @@
             this.CountryProfileGroupBox.TabStop = false;
             this.CountryProfileGroupBox.Visible = false;
             // 
-            // CountryNameLabel
+            // TournamentDataGridView
             // 
-            this.CountryNameLabel.AutoSize = true;
-            this.CountryNameLabel.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.CountryNameLabel.Location = new System.Drawing.Point(15, 23);
-            this.CountryNameLabel.Name = "CountryNameLabel";
-            this.CountryNameLabel.Size = new System.Drawing.Size(184, 46);
-            this.CountryNameLabel.TabIndex = 0;
-            this.CountryNameLabel.Text = "NoCountry";
+            this.TournamentDataGridView.AllowUserToAddRows = false;
+            this.TournamentDataGridView.AllowUserToDeleteRows = false;
+            this.TournamentDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.TournamentDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.TournamentName});
+            this.TournamentDataGridView.Location = new System.Drawing.Point(255, 173);
+            this.TournamentDataGridView.Name = "TournamentDataGridView";
+            this.TournamentDataGridView.ReadOnly = true;
+            this.TournamentDataGridView.RowHeadersVisible = false;
+            this.TournamentDataGridView.RowHeadersWidth = 51;
+            this.TournamentDataGridView.RowTemplate.Height = 29;
+            this.TournamentDataGridView.Size = new System.Drawing.Size(129, 239);
+            this.TournamentDataGridView.TabIndex = 6;
+            this.TournamentDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.TournamentDataGridView_CellClick);
             // 
-            // label2
+            // TournamentName
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label2.Location = new System.Drawing.Point(15, 90);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(153, 28);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Конфедерация:";
+            this.TournamentName.HeaderText = "Название";
+            this.TournamentName.MinimumWidth = 6;
+            this.TournamentName.Name = "TournamentName";
+            this.TournamentName.ReadOnly = true;
+            this.TournamentName.Width = 125;
             // 
-            // ConfederationLabel
+            // label4
             // 
-            this.ConfederationLabel.AutoSize = true;
-            this.ConfederationLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.ConfederationLabel.Location = new System.Drawing.Point(174, 90);
-            this.ConfederationLabel.Name = "ConfederationLabel";
-            this.ConfederationLabel.Size = new System.Drawing.Size(80, 28);
-            this.ConfederationLabel.TabIndex = 2;
-            this.ConfederationLabel.Text = "NoConf";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label3.Location = new System.Drawing.Point(15, 142);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(97, 28);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "Команды";
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label4.Location = new System.Drawing.Point(255, 142);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(94, 28);
+            this.label4.TabIndex = 5;
+            this.label4.Text = "Турниры";
             // 
             // TeamDataGridView
             // 
@@ -192,40 +187,45 @@
             this.TeamName.ReadOnly = true;
             this.TeamName.Width = 125;
             // 
-            // TournamentDataGridView
+            // label3
             // 
-            this.TournamentDataGridView.AllowUserToAddRows = false;
-            this.TournamentDataGridView.AllowUserToDeleteRows = false;
-            this.TournamentDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.TournamentDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.TournamentName});
-            this.TournamentDataGridView.Location = new System.Drawing.Point(255, 173);
-            this.TournamentDataGridView.Name = "TournamentDataGridView";
-            this.TournamentDataGridView.ReadOnly = true;
-            this.TournamentDataGridView.RowHeadersVisible = false;
-            this.TournamentDataGridView.RowHeadersWidth = 51;
-            this.TournamentDataGridView.RowTemplate.Height = 29;
-            this.TournamentDataGridView.Size = new System.Drawing.Size(129, 239);
-            this.TournamentDataGridView.TabIndex = 6;
-            this.TournamentDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.TournamentDataGridView_CellClick);
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label3.Location = new System.Drawing.Point(15, 142);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(97, 28);
+            this.label3.TabIndex = 3;
+            this.label3.Text = "Команды";
             // 
-            // label4
+            // ConfederationLabel
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label4.Location = new System.Drawing.Point(255, 142);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(94, 28);
-            this.label4.TabIndex = 5;
-            this.label4.Text = "Турниры";
+            this.ConfederationLabel.AutoSize = true;
+            this.ConfederationLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.ConfederationLabel.Location = new System.Drawing.Point(174, 90);
+            this.ConfederationLabel.Name = "ConfederationLabel";
+            this.ConfederationLabel.Size = new System.Drawing.Size(80, 28);
+            this.ConfederationLabel.TabIndex = 2;
+            this.ConfederationLabel.Text = "NoConf";
             // 
-            // TournamentName
+            // label2
             // 
-            this.TournamentName.HeaderText = "Название";
-            this.TournamentName.MinimumWidth = 6;
-            this.TournamentName.Name = "TournamentName";
-            this.TournamentName.ReadOnly = true;
-            this.TournamentName.Width = 125;
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label2.Location = new System.Drawing.Point(15, 90);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(153, 28);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Конфедерация:";
+            // 
+            // CountryNameLabel
+            // 
+            this.CountryNameLabel.AutoSize = true;
+            this.CountryNameLabel.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.CountryNameLabel.Location = new System.Drawing.Point(15, 23);
+            this.CountryNameLabel.Name = "CountryNameLabel";
+            this.CountryNameLabel.Size = new System.Drawing.Size(184, 46);
+            this.CountryNameLabel.TabIndex = 0;
+            this.CountryNameLabel.Text = "NoCountry";
             // 
             // AddCountryGroupBox
             // 
@@ -242,38 +242,15 @@
             this.AddCountryGroupBox.TabStop = false;
             this.AddCountryGroupBox.Visible = false;
             // 
-            // label5
+            // ConfirmAddCountryButton
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label5.Location = new System.Drawing.Point(156, 23);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(167, 28);
-            this.label5.TabIndex = 0;
-            this.label5.Text = "Добавить страну";
-            // 
-            // NameTextBox
-            // 
-            this.NameTextBox.Location = new System.Drawing.Point(156, 72);
-            this.NameTextBox.Name = "NameTextBox";
-            this.NameTextBox.Size = new System.Drawing.Size(125, 27);
-            this.NameTextBox.TabIndex = 1;
-            // 
-            // ConfTextBox
-            // 
-            this.ConfTextBox.Location = new System.Drawing.Point(156, 131);
-            this.ConfTextBox.Name = "ConfTextBox";
-            this.ConfTextBox.Size = new System.Drawing.Size(125, 27);
-            this.ConfTextBox.TabIndex = 2;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(29, 79);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(80, 20);
-            this.label6.TabIndex = 3;
-            this.label6.Text = "Название:";
+            this.ConfirmAddCountryButton.Location = new System.Drawing.Point(132, 173);
+            this.ConfirmAddCountryButton.Name = "ConfirmAddCountryButton";
+            this.ConfirmAddCountryButton.Size = new System.Drawing.Size(171, 29);
+            this.ConfirmAddCountryButton.TabIndex = 5;
+            this.ConfirmAddCountryButton.Text = "Добавить страну";
+            this.ConfirmAddCountryButton.UseVisualStyleBackColor = true;
+            this.ConfirmAddCountryButton.Click += new System.EventHandler(this.ConfirmAddCountryButton_Click);
             // 
             // label7
             // 
@@ -284,15 +261,38 @@
             this.label7.TabIndex = 4;
             this.label7.Text = "Конфедерация:";
             // 
-            // ConfirmAddCountryButton
+            // label6
             // 
-            this.ConfirmAddCountryButton.Location = new System.Drawing.Point(132, 173);
-            this.ConfirmAddCountryButton.Name = "ConfirmAddCountryButton";
-            this.ConfirmAddCountryButton.Size = new System.Drawing.Size(171, 29);
-            this.ConfirmAddCountryButton.TabIndex = 5;
-            this.ConfirmAddCountryButton.Text = "Добавить страну";
-            this.ConfirmAddCountryButton.UseVisualStyleBackColor = true;
-            this.ConfirmAddCountryButton.Click += new System.EventHandler(this.ConfirmAddCountryButton_Click);
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(29, 79);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(80, 20);
+            this.label6.TabIndex = 3;
+            this.label6.Text = "Название:";
+            // 
+            // ConfTextBox
+            // 
+            this.ConfTextBox.Location = new System.Drawing.Point(156, 131);
+            this.ConfTextBox.Name = "ConfTextBox";
+            this.ConfTextBox.Size = new System.Drawing.Size(125, 27);
+            this.ConfTextBox.TabIndex = 2;
+            // 
+            // NameTextBox
+            // 
+            this.NameTextBox.Location = new System.Drawing.Point(156, 72);
+            this.NameTextBox.Name = "NameTextBox";
+            this.NameTextBox.Size = new System.Drawing.Size(125, 27);
+            this.NameTextBox.TabIndex = 1;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label5.Location = new System.Drawing.Point(156, 23);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(167, 28);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "Добавить страну";
             // 
             // WinFormCountryView
             // 
@@ -310,8 +310,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.CountryDataGridView)).EndInit();
             this.CountryProfileGroupBox.ResumeLayout(false);
             this.CountryProfileGroupBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.TeamDataGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.TournamentDataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TeamDataGridView)).EndInit();
             this.AddCountryGroupBox.ResumeLayout(false);
             this.AddCountryGroupBox.PerformLayout();
             this.ResumeLayout(false);

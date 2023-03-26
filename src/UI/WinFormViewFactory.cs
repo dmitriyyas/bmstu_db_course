@@ -25,5 +25,10 @@ namespace UI
         {
             return new WinFormCountryView();
         }
+
+        public ITeamView createTeamView()
+        {
+            return new WinFormTeamView();
+        }
     }
 }
