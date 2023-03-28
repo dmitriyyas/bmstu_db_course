@@ -1,25 +1,30 @@
-﻿using BL.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BL.Models;
+using Microsoft.Extensions.Options;
+using System.Diagnostics;
 
 namespace DataAccess.DBContext
 {
-    public interface IAppDbContext
+    public partial class AppDbContext : DbContext
     {
-        DbSet<User> Users { get; set; }
-        DbSet<Country> Countries { get; set; }
-        DbSet<Team> Teams { get; set; }
-        DbSet<Tournament> Tournaments { get; set; }
-        DbSet<Match> Matches { get; set; }
-        DbSet<TeamTournament> TeamTournaments { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<Team> Teams { get; set; }
+        public DbSet<Tournament> Tournaments { get; set; }
+        public DbSet<Match> Matches { get; set; }
+        public DbSet<TeamTournament> TeamTournaments { get; set; }
 
-        void SaveChanges();
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        {
 
-        static void initModels(ModelBuilder modelBuilder)
+        }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>(entity =>
             {
@@ -145,7 +150,7 @@ namespace DataAccess.DBContext
             {
                 entity.ToTable("team_tournaments");
 
-                entity.HasKey(t => new {t.TeamId, t.TournamentId});
+                entity.HasKey(t => new { t.TeamId, t.TournamentId });
 
                 entity.Property(c => c.TeamId)
                     .IsRequired()
@@ -155,6 +160,9 @@ namespace DataAccess.DBContext
                     .IsRequired()
                     .HasColumnName("tournament_id");
             });
+
+            OnModelCreatingPartial(modelBuilder);
         }
+        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }

@@ -30,5 +30,10 @@ namespace UI
         {
             return new WinFormTeamView();
         }
+
+        public ITournamentView createTournamentView()
+        {
+            return new WinFormTournamentView();
+        }
     }
 }

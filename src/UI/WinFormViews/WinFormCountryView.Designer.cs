@@ -106,7 +106,7 @@
             this.AddCountryButton.Name = "AddCountryButton";
             this.AddCountryButton.Size = new System.Drawing.Size(254, 29);
             this.AddCountryButton.TabIndex = 2;
-            this.AddCountryButton.Text = "Добавить страну";
+            this.AddCountryButton.Text = "Создать страну";
             this.AddCountryButton.UseVisualStyleBackColor = true;
             this.AddCountryButton.Visible = false;
             this.AddCountryButton.Click += new System.EventHandler(this.AddCountryButton_Click);
@@ -248,7 +248,7 @@
             this.ConfirmAddCountryButton.Name = "ConfirmAddCountryButton";
             this.ConfirmAddCountryButton.Size = new System.Drawing.Size(171, 29);
             this.ConfirmAddCountryButton.TabIndex = 5;
-            this.ConfirmAddCountryButton.Text = "Добавить страну";
+            this.ConfirmAddCountryButton.Text = "Создать страну";
             this.ConfirmAddCountryButton.UseVisualStyleBackColor = true;
             this.ConfirmAddCountryButton.Click += new System.EventHandler(this.ConfirmAddCountryButton_Click);
             // 
@@ -288,11 +288,11 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label5.Location = new System.Drawing.Point(156, 23);
+            this.label5.Location = new System.Drawing.Point(143, 23);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(167, 28);
+            this.label5.Size = new System.Drawing.Size(150, 28);
             this.label5.TabIndex = 0;
-            this.label5.Text = "Добавить страну";
+            this.label5.Text = "Создать страну";
             // 
             // WinFormCountryView
             // 
@@ -302,8 +302,8 @@
             this.Controls.Add(this.AddCountryButton);
             this.Controls.Add(this.CountryDataGridView);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.CountryProfileGroupBox);
             this.Controls.Add(this.AddCountryGroupBox);
+            this.Controls.Add(this.CountryProfileGroupBox);
             this.Name = "WinFormCountryView";
             this.Text = "WinFormCountryView";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WinFormCountryView_FormClosing);

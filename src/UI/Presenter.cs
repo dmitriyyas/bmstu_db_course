@@ -9,6 +9,8 @@ using BL.Services;
 using Microsoft.Extensions.Configuration;
 using UI.ViewInterfaces;
 using UI.Events;
+using System.Linq.Expressions;
+using System.Diagnostics;
 
 namespace UI
 {
@@ -30,6 +32,7 @@ namespace UI
         private IUserView? _userView;
         private ICountryView? _countryView;
         private ITeamView? _teamView;
+        private ITournamentView? _tournamentView;
 
         public ApplicationContext AppContext { get; set; }
 
@@ -64,7 +67,7 @@ namespace UI
             _mainFormView.UserClicked += OpenUserForm;
             _mainFormView.CountryClicked += OpenCountryForm;
             _mainFormView.TeamClicked += OpenTeamForm;
-            //add other form opens
+            _mainFormView.TournamentClicked += OpenTournamentForm;
 
             _mainFormView.Show();
         }
@@ -152,6 +155,8 @@ namespace UI
             _countryView = null;
             _teamView?.Close();
             _teamView = null;
+            _tournamentView?.Close();
+            _tournamentView = null;
             //close other forms
 
             _mainFormView.LogOutGroupBoxVisible = false;
@@ -183,6 +188,7 @@ namespace UI
             _userView?.Close();
             _countryView?.Close();
             _teamView?.Close();
+            _tournamentView?.Close();
             //close other forms
             AppContext.ExitThread();
         }
@@ -246,10 +252,10 @@ namespace UI
         {
             _userView = _viewFactory.createUserView();
 
-            //add tournament open
             _userView.UserClicked += OpenUserForm;
             _userView.UserFormClosed += UserFormClosed;
             _userView.ChangePermsClicked += ChangePermissions;
+            _userView.TournamentClicked += OpenTournamentForm;
 
             _userView.Users = _userService.getAllUsers();
         }
@@ -268,7 +274,7 @@ namespace UI
             _countryView.ConfirmAddCountryClicked += ConfirmAddCountryClicked;
             _countryView.CountryFormClosed += CountryFormClosed;
             _countryView.TeamClicked += OpenTeamForm;
-            //add tournament click
+            _countryView.TournamentClicked += OpenTournamentForm;
 
             _countryView.Countries = _countryService.getAllCountries();
             if (currentUser?.Permission == "admin")
@@ -291,6 +297,7 @@ namespace UI
                     _countryView.CountryProfile = e.country;
                     _countryView.CountryTeams = _countryService.getCountryTeams(e.country.Id);
                     _countryView.CountryTournaments = _countryService.getCountryTournaments(e.country.Id);
+                    _countryView.AddCountryGroupBoxVisible = false;
                     _countryView.CountryProfileVisible = true;
                     if (currentUser?.Permission == "admin")
                     {
@@ -357,12 +364,12 @@ namespace UI
         {
             _teamView = _viewFactory.createTeamView();
 
-            //add tournament click
             _teamView.TeamClicked += OpenTeamForm;
             _teamView.AddTeamClicked += AddTeamClicked;
             _teamView.CountryClicked += OpenCountryForm;
             _teamView.ConfirmTeamClicked += ConfirmAddTeamClicked;
             _teamView.TeamFormClosed += TeamFormClosed;
+            _teamView.TournamentClicked += OpenTournamentForm;
 
             _teamView.Countries = _countryService.getAllCountries();
             _teamView.Teams = _teamService.getAllTeams();
@@ -385,6 +392,7 @@ namespace UI
                 {
                     _teamView.TeamProfile = e.team;
                     _teamView.TeamTournaments = _teamService.getTeamTournaments(e.team.Id);
+                    _teamView.AddTeamGroupBoxVisible = false;
                     _teamView.TeamProfileVisible = true;
                     if (currentUser != null)
                     {
@@ -452,6 +460,201 @@ namespace UI
         public void TeamFormClosed(object sender, EventArgs e)
         {
             _teamView = null;
+        }
+
+        private void _createTournamentForm()
+        {
+            _tournamentView = _viewFactory.createTournamentView();
+
+            //add handlers
+            _tournamentView.TournamentClicked += OpenTournamentForm;
+            _tournamentView.TournamentFormClosed += TournamentFormClosed;
+            _tournamentView.CountryClicked += OpenCountryForm;
+            _tournamentView.UserClicked += OpenUserForm;
+            _tournamentView.TeamClicked += OpenTeamForm;
+            _tournamentView.AddTournamentClicked += AddTournamentClicked;
+            _tournamentView.DeleteTournamentClicked += DeleteTournamentClicked;
+            _tournamentView.ShowMatchesClicked += ShowMatchesClicked;
+            _tournamentView.ShowTableClicked += ShowTableClicked;
+            _tournamentView.AddTeamToNewClicked += AddTeamToNewClicked;
+            _tournamentView.DeleteTeamFromNewClicked += DeleteTeamFromNewClicked;
+            _tournamentView.ConfirmTournamentClicked += ConfirmAddTournamentClicked;
+
+            _tournamentView.Countries = _countryService.getAllCountries();
+            _tournamentView.Users = _userService.getAllUsers();
+            _tournamentView.Teams= _teamService.getAllTeams();
+            _tournamentView.Tournaments = _tournamentService.getAllTournaments();
+            if (currentUser != null)
+            {
+                _tournamentView.AddTournamentVisible = true;
+            }
+        }
+
+        public void OpenTournamentForm(object sender, TournamentClickedEventArgs e)
+        {
+            try
+            {
+                if (_tournamentView == null)
+                {
+                    _createTournamentForm();
+                }
+
+                if (e.tournament != null)
+                {
+                    _tournamentView.TournamentProfile = e.tournament;
+                    _tournamentView.TournamentTeams = _tournamentService.getTournamentTeams(e.tournament.Id);
+                    _tournamentView.Table = _tournamentService.getTournamentTable(e.tournament.Id);
+                    _tournamentView.TournamentMatches = _tournamentService.getTournamentMatches(e.tournament.Id);
+                    if (currentUser != null)
+                    {
+                        _tournamentView.AddTournamentVisible = true;
+                    }
+                    if (currentUser != null && currentUser.Id == e.tournament.UserId)
+                        _tournamentView.DeleteTournamentVisible = true;
+                    else
+                        _tournamentView.DeleteTournamentVisible = false;
+
+                    _tournamentView.AddTournamentGroupBoxVisible = false;
+                    _tournamentView.TournamentProfileVisible = true;
+                }
+
+                _tournamentView.Show();
+                _tournamentView.BringToFront();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка");
+            }
+        }
+
+        public void AddTournamentClicked(object sender, EventArgs e)
+        {
+            _tournamentView.AddTournamentVisible = false;
+            _tournamentView.TournamentProfileVisible = false;
+            _tournamentView.AddTournamentGroupBoxVisible = true;
+        }
+
+        public void DeleteTournamentClicked(object sender, EventArgs e)
+        {
+            try
+            {
+                _tournamentService.deleteTournament(_tournamentView.TournamentProfile.Id);
+                _tournamentView.TournamentProfileVisible = false;
+                _tournamentView.Tournaments = _tournamentService.getAllTournaments();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка");
+            }
+        }
+
+        public void ShowMatchesClicked(object sender, EventArgs e)
+        {
+            _tournamentView.TableVisible = false;
+            _tournamentView.MatchesVisible = true;
+        }
+
+        public void ShowTableClicked(object sender, EventArgs e)
+        {
+            _tournamentView.MatchesVisible = false;
+            _tournamentView.TableVisible = true;
+        }
+
+        public void AddTeamToNewClicked(object sender, EventArgs e)
+        {
+            try
+            {
+                var teams = _tournamentView.NewTournamentTeams;
+                var team = _teamService.getAllTeams().FirstOrDefault(t => t.Name == _tournamentView.NewTeamName);
+                if (team == null)
+                {
+                    throw new Exception("Такой команды не существует.");
+                }
+                if (teams.FirstOrDefault(t => t.Id == team.Id) != null)
+                {
+                    throw new Exception("Такая команда уже есть в турнире.");
+                }
+                teams.Add(team);
+                _tournamentView.NewTournamentTeams = teams;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка");
+            }
+        }
+
+        public void DeleteTeamFromNewClicked(object sender, EventArgs e)
+        {
+            try
+            {
+                string? name = _tournamentView.SelectedTeamName;
+                if (name == null)
+                    throw new Exception("Команда для удаления не выбрана.");
+
+                var teams = _tournamentView.NewTournamentTeams;
+                var team = _tournamentView.Teams.FirstOrDefault(t => t.Name == name);
+                teams.RemoveAll(t => t.Id == team.Id);
+                _tournamentView.NewTournamentTeams = teams;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка");
+            }
+        }
+
+        public void ConfirmAddTournamentClicked(object sender, EventArgs e)
+        {
+            try
+            {
+                string name = _tournamentView.NewTournamentName;
+                string countryName = _tournamentView.NewTournamentCountry;
+
+                if (name.Length == 0)
+                {
+                    throw new Exception("Вы не ввели название команды!");
+                }
+
+                if (countryName.Length == 0)
+                {
+                    throw new Exception("Вы не выбрали страну!");
+                }
+
+                Country country = _countryService.getAllCountries().FirstOrDefault(c => c.Name == countryName);
+
+                if (country == null)
+                {
+                    throw new Exception("Такой страны нет!");
+                }
+
+                var teams = _tournamentView.NewTournamentTeams;
+                if (teams.Count < 2)
+                {
+                    throw new Exception("Турнир должен состоять как минимум из 2 команд.");
+                }
+
+                var tournament = _tournamentService.createTournament(name, currentUser.Id, country.Id, teams);
+
+                _tournamentView.TournamentProfile = tournament;
+                _tournamentView.TournamentTeams = _tournamentService.getTournamentTeams(tournament.Id);
+                _tournamentView.Table = _tournamentService.getTournamentTable(tournament.Id);
+                _tournamentView.TournamentMatches = _tournamentService.getTournamentMatches(tournament.Id);
+                _tournamentView.Tournaments = _tournamentService.getAllTournaments();
+
+                _tournamentView.AddTournamentVisible = true;
+                _tournamentView.DeleteTournamentVisible = true;
+
+                _tournamentView.AddTournamentGroupBoxVisible = false;
+                _tournamentView.TournamentProfileVisible = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка");
+            }
+        }
+
+        public void TournamentFormClosed(object sender, EventArgs e)
+        {
+            _tournamentView = null;
         }
     }
 }

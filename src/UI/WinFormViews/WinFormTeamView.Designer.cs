@@ -102,7 +102,7 @@
             this.AddTeamButton.Name = "AddTeamButton";
             this.AddTeamButton.Size = new System.Drawing.Size(254, 29);
             this.AddTeamButton.TabIndex = 2;
-            this.AddTeamButton.Text = "Добавить команду";
+            this.AddTeamButton.Text = "Создать команду";
             this.AddTeamButton.UseVisualStyleBackColor = true;
             this.AddTeamButton.Visible = false;
             this.AddTeamButton.Click += new System.EventHandler(this.AddTeamButton_Click);
@@ -209,7 +209,7 @@
             this.ConfirmAddTeamButton.Name = "ConfirmAddTeamButton";
             this.ConfirmAddTeamButton.Size = new System.Drawing.Size(151, 29);
             this.ConfirmAddTeamButton.TabIndex = 5;
-            this.ConfirmAddTeamButton.Text = "Добавить команду";
+            this.ConfirmAddTeamButton.Text = "Создать команду";
             this.ConfirmAddTeamButton.UseVisualStyleBackColor = true;
             this.ConfirmAddTeamButton.Click += new System.EventHandler(this.ConfirmAddTeamButton_Click);
             // 
@@ -250,11 +250,11 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label4.Location = new System.Drawing.Point(118, 23);
+            this.label4.Location = new System.Drawing.Point(143, 23);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(185, 28);
+            this.label4.Size = new System.Drawing.Size(168, 28);
             this.label4.TabIndex = 0;
-            this.label4.Text = "Добавить команду";
+            this.label4.Text = "Создать команду";
             // 
             // WinFormTeamView
             // 

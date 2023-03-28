@@ -4,9 +4,11 @@ using BL.RepositoryInterfaces;
 using BL.Services;
 using DataAccess.DBContext;
 using DataAccess.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using UI.WinFormViews;
 
 namespace UI
@@ -34,10 +36,6 @@ namespace UI
 
             var builder = new HostBuilder().ConfigureServices((hostContext, services) =>
             {
-                services.AddDbContext<AdminDbContext>();
-                services.AddDbContext<UserDbContext>();
-                services.AddDbContext<GuestDbContext>();
-
                 services.AddSingleton<DbContextFactory>();
                 services.AddSingleton<IViewFactory, WinFormViewFactory>();
 

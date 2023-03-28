@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BL.Models;
 using BL.RepositoryInterfaces;
 using DataAccess.DBContext;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Repositories
 {
@@ -23,7 +24,10 @@ namespace DataAccess.Repositories
             var dbContext = _dbContextFactory.getDbContext();
             try
             {
-                tournament.Id = dbContext.Tournaments.Count() + 1;
+                if (dbContext.Tournaments.Count() > 0)
+                    tournament.Id = dbContext.Tournaments.Select(x => x.Id).Max() + 1;
+                else
+                    tournament.Id = 1;
 
                 dbContext.Tournaments.Add(tournament);
                 dbContext.SaveChanges();

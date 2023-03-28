@@ -36,6 +36,7 @@ namespace UI.WinFormViews
         public event EventHandler<UserClickedEventArgs> UserClicked;
         public event EventHandler<CountryClickedEventArgs> CountryClicked;
         public event EventHandler<TeamClickedEventArgs> TeamClicked;
+        public event EventHandler<TournamentClickedEventArgs> TournamentClicked;
 
         public WinFormMainView()
         {
@@ -95,6 +96,11 @@ namespace UI.WinFormViews
         private void ShowTeamsButton_Click(object sender, EventArgs e)
         {
             TeamClicked.Invoke(this, new TeamClickedEventArgs());
+        }
+
+        private void ShowTournamentsButton_Click(object sender, EventArgs e)
+        {
+            TournamentClicked.Invoke(this, new TournamentClickedEventArgs());
         }
     }
 }

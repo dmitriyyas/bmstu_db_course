@@ -346,6 +346,7 @@
             this.ShowTournamentsButton.TabIndex = 8;
             this.ShowTournamentsButton.Text = "Турниры";
             this.ShowTournamentsButton.UseVisualStyleBackColor = true;
+            this.ShowTournamentsButton.Click += new System.EventHandler(this.ShowTournamentsButton_Click);
             // 
             // WinFormMainView
             // 
