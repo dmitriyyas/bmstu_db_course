@@ -22,9 +22,12 @@ namespace DataAccess.Repositories
         {
             var dbContext = _dbContextFactory.getDbContext();
             try
-            { 
-                user.Id = dbContext.Users.Count() + 1;
-         
+            {
+                if (dbContext.Users.Count() > 0)
+                    user.Id = dbContext.Users.Select(x => x.Id).Max() + 1;
+                else
+                    user.Id = 1;
+
                 dbContext.Users.Add(user);
                 dbContext.SaveChanges();
             }

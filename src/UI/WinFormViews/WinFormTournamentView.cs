@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using UI.ViewInterfaces;
 using UI.Events;
+using System.Diagnostics;
 
 namespace UI.WinFormViews
 {

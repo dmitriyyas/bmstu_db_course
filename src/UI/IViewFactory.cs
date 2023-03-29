@@ -18,5 +18,7 @@ namespace UI
         ITeamView createTeamView();
 
         ITournamentView createTournamentView();
+
+        IMatchView createMatchView();
     }
 }

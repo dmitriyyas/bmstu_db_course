@@ -23,7 +23,11 @@ namespace DataAccess.Repositories
 
             try
             {
-                team.Id = dbContext.Teams.Count() + 1;
+                if (dbContext.Teams.Count() > 0)
+                    team.Id = dbContext.Teams.Select(x => x.Id).Max() + 1;
+                else
+                    team.Id = 1;
+
                 dbContext.Teams.Add(team);
                 dbContext.SaveChanges();
             }

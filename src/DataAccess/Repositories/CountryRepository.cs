@@ -24,7 +24,11 @@ namespace DataAccess.Repositories
 
             try
             {
-                country.Id = dbContext.Countries.Count() + 1;
+                if (dbContext.Countries.Count() > 0)
+                    country.Id = dbContext.Countries.Select(x => x.Id).Max() + 1;
+                else
+                    country.Id = 1;
+
                 dbContext.Countries.Add(country);
                 dbContext.SaveChanges();
             }

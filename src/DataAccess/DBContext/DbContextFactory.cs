@@ -14,9 +14,6 @@ namespace DataAccess.DBContext
         
         private readonly IConfiguration _configuration;
 
-        private AppDbContext _adminDbContext;
-        private string? lastPerms;
-
         public DbContextFactory(IConfiguration configuration)
         {
             _configuration = configuration;
@@ -25,13 +22,10 @@ namespace DataAccess.DBContext
         public AppDbContext getDbContext()
         {
             string curPerms = _configuration["DbConnection"];
-            if (lastPerms == null || lastPerms != curPerms)
-            {
-                lastPerms = curPerms;
-                var builder = new DbContextOptionsBuilder<AppDbContext>();
-                builder.UseNpgsql(_configuration.GetConnectionString(curPerms));
-                _adminDbContext = new AppDbContext(builder.Options);
-            }
+
+            var builder = new DbContextOptionsBuilder<AppDbContext>();
+            builder.UseNpgsql(_configuration.GetConnectionString(curPerms)).UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking).EnableDetailedErrors();
+            var _adminDbContext = new AppDbContext(builder.Options);
 
             return _adminDbContext;
         }

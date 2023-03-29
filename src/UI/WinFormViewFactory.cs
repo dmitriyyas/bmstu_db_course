@@ -35,5 +35,10 @@ namespace UI
         {
             return new WinFormTournamentView();
         }
+
+        public IMatchView createMatchView() 
+        { 
+            return new WinFormMatchView(); 
+        }
     }
 }

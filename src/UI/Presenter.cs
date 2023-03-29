@@ -11,6 +11,7 @@ using UI.ViewInterfaces;
 using UI.Events;
 using System.Linq.Expressions;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace UI
 {
@@ -33,6 +34,7 @@ namespace UI
         private ICountryView? _countryView;
         private ITeamView? _teamView;
         private ITournamentView? _tournamentView;
+        private IMatchView? _matchView;
 
         public ApplicationContext AppContext { get; set; }
 
@@ -157,7 +159,8 @@ namespace UI
             _teamView = null;
             _tournamentView?.Close();
             _tournamentView = null;
-            //close other forms
+            _matchView?.Close();
+            _matchView = null;
 
             _mainFormView.LogOutGroupBoxVisible = false;
             _mainFormView.StartGroupBoxVisible = true;
@@ -189,6 +192,7 @@ namespace UI
             _countryView?.Close();
             _teamView?.Close();
             _tournamentView?.Close();
+            _matchView?.Close();
             //close other forms
             AppContext.ExitThread();
         }
@@ -466,7 +470,6 @@ namespace UI
         {
             _tournamentView = _viewFactory.createTournamentView();
 
-            //add handlers
             _tournamentView.TournamentClicked += OpenTournamentForm;
             _tournamentView.TournamentFormClosed += TournamentFormClosed;
             _tournamentView.CountryClicked += OpenCountryForm;
@@ -479,6 +482,8 @@ namespace UI
             _tournamentView.AddTeamToNewClicked += AddTeamToNewClicked;
             _tournamentView.DeleteTeamFromNewClicked += DeleteTeamFromNewClicked;
             _tournamentView.ConfirmTournamentClicked += ConfirmAddTournamentClicked;
+            _tournamentView.MatchClicked += OpenMatchForm;
+            _tournamentView.NotExistedMatchClicked += OpenNotExistedMatchForm;
 
             _tournamentView.Countries = _countryService.getAllCountries();
             _tournamentView.Users = _userService.getAllUsers();
@@ -655,6 +660,175 @@ namespace UI
         public void TournamentFormClosed(object sender, EventArgs e)
         {
             _tournamentView = null;
+        }
+
+        private void _createMatchView()
+        {
+            _matchView = _viewFactory.createMatchView();
+
+            _matchView.MatchFormClosed += MatchFormClosed;
+            _matchView.TeamClicked += OpenTeamForm;
+            _matchView.CreateMatchClicked += CreateMatchClicked;
+            _matchView.UpdateMatchClicked += UpdateMatchClicked;
+            _matchView.DeleteMatchClicked += DeleteMatchClicked;
+        }
+
+        public void OpenMatchForm(object sender, MatchClickedEventArgs e)
+        {
+            try
+            {
+                if (_matchView == null)
+                {
+                    _createMatchView();
+                }
+
+                _matchView.MatchProfile = e.match;
+                _matchView.Home = _teamService.getTeam(e.match.HomeTeamId);
+                _matchView.Guest = _teamService.getTeam(e.match.GuestTeamId);
+                _matchView.MatchTournament = _tournamentService.getTournament(e.match.TournamentId);
+                _matchView.CreateMatchVisible = false;
+
+                var tournament = _tournamentService.getTournament(e.match.TournamentId);
+                if (currentUser != null && currentUser.Id == tournament.UserId)
+                {
+                    _matchView.EditMatchVisible = true;
+                    _matchView.GoalsEnabled = true;
+                }
+                else
+                {
+                    _matchView.EditMatchVisible = false;
+                    _matchView.GoalsEnabled = false;
+                }
+
+                _matchView.Show();
+                _matchView.BringToFront();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка");
+            }
+        }
+
+        public void OpenNotExistedMatchForm(object sender, NotExistedMatchEventArgs e)
+        {
+            try
+            {
+                if (_matchView == null)
+                {
+                    _createMatchView();
+                }
+
+
+                _matchView.Home = e.hostTeam;
+                _matchView.Guest = e.guestTeam;
+                _matchView.MatchTournament = e.tournament;
+                _matchView.HomeGoals = "-";
+                _matchView.GuestGoals = "-";
+                _matchView.EditMatchVisible = false;
+
+                if (currentUser != null && currentUser.Id == e.tournament.UserId)
+                {
+                    _matchView.CreateMatchVisible = true;
+                    _matchView.GoalsEnabled = true;
+                }
+                else
+                {
+                    _matchView.CreateMatchVisible = false;
+                    _matchView.GoalsEnabled = false;
+                }
+
+                _matchView.Show();
+                _matchView.BringToFront();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка");
+            }
+        }
+
+        public void CreateMatchClicked(object sender, EventArgs e)
+        {
+            try
+            {
+                int homeGoals, guestGoals;
+                bool isValid = int.TryParse(_matchView.HomeGoals, out homeGoals);
+                if (!isValid || homeGoals < 0)
+                {
+                    throw new Exception("Некорректное значение гола!");
+                }
+
+                isValid = int.TryParse(_matchView.GuestGoals, out guestGoals);
+                if (!isValid || guestGoals < 0)
+                {
+                    throw new Exception("Некорректное значение гола!");
+                }
+
+                var match = _matchService.createMatch(_matchView.MatchTournament.Id, _matchView.Home.Id, _matchView.Guest.Id, homeGoals, guestGoals);
+                OpenMatchForm(this, new MatchClickedEventArgs { match = match });
+
+                if (_tournamentView != null)
+                {
+                    //OpenTournamentForm(this, new TournamentClickedEventArgs { tournament = _matchView.MatchTournament});
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка");
+            }
+        }
+
+        public void UpdateMatchClicked(object sender, EventArgs e)
+        {
+            try
+            {
+                int homeGoals, guestGoals;
+                bool isValid = int.TryParse(_matchView.HomeGoals, out homeGoals);
+                if (!isValid || homeGoals < 0)
+                {
+                    throw new Exception("Некорректное значение гола!");
+                }
+
+                isValid = int.TryParse(_matchView.GuestGoals, out guestGoals);
+                if (!isValid || guestGoals < 0)
+                {
+                    throw new Exception("Некорректное значение гола!");
+                }
+
+                _matchService.updateMatch(_matchView.MatchProfile.Id, homeGoals, guestGoals);
+                OpenMatchForm(this, new MatchClickedEventArgs { match = _matchService.getMatch(_matchView.MatchProfile.Id) });
+
+                if (_tournamentView != null)
+                {
+                    //OpenTournamentForm(this, new TournamentClickedEventArgs { tournament = _matchView.MatchTournament });
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка");
+            }
+        }
+
+        public void DeleteMatchClicked(object sender, EventArgs e)
+        {
+            try
+            {
+                var match = _matchView.MatchProfile;
+                var home = _teamService.getTeam(match.HomeTeamId);
+                var guest = _teamService.getTeam(match.GuestTeamId);
+                var tournament = _tournamentService.getTournament(match.TournamentId);
+
+                _matchService.deleteMatch(match.Id);
+                OpenNotExistedMatchForm(this, new NotExistedMatchEventArgs { tournament = tournament, hostTeam = home, guestTeam = guest });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка");
+            }
+        }
+
+        public void MatchFormClosed(object sender, EventArgs e)
+        {
+            _matchView = null;
         }
     }
 }

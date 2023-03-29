@@ -22,7 +22,10 @@ namespace DataAccess.Repositories
             var dbContext = _dbContextFactory.getDbContext();
             try
             {
-                match.Id = dbContext.Matches.Count() + 1;
+                if (dbContext.Matches.Count() > 0)
+                    match.Id = dbContext.Matches.Select(x => x.Id).Max() + 1;
+                else
+                    match.Id = 1;
 
                 dbContext.Matches.Add(match);
                 dbContext.SaveChanges();
@@ -48,7 +51,7 @@ namespace DataAccess.Repositories
             }
             catch (Exception ex)
             {
-                throw new Exception("Ошибка при удалении турнира.");
+                throw new Exception("Ошибка при удалении матча.");
             }
         }
 
@@ -86,6 +89,7 @@ namespace DataAccess.Repositories
 
             try
             {
+
                 dbContext.Matches.Update(match);
                 dbContext.SaveChanges();
             }
