@@ -20,10 +20,10 @@ namespace DataAccess.Repositories
 
         public void create(Country country)
         {
-            var dbContext = _dbContextFactory.getDbContext();
-
             try
             {
+                using var dbContext = _dbContextFactory.getDbContext();
+
                 if (dbContext.Countries.Count() > 0)
                     country.Id = dbContext.Countries.Select(x => x.Id).Max() + 1;
                 else
@@ -40,21 +40,21 @@ namespace DataAccess.Repositories
 
         public IEnumerable<Country> getAll()
         {
-            var dbContext = _dbContextFactory.getDbContext();
+            using var dbContext = _dbContextFactory.getDbContext();
 
             return dbContext.Countries.ToList();
         }
 
         public Country getById(int id)
         {
-            var dbContext = _dbContextFactory.getDbContext();
+            using var dbContext = _dbContextFactory.getDbContext();
 
             return dbContext.Countries.FirstOrDefault(c => c.Id == id);
         }
 
         public Country getByName(string name)
         {
-            var dbContext = _dbContextFactory.getDbContext();
+            using var dbContext = _dbContextFactory.getDbContext();
 
             return dbContext.Countries.FirstOrDefault(c => c.Name == name);
         }

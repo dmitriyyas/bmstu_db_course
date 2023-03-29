@@ -21,9 +21,10 @@ namespace DataAccess.Repositories
 
         public void create(Tournament tournament)
         {
-            var dbContext = _dbContextFactory.getDbContext();
             try
             {
+                using var dbContext = _dbContextFactory.getDbContext();
+
                 if (dbContext.Tournaments.Count() > 0)
                     tournament.Id = dbContext.Tournaments.Select(x => x.Id).Max() + 1;
                 else
@@ -40,9 +41,10 @@ namespace DataAccess.Repositories
 
         public void delete(int id)
         {
-            var dbContext = _dbContextFactory.getDbContext();
             try
             {
+                using var dbContext = _dbContextFactory.getDbContext();
+
                 var tournament = dbContext.Tournaments.FirstOrDefault(t => t.Id == id);
                 if (tournament == null)
                 {
@@ -59,28 +61,28 @@ namespace DataAccess.Repositories
 
         public IEnumerable<Tournament> getAll()
         {
-            var dbContext = _dbContextFactory.getDbContext();
+            using var dbContext = _dbContextFactory.getDbContext();
 
             return dbContext.Tournaments.ToList();
         }
 
         public IEnumerable<Tournament> getByCountry(int countryId)
         {
-            var dbContext = _dbContextFactory.getDbContext();
+            using var dbContext = _dbContextFactory.getDbContext();
 
             return dbContext.Tournaments.Where(t => t.CountryId == countryId).ToList();
         }
 
         public Tournament getById(int id)
         {
-            var dbContext = _dbContextFactory.getDbContext();
+            using var dbContext = _dbContextFactory.getDbContext();
 
             return dbContext.Tournaments.FirstOrDefault(t => t.Id == id);
         }
 
         public Tournament getByName(string name)
         {
-            var dbContext = _dbContextFactory.getDbContext();
+            using var dbContext = _dbContextFactory.getDbContext();
 
             return dbContext.Tournaments.FirstOrDefault(t => t.Name == name);
         }
@@ -96,7 +98,7 @@ namespace DataAccess.Repositories
 
         public IEnumerable<Tournament> getByUser(int userId)
         {
-            var dbContext = _dbContextFactory.getDbContext();
+            using var dbContext = _dbContextFactory.getDbContext();
 
             return dbContext.Tournaments.Where(t => t.UserId == userId).ToList();
         }

@@ -41,7 +41,7 @@ namespace DataAccess.DBContext
                     .HasMaxLength(64)
                     .HasColumnName("login");
 
-                entity.Property(u => u.Password)
+                entity.Property(u => u.PasswordHash)
                     .IsRequired()
                     .HasMaxLength(64)
                     .HasColumnName("password");

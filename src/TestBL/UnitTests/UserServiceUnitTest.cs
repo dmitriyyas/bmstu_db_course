@@ -16,7 +16,7 @@ namespace TestBL.UnitTests
         {
             Assert.AreEqual(x.Id, y.Id);
             Assert.AreEqual(x.Login, y.Login);
-            Assert.AreEqual(x.Password, y.Password);
+            Assert.AreEqual(x.PasswordHash, y.PasswordHash);
             Assert.AreEqual(x.Permission, y.Permission);
         }
 

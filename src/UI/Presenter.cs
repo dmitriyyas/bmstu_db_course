@@ -534,6 +534,9 @@ namespace UI
 
         public void AddTournamentClicked(object sender, EventArgs e)
         {
+            _tournamentView.NewTournamentName = "";
+            _tournamentView.NewTournamentTeams.Clear();
+
             _tournamentView.AddTournamentVisible = false;
             _tournamentView.TournamentProfileVisible = false;
             _tournamentView.AddTournamentGroupBoxVisible = true;

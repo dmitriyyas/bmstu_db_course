@@ -20,9 +20,10 @@ namespace DataAccess.Repositories
 
         public void create(TeamTournament teamTournament)
         {
-            var dbContext = _dbContextFactory.getDbContext();
             try
             {
+                using var dbContext = _dbContextFactory.getDbContext();
+
                 dbContext.TeamTournaments.Add(teamTournament);
                 dbContext.SaveChanges();
             }
@@ -34,7 +35,7 @@ namespace DataAccess.Repositories
 
         public TeamTournament get(int teamId, int tournamentId)
         {
-            var dbContext = _dbContextFactory.getDbContext();
+            using var dbContext = _dbContextFactory.getDbContext();
 
             return dbContext.TeamTournaments.FirstOrDefault(t => t.TournamentId == tournamentId && t.TeamId == teamId);
         }

@@ -19,9 +19,9 @@ namespace DataAccess.Repositories
         }
         public void create(Match match)
         {
-            var dbContext = _dbContextFactory.getDbContext();
             try
             {
+                using var dbContext = _dbContextFactory.getDbContext();
                 if (dbContext.Matches.Count() > 0)
                     match.Id = dbContext.Matches.Select(x => x.Id).Max() + 1;
                 else
@@ -57,38 +57,37 @@ namespace DataAccess.Repositories
 
         public IEnumerable<Match> getByGuestTeam(int teamId, int tournamentId)
         {
-            var dbContext = _dbContextFactory.getDbContext();
+            using var dbContext = _dbContextFactory.getDbContext();
 
             return dbContext.Matches.Where(m => m.GuestTeamId == teamId && m.TournamentId == tournamentId).ToList();
         }
 
         public IEnumerable<Match> getByHostTeam(int teamId, int tournamentId)
         {
-            var dbContext = _dbContextFactory.getDbContext();
+            using var dbContext = _dbContextFactory.getDbContext();
 
             return dbContext.Matches.Where(m => m.HomeTeamId == teamId && m.TournamentId == tournamentId).ToList();
         }
 
         public Match getById(int id)
         {
-            var dbContext = _dbContextFactory.getDbContext();
+            using var dbContext = _dbContextFactory.getDbContext();
 
             return dbContext.Matches.FirstOrDefault(m => m.Id == id);
         }
 
         public IEnumerable<Match> getByTournament(int tournamentId)
         {
-            var dbContext = _dbContextFactory.getDbContext();
+            using var dbContext = _dbContextFactory.getDbContext();
 
             return dbContext.Matches.Where(m => m.TournamentId == tournamentId).ToList();
         }
 
         public void update(Match match)
         {
-            var dbContext = _dbContextFactory.getDbContext();
-
             try
             {
+                using var dbContext = _dbContextFactory.getDbContext();
 
                 dbContext.Matches.Update(match);
                 dbContext.SaveChanges();

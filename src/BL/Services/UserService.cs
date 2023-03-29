@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Security.Policy;
 using System.Text;
@@ -25,7 +26,9 @@ namespace BL.Services
             User user = _userRepository.getByLogin(login);
             if (user == null)
             {
-                user = new User(login, password);
+                string hash = BCrypt.Net.BCrypt.HashPassword(password);
+                Debug.WriteLine(hash);
+                user = new User(login, hash);
                 _userRepository.create(user);
             }
             else
@@ -41,8 +44,7 @@ namespace BL.Services
             User user = _userRepository.getByLogin(login);
             if (user != null)
             {
-                string expectedPassword = user.Password;
-                if (expectedPassword != password)
+                if (!user.verify(password))
                 {
                     throw new Exception("Неверный пароль.");
                 }
@@ -60,7 +62,7 @@ namespace BL.Services
             User user = _userRepository.getById(userId);
             if (user != null)
             {
-                User newUser = new User(user.Login, user.Password, permission: "admin", id: user.Id);
+                User newUser = new User(user.Login, user.PasswordHash, permission: "admin", id: user.Id);
                 _userRepository.update(newUser);
             }
             else

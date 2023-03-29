@@ -20,9 +20,10 @@ namespace DataAccess.Repositories
 
         public void create(User user)
         {
-            var dbContext = _dbContextFactory.getDbContext();
             try
             {
+                using var dbContext = _dbContextFactory.getDbContext();
+
                 if (dbContext.Users.Count() > 0)
                     user.Id = dbContext.Users.Select(x => x.Id).Max() + 1;
                 else
@@ -39,31 +40,31 @@ namespace DataAccess.Repositories
 
         public IEnumerable<User> getAll()
         {
-            var dbContext = _dbContextFactory.getDbContext();
+            using var dbContext = _dbContextFactory.getDbContext();
 
             return dbContext.Users.ToList();
         }
 
         public User getById(int id)
         {
-            var dbContext = _dbContextFactory.getDbContext();
+            using var dbContext = _dbContextFactory.getDbContext();
 
             return dbContext.Users.FirstOrDefault(u => u.Id == id);
         }
 
         public User getByLogin(string login)
         {
-            var dbContext = _dbContextFactory.getDbContext();
+            using var dbContext = _dbContextFactory.getDbContext();
 
             return dbContext.Users.FirstOrDefault(u => u.Login == login);
         }
 
         public void update(User user)
         {
-            var dbContext = _dbContextFactory.getDbContext();
-
             try
             {
+                using var dbContext = _dbContextFactory.getDbContext();
+
                 dbContext.Users.Update(user);
                 dbContext.SaveChanges();
             }
