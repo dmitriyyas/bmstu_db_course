@@ -24,7 +24,7 @@ namespace DataAccess.DBContext
             string curPerms = _configuration["DbConnection"];
 
             var builder = new DbContextOptionsBuilder<AppDbContext>();
-            builder.UseNpgsql(_configuration.GetConnectionString(curPerms)).UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking).EnableDetailedErrors();
+            builder.UseNpgsql(_configuration.GetConnectionString(curPerms));
             var _adminDbContext = new AppDbContext(builder.Options);
 
             return _adminDbContext;

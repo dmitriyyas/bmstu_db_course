@@ -16,7 +16,6 @@ namespace TestBL.UnitTests
         {
             Assert.AreEqual(x.Id, y.Id);
             Assert.AreEqual(x.Login, y.Login);
-            Assert.AreEqual(x.PasswordHash, y.PasswordHash);
             Assert.AreEqual(x.Permission, y.Permission);
         }
 
@@ -28,10 +27,10 @@ namespace TestBL.UnitTests
             var userService = new UserService(userMock, null);
 
             string login = "login";
-            string password = "password";
+            string password = BCrypt.Net.BCrypt.HashPassword("password");
             User user = new User(login, password);
 
-            User createdUser = userService.register(login, password);
+            User createdUser = userService.register(login, "password");
 
             compare(user, createdUser);
         }
@@ -58,12 +57,12 @@ namespace TestBL.UnitTests
             var userService = new UserService(userMock, null);
 
             string login = "login";
-            string password = "password";
+            string password = BCrypt.Net.BCrypt.HashPassword("password");
 
             User user = new User(login, password);
             userMock.create(user);
 
-            User loggedUser = userService.logIn(login, password);
+            User loggedUser = userService.logIn(login, "password");
 
             compare(user, loggedUser);
         }
@@ -76,7 +75,7 @@ namespace TestBL.UnitTests
             var userService = new UserService(userMock, null);
 
             string login = "login";
-            string password = "password";
+            string password = BCrypt.Net.BCrypt.HashPassword("password");
 
             User user = new User(login, password);
             userMock.create(user);

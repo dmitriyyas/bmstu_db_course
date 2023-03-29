@@ -264,8 +264,8 @@
             this.Controls.Add(this.AddTeamButton);
             this.Controls.Add(this.TeamDataGridView);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.AddTeamGroupBox);
             this.Controls.Add(this.TeamProfileGroupBox);
+            this.Controls.Add(this.AddTeamGroupBox);
             this.Name = "WinFormTeamView";
             this.Text = "WinFormTeamView";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WinFormTeamView_FormClosing);

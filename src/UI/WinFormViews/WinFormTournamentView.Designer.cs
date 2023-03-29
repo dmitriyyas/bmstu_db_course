@@ -41,6 +41,9 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.NameLabel = new System.Windows.Forms.Label();
+            this.MatchesDataGridView = new System.Windows.Forms.DataGridView();
+            this.ShowMatchesButton = new System.Windows.Forms.Button();
+            this.ShowTableButton = new System.Windows.Forms.Button();
             this.TableDataGridView = new System.Windows.Forms.DataGridView();
             this.TeamName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Games = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -50,9 +53,6 @@
             this.GoalsScored = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.GoalsConceded = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Points = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MatchesDataGridView = new System.Windows.Forms.DataGridView();
-            this.ShowMatchesButton = new System.Windows.Forms.Button();
-            this.ShowTableButton = new System.Windows.Forms.Button();
             this.AddTournamentGroupBox = new System.Windows.Forms.GroupBox();
             this.ConfirmAddTournamentButton = new System.Windows.Forms.Button();
             this.DeleteTeamButton = new System.Windows.Forms.Button();
@@ -68,8 +68,8 @@
             this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.TournamentsDataGridView)).BeginInit();
             this.TournamentProfileGroupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.TableDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MatchesDataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TableDataGridView)).BeginInit();
             this.AddTournamentGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TeamDataGridView)).BeginInit();
             this.SuspendLayout();
@@ -221,6 +221,43 @@
             this.NameLabel.TabIndex = 0;
             this.NameLabel.Text = "NoTournament";
             // 
+            // MatchesDataGridView
+            // 
+            this.MatchesDataGridView.AllowUserToAddRows = false;
+            this.MatchesDataGridView.AllowUserToDeleteRows = false;
+            this.MatchesDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.MatchesDataGridView.Location = new System.Drawing.Point(12, 212);
+            this.MatchesDataGridView.Name = "MatchesDataGridView";
+            this.MatchesDataGridView.ReadOnly = true;
+            this.MatchesDataGridView.RowHeadersVisible = false;
+            this.MatchesDataGridView.RowHeadersWidth = 51;
+            this.MatchesDataGridView.RowTemplate.Height = 29;
+            this.MatchesDataGridView.Size = new System.Drawing.Size(676, 423);
+            this.MatchesDataGridView.TabIndex = 8;
+            this.MatchesDataGridView.Visible = false;
+            this.MatchesDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.MatchesDataGridView_CellClick);
+            // 
+            // ShowMatchesButton
+            // 
+            this.ShowMatchesButton.Location = new System.Drawing.Point(21, 177);
+            this.ShowMatchesButton.Name = "ShowMatchesButton";
+            this.ShowMatchesButton.Size = new System.Drawing.Size(149, 29);
+            this.ShowMatchesButton.TabIndex = 6;
+            this.ShowMatchesButton.Text = "Показать матчи";
+            this.ShowMatchesButton.UseVisualStyleBackColor = true;
+            this.ShowMatchesButton.Click += new System.EventHandler(this.ShowMatchesButton_Click);
+            // 
+            // ShowTableButton
+            // 
+            this.ShowTableButton.Location = new System.Drawing.Point(21, 177);
+            this.ShowTableButton.Name = "ShowTableButton";
+            this.ShowTableButton.Size = new System.Drawing.Size(149, 29);
+            this.ShowTableButton.TabIndex = 7;
+            this.ShowTableButton.Text = "Показать таблицу";
+            this.ShowTableButton.UseVisualStyleBackColor = true;
+            this.ShowTableButton.Visible = false;
+            this.ShowTableButton.Click += new System.EventHandler(this.ShowTableButton_Click);
+            // 
             // TableDataGridView
             // 
             this.TableDataGridView.AllowUserToAddRows = false;
@@ -308,43 +345,6 @@
             this.Points.Name = "Points";
             this.Points.ReadOnly = true;
             this.Points.Width = 60;
-            // 
-            // MatchesDataGridView
-            // 
-            this.MatchesDataGridView.AllowUserToAddRows = false;
-            this.MatchesDataGridView.AllowUserToDeleteRows = false;
-            this.MatchesDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.MatchesDataGridView.Location = new System.Drawing.Point(12, 212);
-            this.MatchesDataGridView.Name = "MatchesDataGridView";
-            this.MatchesDataGridView.ReadOnly = true;
-            this.MatchesDataGridView.RowHeadersVisible = false;
-            this.MatchesDataGridView.RowHeadersWidth = 51;
-            this.MatchesDataGridView.RowTemplate.Height = 29;
-            this.MatchesDataGridView.Size = new System.Drawing.Size(676, 423);
-            this.MatchesDataGridView.TabIndex = 8;
-            this.MatchesDataGridView.Visible = false;
-            this.MatchesDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.MatchesDataGridView_CellClick);
-            // 
-            // ShowMatchesButton
-            // 
-            this.ShowMatchesButton.Location = new System.Drawing.Point(21, 177);
-            this.ShowMatchesButton.Name = "ShowMatchesButton";
-            this.ShowMatchesButton.Size = new System.Drawing.Size(149, 29);
-            this.ShowMatchesButton.TabIndex = 6;
-            this.ShowMatchesButton.Text = "Показать матчи";
-            this.ShowMatchesButton.UseVisualStyleBackColor = true;
-            this.ShowMatchesButton.Click += new System.EventHandler(this.ShowMatchesButton_Click);
-            // 
-            // ShowTableButton
-            // 
-            this.ShowTableButton.Location = new System.Drawing.Point(21, 177);
-            this.ShowTableButton.Name = "ShowTableButton";
-            this.ShowTableButton.Size = new System.Drawing.Size(149, 29);
-            this.ShowTableButton.TabIndex = 7;
-            this.ShowTableButton.Text = "Показать таблицу";
-            this.ShowTableButton.UseVisualStyleBackColor = true;
-            this.ShowTableButton.Visible = false;
-            this.ShowTableButton.Click += new System.EventHandler(this.ShowTableButton_Click);
             // 
             // AddTournamentGroupBox
             // 
@@ -491,16 +491,16 @@
             this.Controls.Add(this.CreateTournamentButton);
             this.Controls.Add(this.TournamentsDataGridView);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.TournamentProfileGroupBox);
             this.Controls.Add(this.AddTournamentGroupBox);
+            this.Controls.Add(this.TournamentProfileGroupBox);
             this.Name = "WinFormTournamentView";
             this.Text = "WinFormTournamentView";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WinFormTournamentView_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.TournamentsDataGridView)).EndInit();
             this.TournamentProfileGroupBox.ResumeLayout(false);
             this.TournamentProfileGroupBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.TableDataGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.MatchesDataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TableDataGridView)).EndInit();
             this.AddTournamentGroupBox.ResumeLayout(false);
             this.AddTournamentGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TeamDataGridView)).EndInit();

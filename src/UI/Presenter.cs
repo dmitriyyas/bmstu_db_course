@@ -9,9 +9,6 @@ using BL.Services;
 using Microsoft.Extensions.Configuration;
 using UI.ViewInterfaces;
 using UI.Events;
-using System.Linq.Expressions;
-using System.Diagnostics;
-using System.Text.RegularExpressions;
 
 namespace UI
 {
@@ -75,7 +72,7 @@ namespace UI
         }
 
         public void LogIn(object sender, EventArgs e)
-        { 
+        {
             _mainFormView.StartGroupBoxVisible = false;
             _mainFormView.LogInGroupBoxVisible = true;
         }
@@ -193,8 +190,28 @@ namespace UI
             _teamView?.Close();
             _tournamentView?.Close();
             _matchView?.Close();
-            //close other forms
+
             AppContext.ExitThread();
+        }
+
+        private void _loadUserViewProfile(User user)
+        {
+            _userView.UserProfile = _userService.getUser(user.Id);
+            _userView.UserTournaments = _userService.getUserTournaments(user.Id);
+            if (currentUser?.Permission == "admin" && user.Permission == "user")
+            {
+                _userView.ChangePermsVisible = true;
+            }
+            else
+            {
+                _userView.ChangePermsVisible = false;
+            }
+            _userView.UserProfileVisible = true;
+        }
+
+        private void _loadUserViewEmpty()
+        {
+            _userView.UserProfileVisible = false;
         }
 
         public void ChangePermissions(object sender, EventArgs e)
@@ -202,9 +219,7 @@ namespace UI
             try
             {
                 _userService.changeUserPermissions(_userView.UserProfile.Id);
-                _userView.Users = _userService.getAllUsers();
-                _userView.UserProfile = _userService.getUser(_userView.UserProfile.Id);
-                _userView.ChangePermsVisible = false;
+                _loadUserViewProfile(_userView.UserProfile);
             }
             catch (Exception ex)
             {
@@ -224,23 +239,15 @@ namespace UI
 
                 if (e.user != null)
                 {
-                    _userView.UserProfile = e.user;
-                    _userView.UserTournaments = _userService.getUserTournaments(e.user.Id);
-                    _userView.UserProfileVisible = true;
-                    if (currentUser?.Permission == "admin" && e.user.Permission == "user")
-                    {
-                        _userView.ChangePermsVisible = true;
-                    }
-                    else
-                    {
-                        _userView.ChangePermsVisible = false;
-                    }
+                    _loadUserViewProfile(e.user);
                 }
                 else if (currentUser != null)
                 {
-                    _userView.UserProfile = currentUser;
-                    _userView.UserTournaments = _userService.getUserTournaments(currentUser.Id);
-                    _userView.UserProfileVisible = true;
+                    _loadUserViewProfile(currentUser);
+                }
+                else
+                {
+                    _loadUserViewEmpty();
                 }
 
                 _userView.Show();
@@ -269,6 +276,39 @@ namespace UI
             _userView = null;
         }
 
+        private void _loadCountryViewEmpty()
+        {
+            if (currentUser?.Permission == "admin")
+            {
+                _countryView.AddCountryVisible = true;
+            }
+            _countryView.AddCountryGroupBoxVisible = false;
+            _countryView.CountryProfileVisible = false;
+        }
+
+        private void _loadCountryViewProfile(Country country)
+        {
+            if (currentUser?.Permission == "admin")
+            {
+                _countryView.AddCountryVisible = true;
+            }
+            _countryView.CountryProfile = country;
+            _countryView.CountryTeams = _countryService.getCountryTeams(country.Id);
+            _countryView.CountryTournaments = _countryService.getCountryTournaments(country.Id);
+            _countryView.AddCountryGroupBoxVisible = false;
+            _countryView.CountryProfileVisible = true;
+        }
+
+        private void _loadCountryViewCreating()
+        {
+            _countryView.AddCountryVisible = false;
+            _countryView.CountryProfileVisible = false;
+            _countryView.AddCountryGroupBoxVisible = true;
+
+            _countryView.NewCountryName = "";
+            _countryView.NewCountryConfederation = "";
+        }
+
         private void _createCountryForm()
         {
             _countryView = _viewFactory.createCountryView();
@@ -281,9 +321,21 @@ namespace UI
             _countryView.TournamentClicked += OpenTournamentForm;
 
             _countryView.Countries = _countryService.getAllCountries();
-            if (currentUser?.Permission == "admin")
+        }
+
+        private void _reloadCountries()
+        {
+            if (_countryView != null)
             {
-                _countryView.AddCountryVisible = true;
+                _countryView.Countries = _countryService.getAllCountries();
+            }
+            if (_teamView!= null)
+            {
+                _teamView.Countries = _countryService.getAllCountries();
+            }
+            if (_tournamentView != null)
+            {
+                _tournamentView.Countries = _countryService.getAllCountries();
             }
         }
 
@@ -298,15 +350,11 @@ namespace UI
 
                 if (e.country != null)
                 {
-                    _countryView.CountryProfile = e.country;
-                    _countryView.CountryTeams = _countryService.getCountryTeams(e.country.Id);
-                    _countryView.CountryTournaments = _countryService.getCountryTournaments(e.country.Id);
-                    _countryView.AddCountryGroupBoxVisible = false;
-                    _countryView.CountryProfileVisible = true;
-                    if (currentUser?.Permission == "admin")
-                    {
-                        _countryView.AddCountryVisible = true;
-                    }
+                    _loadCountryViewProfile(e.country);
+                }
+                else
+                {
+                    _loadCountryViewEmpty();
                 }
 
                 _countryView.Show();
@@ -320,9 +368,7 @@ namespace UI
 
         public void AddCountryClicked(object sender, EventArgs e)
         {
-            _countryView.AddCountryVisible = false;
-            _countryView.CountryProfileVisible = false;
-            _countryView.AddCountryGroupBoxVisible = true;
+            _loadCountryViewCreating();
         }
 
         public void ConfirmAddCountryClicked(object sender, EventArgs e)
@@ -343,14 +389,8 @@ namespace UI
                 }
 
                 Country country = _countryService.createCountry(name, confederation);
-                _countryView.CountryProfile = country;
-                _countryView.Countries = _countryService.getAllCountries();
-                _countryView.CountryTeams = _countryService.getCountryTeams(country.Id);
-                _countryView.CountryTournaments = _countryService.getCountryTournaments(country.Id);
-
-                _countryView.AddCountryGroupBoxVisible = false;
-                _countryView.CountryProfileVisible = true;
-                _countryView.AddCountryVisible = true;
+                _reloadCountries();
+                _loadCountryViewProfile(country);
 
             }
             catch (Exception ex)
@@ -377,9 +417,53 @@ namespace UI
 
             _teamView.Countries = _countryService.getAllCountries();
             _teamView.Teams = _teamService.getAllTeams();
+        }
+
+        private void _loadTeamViewEmpty()
+        {
             if (currentUser != null)
             {
                 _teamView.AddTeamVisible = true;
+            }
+            _teamView.AddTeamGroupBoxVisible = false;
+            _teamView.TeamProfileVisible = false;
+        }
+
+        private void _loadTeamViewProfile(Team team)
+        {
+            if (currentUser != null)
+            {
+                _teamView.AddTeamVisible = true;
+            }
+
+            _teamView.TeamProfile = team;
+            _teamView.TeamTournaments = _teamService.getTeamTournaments(team.Id);
+            _teamView.AddTeamGroupBoxVisible = false;
+            _teamView.TeamProfileVisible = true;
+        }
+
+        private void _loadTeamViewCreating()
+        {
+            _teamView.AddTeamVisible = false;
+            _teamView.TeamProfileVisible = false;
+            _teamView.AddTeamGroupBoxVisible = true;
+            _teamView.NewTeamName = "";
+            _teamView.NewTeamCountry = "";
+        }
+
+        private void _reloadTeams()
+        {
+            if (_teamView != null)
+            {
+                _teamView.Teams = _teamService.getAllTeams();
+            }
+            if (_countryView?.CountryProfile != null)
+            {
+                _countryView.CountryTeams = _countryService.getCountryTeams(_countryView.CountryProfile.Id);
+            }
+            if (_tournamentView != null)
+            {
+                _tournamentView.Teams = _teamService.getAllTeams();
             }
         }
 
@@ -394,14 +478,11 @@ namespace UI
 
                 if (e.team != null)
                 {
-                    _teamView.TeamProfile = e.team;
-                    _teamView.TeamTournaments = _teamService.getTeamTournaments(e.team.Id);
-                    _teamView.AddTeamGroupBoxVisible = false;
-                    _teamView.TeamProfileVisible = true;
-                    if (currentUser != null)
-                    {
-                        _teamView.AddTeamVisible = true;
-                    }
+                    _loadTeamViewProfile(e.team);
+                }
+                else
+                {
+                    _loadTeamViewEmpty();
                 }
 
                 _teamView.Show();
@@ -415,9 +496,7 @@ namespace UI
 
         public void AddTeamClicked(object sender, EventArgs e)
         {
-            _teamView.AddTeamVisible = false;
-            _teamView.TeamProfileVisible = false;
-            _teamView.AddTeamGroupBoxVisible = true;
+            _loadTeamViewCreating();
         }
 
         public void ConfirmAddTeamClicked(object sender, EventArgs e)
@@ -445,14 +524,8 @@ namespace UI
                 }
 
                 Team team = _teamService.createTeam(name, country.Id);
-
-                _teamView.TeamProfile = team;
-                _teamView.Teams = _teamService.getAllTeams();
-                _teamView.TeamTournaments = _teamService.getTeamTournaments(team.Id);
-
-                _teamView.AddTeamGroupBoxVisible = false;
-                _teamView.TeamProfileVisible = true;
-                _teamView.AddTeamVisible = true;
+                _reloadTeams();
+                _loadTeamViewProfile(team);
 
             }
             catch (Exception ex)
@@ -487,11 +560,72 @@ namespace UI
 
             _tournamentView.Countries = _countryService.getAllCountries();
             _tournamentView.Users = _userService.getAllUsers();
-            _tournamentView.Teams= _teamService.getAllTeams();
             _tournamentView.Tournaments = _tournamentService.getAllTournaments();
+        }
+
+        private void _loadTournamentViewEmpty()
+        {
             if (currentUser != null)
             {
                 _tournamentView.AddTournamentVisible = true;
+            }
+
+            _tournamentView.AddTournamentGroupBoxVisible = false;
+            _tournamentView.TournamentProfileVisible = false;
+        }
+
+        private void _loadTournamentViewProfile(Tournament tournament)
+        {
+            if (currentUser != null)
+            {
+                _tournamentView.AddTournamentVisible = true;
+            }
+
+            _tournamentView.TournamentProfile = tournament;
+            _tournamentView.TournamentTeams = _tournamentService.getTournamentTeams(tournament.Id);
+            _tournamentView.Table = _tournamentService.getTournamentTable(tournament.Id);
+            _tournamentView.TournamentMatches = _tournamentService.getTournamentMatches(tournament.Id);
+
+            if (currentUser != null && currentUser.Id == tournament.UserId)
+                _tournamentView.DeleteTournamentVisible = true;
+            else
+                _tournamentView.DeleteTournamentVisible = false;
+
+            _tournamentView.AddTournamentGroupBoxVisible = false;
+            _tournamentView.TournamentProfileVisible = true;
+        }
+
+        private void _loadTournamentViewCreating()
+        {
+            _tournamentView.Teams = _teamService.getAllTeams();
+
+            _tournamentView.AddTournamentVisible = false;
+            _tournamentView.TournamentProfileVisible = false;
+            _tournamentView.AddTournamentGroupBoxVisible = true;
+
+            _tournamentView.NewTournamentName = "";
+            _tournamentView.NewTournamentTeams.Clear();
+            _tournamentView.NewTournamentCountry = "";
+            _tournamentView.NewTeamName = "";
+        }
+
+        private void _reloadTournaments()
+        {
+            if (_tournamentView != null)
+            {
+                _tournamentView.Tournaments = _tournamentService.getAllTournaments();
+            }
+            if (_teamView?.TeamProfile != null)
+            {
+                _teamView.TeamTournaments = _teamService.getTeamTournaments(_teamView.TeamProfile.Id);
+            }
+            if (_countryView?.CountryProfile != null)
+            {
+                _countryView.CountryTournaments = _countryService.getCountryTournaments(_countryView.CountryProfile.Id);
+            }
+            if (_userView?.UserProfile != null)
+            {
+                _userView.UserTournaments = _userService.getUserTournaments(_userView.UserProfile.Id);
             }
         }
 
@@ -506,21 +640,11 @@ namespace UI
 
                 if (e.tournament != null)
                 {
-                    _tournamentView.TournamentProfile = e.tournament;
-                    _tournamentView.TournamentTeams = _tournamentService.getTournamentTeams(e.tournament.Id);
-                    _tournamentView.Table = _tournamentService.getTournamentTable(e.tournament.Id);
-                    _tournamentView.TournamentMatches = _tournamentService.getTournamentMatches(e.tournament.Id);
-                    if (currentUser != null)
-                    {
-                        _tournamentView.AddTournamentVisible = true;
-                    }
-                    if (currentUser != null && currentUser.Id == e.tournament.UserId)
-                        _tournamentView.DeleteTournamentVisible = true;
-                    else
-                        _tournamentView.DeleteTournamentVisible = false;
-
-                    _tournamentView.AddTournamentGroupBoxVisible = false;
-                    _tournamentView.TournamentProfileVisible = true;
+                    _loadTournamentViewProfile(e.tournament);
+                }
+                else
+                {
+                    _loadTournamentViewEmpty();
                 }
 
                 _tournamentView.Show();
@@ -534,12 +658,7 @@ namespace UI
 
         public void AddTournamentClicked(object sender, EventArgs e)
         {
-            _tournamentView.NewTournamentName = "";
-            _tournamentView.NewTournamentTeams.Clear();
-
-            _tournamentView.AddTournamentVisible = false;
-            _tournamentView.TournamentProfileVisible = false;
-            _tournamentView.AddTournamentGroupBoxVisible = true;
+            _loadTournamentViewCreating();
         }
 
         public void DeleteTournamentClicked(object sender, EventArgs e)
@@ -547,8 +666,8 @@ namespace UI
             try
             {
                 _tournamentService.deleteTournament(_tournamentView.TournamentProfile.Id);
-                _tournamentView.TournamentProfileVisible = false;
-                _tournamentView.Tournaments = _tournamentService.getAllTournaments();
+                _reloadTournaments();
+                _loadTournamentViewEmpty();
             }
             catch (Exception ex)
             {
@@ -641,18 +760,8 @@ namespace UI
                 }
 
                 var tournament = _tournamentService.createTournament(name, currentUser.Id, country.Id, teams);
-
-                _tournamentView.TournamentProfile = tournament;
-                _tournamentView.TournamentTeams = _tournamentService.getTournamentTeams(tournament.Id);
-                _tournamentView.Table = _tournamentService.getTournamentTable(tournament.Id);
-                _tournamentView.TournamentMatches = _tournamentService.getTournamentMatches(tournament.Id);
-                _tournamentView.Tournaments = _tournamentService.getAllTournaments();
-
-                _tournamentView.AddTournamentVisible = true;
-                _tournamentView.DeleteTournamentVisible = true;
-
-                _tournamentView.AddTournamentGroupBoxVisible = false;
-                _tournamentView.TournamentProfileVisible = true;
+                _teamService.getAllTeams();
+                _loadTournamentViewProfile(tournament);
             }
             catch (Exception ex)
             {
@@ -676,6 +785,57 @@ namespace UI
             _matchView.DeleteMatchClicked += DeleteMatchClicked;
         }
 
+        private void _loadMatchViewProfile(Match match)
+        {
+            _matchView.MatchProfile = match;
+            _matchView.Home = _teamService.getTeam(match.HomeTeamId);
+            _matchView.Guest = _teamService.getTeam(match.GuestTeamId);
+            _matchView.MatchTournament = _tournamentService.getTournament(match.TournamentId);
+            _matchView.CreateMatchVisible = false;
+
+            var tournament = _tournamentService.getTournament(match.TournamentId);
+            if (currentUser != null && currentUser.Id == tournament.UserId)
+            {
+                _matchView.EditMatchVisible = true;
+                _matchView.GoalsEnabled = true;
+            }
+            else
+            {
+                _matchView.EditMatchVisible = false;
+                _matchView.GoalsEnabled = false;
+            }
+        }
+
+        private void _loadMatchViewEmpty(Tournament tournament, Team home, Team guest)
+        {
+            _matchView.Home = home;
+            _matchView.Guest = guest;
+            _matchView.MatchTournament = tournament;
+            _matchView.HomeGoals = "-";
+            _matchView.GuestGoals = "-";
+            _matchView.EditMatchVisible = false;
+
+            if (currentUser != null && currentUser.Id == tournament.UserId)
+            {
+                _matchView.CreateMatchVisible = true;
+                _matchView.GoalsEnabled = true;
+            }
+            else
+            {
+                _matchView.CreateMatchVisible = false;
+                _matchView.GoalsEnabled = false;
+            }
+        }
+
+        private void _reloadMatches()
+        {
+            if (_tournamentView?.TournamentProfile != null)
+            {
+                _tournamentView.TournamentMatches = _tournamentService.getTournamentMatches(_tournamentView.TournamentProfile.Id);
+                _tournamentView.Table = _tournamentService.getTournamentTable(_tournamentView.TournamentProfile.Id);
+            }
+        }
+
         public void OpenMatchForm(object sender, MatchClickedEventArgs e)
         {
             try
@@ -685,23 +845,7 @@ namespace UI
                     _createMatchView();
                 }
 
-                _matchView.MatchProfile = e.match;
-                _matchView.Home = _teamService.getTeam(e.match.HomeTeamId);
-                _matchView.Guest = _teamService.getTeam(e.match.GuestTeamId);
-                _matchView.MatchTournament = _tournamentService.getTournament(e.match.TournamentId);
-                _matchView.CreateMatchVisible = false;
-
-                var tournament = _tournamentService.getTournament(e.match.TournamentId);
-                if (currentUser != null && currentUser.Id == tournament.UserId)
-                {
-                    _matchView.EditMatchVisible = true;
-                    _matchView.GoalsEnabled = true;
-                }
-                else
-                {
-                    _matchView.EditMatchVisible = false;
-                    _matchView.GoalsEnabled = false;
-                }
+                _loadMatchViewProfile(e.match);
 
                 _matchView.Show();
                 _matchView.BringToFront();
@@ -721,25 +865,8 @@ namespace UI
                     _createMatchView();
                 }
 
-
-                _matchView.Home = e.hostTeam;
-                _matchView.Guest = e.guestTeam;
-                _matchView.MatchTournament = e.tournament;
-                _matchView.HomeGoals = "-";
-                _matchView.GuestGoals = "-";
-                _matchView.EditMatchVisible = false;
-
-                if (currentUser != null && currentUser.Id == e.tournament.UserId)
-                {
-                    _matchView.CreateMatchVisible = true;
-                    _matchView.GoalsEnabled = true;
-                }
-                else
-                {
-                    _matchView.CreateMatchVisible = false;
-                    _matchView.GoalsEnabled = false;
-                }
-
+                _loadMatchViewEmpty(e.tournament, e.hostTeam, e.guestTeam);
+                
                 _matchView.Show();
                 _matchView.BringToFront();
             }
@@ -767,12 +894,9 @@ namespace UI
                 }
 
                 var match = _matchService.createMatch(_matchView.MatchTournament.Id, _matchView.Home.Id, _matchView.Guest.Id, homeGoals, guestGoals);
-                OpenMatchForm(this, new MatchClickedEventArgs { match = match });
+                _loadMatchViewProfile(match);
 
-                if (_tournamentView != null)
-                {
-                    //OpenTournamentForm(this, new TournamentClickedEventArgs { tournament = _matchView.MatchTournament});
-                }
+                _reloadMatches();
             }
             catch (Exception ex)
             {
@@ -798,12 +922,9 @@ namespace UI
                 }
 
                 _matchService.updateMatch(_matchView.MatchProfile.Id, homeGoals, guestGoals);
-                OpenMatchForm(this, new MatchClickedEventArgs { match = _matchService.getMatch(_matchView.MatchProfile.Id) });
+                _loadMatchViewProfile(_matchService.getMatch(_matchView.MatchProfile.Id));
 
-                if (_tournamentView != null)
-                {
-                    //OpenTournamentForm(this, new TournamentClickedEventArgs { tournament = _matchView.MatchTournament });
-                }
+                _reloadMatches();
             }
             catch (Exception ex)
             {
@@ -821,7 +942,8 @@ namespace UI
                 var tournament = _tournamentService.getTournament(match.TournamentId);
 
                 _matchService.deleteMatch(match.Id);
-                OpenNotExistedMatchForm(this, new NotExistedMatchEventArgs { tournament = tournament, hostTeam = home, guestTeam = guest });
+                _loadMatchViewEmpty(tournament, home, guest);
+                _reloadMatches();
             }
             catch (Exception ex)
             {
