@@ -214,11 +214,20 @@ namespace UI
             _userView.UserProfileVisible = false;
         }
 
+        private void _reloadUsers()
+        {
+            if (_userView != null)
+            {
+                _userView.Users = _userService.getAllUsers();
+            }
+        }
+
         public void ChangePermissions(object sender, EventArgs e)
         {
             try
             {
                 _userService.changeUserPermissions(_userView.UserProfile.Id);
+                _reloadUsers();
                 _loadUserViewProfile(_userView.UserProfile);
             }
             catch (Exception ex)
