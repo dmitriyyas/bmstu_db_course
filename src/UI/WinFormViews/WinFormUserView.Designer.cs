@@ -188,7 +188,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.UsersDataGridView);
             this.Name = "WinFormUserView";
-            this.Text = "WinFormUserView";
+            this.Text = "Пользователи";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WinFormUserView_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.UsersDataGridView)).EndInit();
             this.UserProfileGroupBox.ResumeLayout(false);

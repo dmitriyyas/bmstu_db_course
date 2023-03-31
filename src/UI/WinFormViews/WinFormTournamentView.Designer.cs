@@ -41,7 +41,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.NameLabel = new System.Windows.Forms.Label();
-            this.MatchesDataGridView = new System.Windows.Forms.DataGridView();
             this.ShowMatchesButton = new System.Windows.Forms.Button();
             this.ShowTableButton = new System.Windows.Forms.Button();
             this.TableDataGridView = new System.Windows.Forms.DataGridView();
@@ -53,6 +52,7 @@
             this.GoalsScored = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.GoalsConceded = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Points = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MatchesDataGridView = new System.Windows.Forms.DataGridView();
             this.AddTournamentGroupBox = new System.Windows.Forms.GroupBox();
             this.ConfirmAddTournamentButton = new System.Windows.Forms.Button();
             this.DeleteTeamButton = new System.Windows.Forms.Button();
@@ -68,8 +68,8 @@
             this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.TournamentsDataGridView)).BeginInit();
             this.TournamentProfileGroupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.MatchesDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TableDataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MatchesDataGridView)).BeginInit();
             this.AddTournamentGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TeamDataGridView)).BeginInit();
             this.SuspendLayout();
@@ -221,21 +221,6 @@
             this.NameLabel.TabIndex = 0;
             this.NameLabel.Text = "NoTournament";
             // 
-            // MatchesDataGridView
-            // 
-            this.MatchesDataGridView.AllowUserToAddRows = false;
-            this.MatchesDataGridView.AllowUserToDeleteRows = false;
-            this.MatchesDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.MatchesDataGridView.Location = new System.Drawing.Point(12, 212);
-            this.MatchesDataGridView.Name = "MatchesDataGridView";
-            this.MatchesDataGridView.ReadOnly = true;
-            this.MatchesDataGridView.RowHeadersWidth = 125;
-            this.MatchesDataGridView.RowTemplate.Height = 29;
-            this.MatchesDataGridView.Size = new System.Drawing.Size(715, 423);
-            this.MatchesDataGridView.TabIndex = 8;
-            this.MatchesDataGridView.Visible = false;
-            this.MatchesDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.MatchesDataGridView_CellClick);
-            // 
             // ShowMatchesButton
             // 
             this.ShowMatchesButton.Location = new System.Drawing.Point(21, 177);
@@ -345,6 +330,21 @@
             this.Points.ReadOnly = true;
             this.Points.Width = 60;
             // 
+            // MatchesDataGridView
+            // 
+            this.MatchesDataGridView.AllowUserToAddRows = false;
+            this.MatchesDataGridView.AllowUserToDeleteRows = false;
+            this.MatchesDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.MatchesDataGridView.Location = new System.Drawing.Point(12, 212);
+            this.MatchesDataGridView.Name = "MatchesDataGridView";
+            this.MatchesDataGridView.ReadOnly = true;
+            this.MatchesDataGridView.RowHeadersWidth = 125;
+            this.MatchesDataGridView.RowTemplate.Height = 29;
+            this.MatchesDataGridView.Size = new System.Drawing.Size(715, 423);
+            this.MatchesDataGridView.TabIndex = 8;
+            this.MatchesDataGridView.Visible = false;
+            this.MatchesDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.MatchesDataGridView_CellClick);
+            // 
             // AddTournamentGroupBox
             // 
             this.AddTournamentGroupBox.Controls.Add(this.ConfirmAddTournamentButton);
@@ -397,6 +397,8 @@
             // 
             // TeamComboBox
             // 
+            this.TeamComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.TeamComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.TeamComboBox.FormattingEnabled = true;
             this.TeamComboBox.Location = new System.Drawing.Point(177, 212);
             this.TeamComboBox.Name = "TeamComboBox";
@@ -440,6 +442,8 @@
             // 
             // CountryComboBox
             // 
+            this.CountryComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.CountryComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.CountryComboBox.FormattingEnabled = true;
             this.CountryComboBox.Location = new System.Drawing.Point(297, 114);
             this.CountryComboBox.Name = "CountryComboBox";
@@ -490,16 +494,16 @@
             this.Controls.Add(this.CreateTournamentButton);
             this.Controls.Add(this.TournamentsDataGridView);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.TournamentProfileGroupBox);
             this.Controls.Add(this.AddTournamentGroupBox);
+            this.Controls.Add(this.TournamentProfileGroupBox);
             this.Name = "WinFormTournamentView";
-            this.Text = "WinFormTournamentView";
+            this.Text = "Турниры";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WinFormTournamentView_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.TournamentsDataGridView)).EndInit();
             this.TournamentProfileGroupBox.ResumeLayout(false);
             this.TournamentProfileGroupBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.MatchesDataGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.TableDataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MatchesDataGridView)).EndInit();
             this.AddTournamentGroupBox.ResumeLayout(false);
             this.AddTournamentGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TeamDataGridView)).EndInit();

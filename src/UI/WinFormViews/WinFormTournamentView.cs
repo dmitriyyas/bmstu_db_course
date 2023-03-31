@@ -77,12 +77,10 @@ namespace UI.WinFormViews
                 _tournamentMatches = value;
                 MatchesDataGridView.Rows.Clear();
                 MatchesDataGridView.Columns.Clear();
-                //MatchesDataGridView.Columns.Add("Teams", "Команды");
                 foreach (var team in TournamentTeams)
                 {
                     MatchesDataGridView.Columns.Add(team.Name, team.Name);
                     int index = MatchesDataGridView.Rows.Add();
-                    //MatchesDataGridView.Rows[index].Cells[0].Value = team.Name;
                     MatchesDataGridView.Rows[index].HeaderCell.Value = team.Name;
                 }
                 foreach (var match in value)

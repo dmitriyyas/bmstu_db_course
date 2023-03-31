@@ -302,10 +302,10 @@
             this.Controls.Add(this.AddCountryButton);
             this.Controls.Add(this.CountryDataGridView);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.AddCountryGroupBox);
             this.Controls.Add(this.CountryProfileGroupBox);
+            this.Controls.Add(this.AddCountryGroupBox);
             this.Name = "WinFormCountryView";
-            this.Text = "WinFormCountryView";
+            this.Text = "Страны";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WinFormCountryView_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.CountryDataGridView)).EndInit();
             this.CountryProfileGroupBox.ResumeLayout(false);

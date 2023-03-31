@@ -269,7 +269,7 @@
             this.Controls.Add(this.AddTeamGroupBox);
             this.Controls.Add(this.TeamProfileGroupBox);
             this.Name = "WinFormTeamView";
-            this.Text = "WinFormTeamView";
+            this.Text = "Команды";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WinFormTeamView_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.TeamDataGridView)).EndInit();
             this.TeamProfileGroupBox.ResumeLayout(false);

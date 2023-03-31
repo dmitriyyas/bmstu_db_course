@@ -135,7 +135,7 @@
             this.Controls.Add(this.GuestLinkLabel);
             this.Controls.Add(this.HomeLinkLabel);
             this.Name = "WinFormMatchView";
-            this.Text = "WinFormMatchView";
+            this.Text = "Матч";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WinFormMatchView_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
