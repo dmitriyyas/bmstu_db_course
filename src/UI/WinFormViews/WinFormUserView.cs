@@ -30,9 +30,9 @@ namespace UI.WinFormViews
             
             set 
             {
-                _users = value;
+                _users = value.OrderBy(u => u.Login);
                 UsersDataGridView.Rows.Clear();
-                foreach (var user in value)
+                foreach (var user in _users)
                 {
                     UsersDataGridView.Rows.Add(user.Login, user.Permission);
                 }
@@ -55,9 +55,9 @@ namespace UI.WinFormViews
             
             set 
             {
-                _userTournaments = value;
+                _userTournaments = value.OrderBy(t => t.Name);
                 TournamentsDataGridView.Rows.Clear();
-                foreach (var tournament in value)
+                foreach (var tournament in _userTournaments)
                 {
                     TournamentsDataGridView.Rows.Add(tournament.Name);
                 }

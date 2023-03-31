@@ -224,6 +224,8 @@
             // 
             // CountryComboBox
             // 
+            this.CountryComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.CountryComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.CountryComboBox.FormattingEnabled = true;
             this.CountryComboBox.Location = new System.Drawing.Point(143, 128);
             this.CountryComboBox.Name = "CountryComboBox";
@@ -264,8 +266,8 @@
             this.Controls.Add(this.AddTeamButton);
             this.Controls.Add(this.TeamDataGridView);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.TeamProfileGroupBox);
             this.Controls.Add(this.AddTeamGroupBox);
+            this.Controls.Add(this.TeamProfileGroupBox);
             this.Name = "WinFormTeamView";
             this.Text = "WinFormTeamView";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WinFormTeamView_FormClosing);

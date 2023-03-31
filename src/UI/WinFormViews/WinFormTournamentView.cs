@@ -23,6 +23,7 @@ namespace UI.WinFormViews
         private List<Team> _newTournamentTeams = new List<Team>();
         private IEnumerable<TeamStatistics> _table;
         private IEnumerable<Team> _teams;
+        private IEnumerable<Team> _tournamentTeams;
         public WinFormTournamentView()
         {
             InitializeComponent();
@@ -33,9 +34,9 @@ namespace UI.WinFormViews
             get => _tournaments;
             set
             {
-                _tournaments = value;
+                _tournaments = value.OrderBy(t => t.Name);
                 TournamentsDataGridView.Rows.Clear();
-                foreach(var tournament in value)
+                foreach(var tournament in _tournaments)
                 {
                     var country = Countries.FirstOrDefault(c => c.Id == tournament.CountryId);
                     var user = Users.FirstOrDefault(u => u.Id == tournament.UserId);
@@ -54,15 +55,15 @@ namespace UI.WinFormViews
                 UserLinkLabel.Text = Users.FirstOrDefault(u => u.Id == value.UserId)?.Login;
             } 
         }
-        public IEnumerable<Team> TournamentTeams { get; set; }
+        public IEnumerable<Team> TournamentTeams { get => _tournamentTeams; set => _tournamentTeams = value.OrderBy(t => t.Name); }
         public IEnumerable<Country> Countries
         {
             get => _countries;
             set
             {
-                _countries = value;
+                _countries = value.OrderBy(t => t.Name);
                 CountryComboBox.Items.Clear();
-                foreach(var country in value)
+                foreach(var country in _countries)
                 {
                     CountryComboBox.Items.Add(country.Name);
                 }
@@ -76,24 +77,25 @@ namespace UI.WinFormViews
                 _tournamentMatches = value;
                 MatchesDataGridView.Rows.Clear();
                 MatchesDataGridView.Columns.Clear();
-                MatchesDataGridView.Columns.Add("Teams", "Команды");
+                //MatchesDataGridView.Columns.Add("Teams", "Команды");
                 foreach (var team in TournamentTeams)
                 {
                     MatchesDataGridView.Columns.Add(team.Name, team.Name);
                     int index = MatchesDataGridView.Rows.Add();
-                    MatchesDataGridView.Rows[index].Cells[0].Value = team.Name;
+                    //MatchesDataGridView.Rows[index].Cells[0].Value = team.Name;
+                    MatchesDataGridView.Rows[index].HeaderCell.Value = team.Name;
                 }
                 foreach (var match in value)
                 {
                     string homeTeam = TournamentTeams.FirstOrDefault(t => t.Id == match.HomeTeamId).Name;
                     string guestTeam = TournamentTeams.FirstOrDefault(t => t.Id == match.GuestTeamId).Name;
                     int column = MatchesDataGridView.Columns[guestTeam].Index;
-                    int row = MatchesDataGridView.Columns[homeTeam].Index - 1;
+                    int row = MatchesDataGridView.Columns[homeTeam].Index;
                     MatchesDataGridView.Rows[row].Cells[column].Value = $"{match.HomeGoals}:{match.GuestGoals}";
                 }
                 for (int i = 0; i < MatchesDataGridView.Rows.Count; i++)
                 {
-                    MatchesDataGridView.Rows[i].Cells[i + 1].Value = "---";
+                    MatchesDataGridView.Rows[i].Cells[i].Value = "---";
                 }
                 foreach (DataGridViewColumn col in MatchesDataGridView.Columns)
                 {
@@ -169,9 +171,9 @@ namespace UI.WinFormViews
             get => _teams;
             set
             {
-                _teams = value;
+                _teams = value.OrderBy(t => t.Name);
                 TeamComboBox.Items.Clear();
-                foreach (var team in value)
+                foreach (var team in _teams)
                 {
                     TeamComboBox.Items.Add(team.Name);
                 }
@@ -267,15 +269,20 @@ namespace UI.WinFormViews
 
         private void MatchesDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex == -1 && e.ColumnIndex != 0)
+            if (e.RowIndex == -1 && e.ColumnIndex != -1)
             {
                 string name = MatchesDataGridView.Columns[e.ColumnIndex].Name;
                 TeamClicked?.Invoke(this, new TeamClickedEventArgs { team = TournamentTeams.FirstOrDefault(t => t.Name == name) });
 
             }
-            else if (e.ColumnIndex != 0 && e.ColumnIndex != e.RowIndex + 1)
+            else if (e.RowIndex != -1 && e.ColumnIndex == -1)
             {
-                string hostName = (string)MatchesDataGridView.Rows[e.RowIndex].Cells[0].Value;
+                string name = (string)MatchesDataGridView.Rows[e.RowIndex].HeaderCell.Value;
+                TeamClicked?.Invoke(this, new TeamClickedEventArgs { team = TournamentTeams.FirstOrDefault(t => t.Name == name) });
+            }
+            else if (e.ColumnIndex != e.RowIndex)
+            {
+                string hostName = (string)MatchesDataGridView.Rows[e.RowIndex].HeaderCell.Value;
                 string guestName = MatchesDataGridView.Columns[e.ColumnIndex].Name;
                 Team host = TournamentTeams.FirstOrDefault(t => t.Name == hostName);
                 Team guest = TournamentTeams.FirstOrDefault(t => t.Name == guestName);

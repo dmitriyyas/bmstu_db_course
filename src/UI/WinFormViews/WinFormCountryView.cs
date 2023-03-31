@@ -29,7 +29,7 @@ namespace UI.WinFormViews
             get => _countries;
             set  
             {
-                _countries = value;
+                _countries = value.OrderBy(c => c.Name);
                 CountryDataGridView.Rows.Clear();
                 foreach (var country in _countries)
                 {
@@ -52,7 +52,7 @@ namespace UI.WinFormViews
             get => _countryTeams;
             set
             {
-                _countryTeams = value;
+                _countryTeams = value.OrderBy(t => t.Name);
                 TeamDataGridView.Rows.Clear();
                 foreach(var team in _countryTeams)
                 {
@@ -65,7 +65,7 @@ namespace UI.WinFormViews
             get => _countryTournaments;
             set
             {
-                _countryTournaments = value;
+                _countryTournaments = value.OrderBy(t => t.Name);
                 TournamentDataGridView.Rows.Clear();
                 foreach (var tournament in _countryTournaments)
                 {

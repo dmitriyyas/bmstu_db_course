@@ -29,7 +29,7 @@ namespace UI.WinFormViews
             get => _teams;
             set
             {
-                _teams = value;
+                _teams = value.OrderBy(t => t.Name);
                 TeamDataGridView.Rows.Clear();
                 foreach(var team in _teams)
                 {
@@ -53,7 +53,7 @@ namespace UI.WinFormViews
             get => _teamTournaments;
             set
             {
-                _teamTournaments = value;
+                _teamTournaments = value.OrderBy(t => t.Name);
                 TournamentDataGridView.Rows.Clear();
                 foreach(var tournament in _teamTournaments)
                 {
@@ -66,9 +66,9 @@ namespace UI.WinFormViews
             get => _countries;
             set
             {
-                _countries = value;
+                _countries = value.OrderBy(t => t.Name);
                 CountryComboBox.Items.Clear();
-                foreach (var country in value)
+                foreach (var country in _countries)
                 {
                     CountryComboBox.Items.Add(country.Name);
                 }

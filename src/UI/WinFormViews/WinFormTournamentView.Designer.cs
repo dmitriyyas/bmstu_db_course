@@ -145,13 +145,13 @@
             this.TournamentProfileGroupBox.Controls.Add(this.label3);
             this.TournamentProfileGroupBox.Controls.Add(this.label2);
             this.TournamentProfileGroupBox.Controls.Add(this.NameLabel);
-            this.TournamentProfileGroupBox.Controls.Add(this.MatchesDataGridView);
             this.TournamentProfileGroupBox.Controls.Add(this.ShowMatchesButton);
             this.TournamentProfileGroupBox.Controls.Add(this.ShowTableButton);
             this.TournamentProfileGroupBox.Controls.Add(this.TableDataGridView);
+            this.TournamentProfileGroupBox.Controls.Add(this.MatchesDataGridView);
             this.TournamentProfileGroupBox.Location = new System.Drawing.Point(442, 21);
             this.TournamentProfileGroupBox.Name = "TournamentProfileGroupBox";
-            this.TournamentProfileGroupBox.Size = new System.Drawing.Size(694, 641);
+            this.TournamentProfileGroupBox.Size = new System.Drawing.Size(733, 641);
             this.TournamentProfileGroupBox.TabIndex = 3;
             this.TournamentProfileGroupBox.TabStop = false;
             this.TournamentProfileGroupBox.Visible = false;
@@ -229,10 +229,9 @@
             this.MatchesDataGridView.Location = new System.Drawing.Point(12, 212);
             this.MatchesDataGridView.Name = "MatchesDataGridView";
             this.MatchesDataGridView.ReadOnly = true;
-            this.MatchesDataGridView.RowHeadersVisible = false;
-            this.MatchesDataGridView.RowHeadersWidth = 51;
+            this.MatchesDataGridView.RowHeadersWidth = 125;
             this.MatchesDataGridView.RowTemplate.Height = 29;
-            this.MatchesDataGridView.Size = new System.Drawing.Size(676, 423);
+            this.MatchesDataGridView.Size = new System.Drawing.Size(715, 423);
             this.MatchesDataGridView.TabIndex = 8;
             this.MatchesDataGridView.Visible = false;
             this.MatchesDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.MatchesDataGridView_CellClick);
@@ -278,7 +277,7 @@
             this.TableDataGridView.RowHeadersVisible = false;
             this.TableDataGridView.RowHeadersWidth = 51;
             this.TableDataGridView.RowTemplate.Height = 29;
-            this.TableDataGridView.Size = new System.Drawing.Size(676, 423);
+            this.TableDataGridView.Size = new System.Drawing.Size(715, 423);
             this.TableDataGridView.TabIndex = 5;
             this.TableDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.TableDataGridView_CellClick);
             // 
@@ -491,8 +490,8 @@
             this.Controls.Add(this.CreateTournamentButton);
             this.Controls.Add(this.TournamentsDataGridView);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.AddTournamentGroupBox);
             this.Controls.Add(this.TournamentProfileGroupBox);
+            this.Controls.Add(this.AddTournamentGroupBox);
             this.Name = "WinFormTournamentView";
             this.Text = "WinFormTournamentView";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WinFormTournamentView_FormClosing);
