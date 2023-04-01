@@ -6,14 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 using BL.Models;
 using BL.RepositoryInterfaces;
-using DataAccess.DBContext;
 
 namespace DataAccess.Repositories
 {
     public class TeamRepository : ITeamRepository
     {
-        private readonly DbContextFactory _dbContextFactory;
-        public TeamRepository(DbContextFactory dbContextFactory)
+        private readonly IDbContextFactory _dbContextFactory;
+        public TeamRepository(IDbContextFactory dbContextFactory)
         {
             _dbContextFactory = dbContextFactory;
         }

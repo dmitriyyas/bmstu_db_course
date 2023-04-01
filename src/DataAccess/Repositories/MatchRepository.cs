@@ -5,15 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using BL.RepositoryInterfaces;
 using BL.Models;
-using DataAccess.DBContext;
 
 namespace DataAccess.Repositories
 {
     public class MatchRepository : IMatchRepository
     {
-        private readonly DbContextFactory _dbContextFactory;
+        private readonly IDbContextFactory _dbContextFactory;
 
-        public MatchRepository(DbContextFactory dbContextFactory)
+        public MatchRepository(IDbContextFactory dbContextFactory)
         {
             _dbContextFactory = dbContextFactory;
         }
@@ -38,9 +37,10 @@ namespace DataAccess.Repositories
 
         public void delete(int id)
         {
-            var dbContext = _dbContextFactory.getDbContext();
             try
             {
+                var dbContext = _dbContextFactory.getDbContext();
+
                 var match = dbContext.Matches.FirstOrDefault(t => t.Id == id);
                 if (match == null)
                 {

@@ -5,16 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using BL.Models;
 using BL.RepositoryInterfaces;
-using DataAccess.DBContext;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Repositories
 {
     public class TournamentRepository : ITournamentRepository
     {
-        private readonly DbContextFactory _dbContextFactory;
+        private readonly IDbContextFactory _dbContextFactory;
 
-        public TournamentRepository(DbContextFactory dbContextFactory)
+        public TournamentRepository(IDbContextFactory dbContextFactory)
         {
             _dbContextFactory = dbContextFactory;
         }

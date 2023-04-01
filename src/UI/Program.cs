@@ -3,7 +3,7 @@ using System.Diagnostics;
 using BL.Models;
 using BL.RepositoryInterfaces;
 using BL.Services;
-using DataAccess.DBContext;
+using DataAccess;
 using DataAccess.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -31,13 +31,13 @@ namespace UI
             ApplicationContext appContext = new ApplicationContext();
 
             IConfiguration configuration = new ConfigurationBuilder()
-                                                .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "..\\..\\..\\"))
+                                                //.SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "..\\..\\..\\"))
                                                 .AddJsonFile("appsettings.json")
                                                 .Build();
 
             var builder = new HostBuilder().ConfigureServices((hostContext, services) =>
             {
-                services.AddSingleton<DbContextFactory>();
+                services.AddSingleton<IDbContextFactory, PgSQLDbContextFactory>();
                 services.AddSingleton<IViewFactory, WinFormViewFactory>();
 
                 services.AddSingleton(configuration);

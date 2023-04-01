@@ -5,15 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using BL.RepositoryInterfaces;
 using BL.Models;
-using DataAccess.DBContext;
 
 namespace DataAccess.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private readonly DbContextFactory _dbContextFactory;
+        private readonly IDbContextFactory _dbContextFactory;
 
-        public UserRepository(DbContextFactory dbContextFactory)
+        public UserRepository(IDbContextFactory dbContextFactory)
         {
             _dbContextFactory = dbContextFactory;
         }

@@ -9,7 +9,7 @@ using BL.Models;
 using Microsoft.Extensions.Options;
 using System.Diagnostics;
 
-namespace DataAccess.DBContext
+namespace DataAccess
 {
     public partial class AppDbContext : DbContext
     {

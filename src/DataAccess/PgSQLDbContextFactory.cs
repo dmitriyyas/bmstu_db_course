@@ -7,14 +7,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 
-namespace DataAccess.DBContext
+namespace DataAccess
 {
-    public class DbContextFactory
+    public class PgSQLDbContextFactory : IDbContextFactory
     {
-        
+
         private readonly IConfiguration _configuration;
 
-        public DbContextFactory(IConfiguration configuration)
+        public PgSQLDbContextFactory(IConfiguration configuration)
         {
             _configuration = configuration;
         }

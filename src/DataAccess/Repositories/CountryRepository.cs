@@ -5,15 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using BL.Models;
 using BL.RepositoryInterfaces;
-using DataAccess.DBContext;
 
 namespace DataAccess.Repositories
 {
     public class CountryRepository : ICountryRepository
     {
-        private readonly DbContextFactory _dbContextFactory;
+        private readonly IDbContextFactory _dbContextFactory;
 
-        public CountryRepository(DbContextFactory dbContextFactory)
+        public CountryRepository(IDbContextFactory dbContextFactory)
         {
             _dbContextFactory = dbContextFactory;
         }
