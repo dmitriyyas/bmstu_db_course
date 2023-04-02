@@ -27,7 +27,6 @@ namespace BL.Services
             if (user == null)
             {
                 string hash = BCrypt.Net.BCrypt.HashPassword(password);
-                Debug.WriteLine(hash);
                 user = new User(login, hash);
                 _userRepository.create(user);
             }

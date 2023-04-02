@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess
 {
-    public class InMemoryDbContextFactory
+    public class InMemoryDbContextFactory : IDbContextFactory
     {
         private readonly string _dbName;
         public InMemoryDbContextFactory()
