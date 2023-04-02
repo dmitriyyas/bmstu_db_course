@@ -23,12 +23,12 @@ namespace BL.Services
             _teamTournamentRepository = teamTournamentRepository;
         }
 
-        public Tournament createTournament(string name, int userId, int countryId, IEnumerable<Team> teams)
+        public Tournament createTournament(string name, User user, Country country, IEnumerable<Team> teams)
         {
             Tournament tournament = _tournamentRepository.getByName(name);
             if (tournament == null)
             {
-                tournament = new Tournament(name, userId, countryId);
+                tournament = user.createTournament(name, country);
                 _tournamentRepository.create(tournament);
                 try
                 {

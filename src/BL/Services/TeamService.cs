@@ -46,6 +46,19 @@ namespace BL.Services
             return team;
         }
 
+        public void changeCountry(int id, Country country)
+        {
+            Team team = _teamRepository.getById(id);
+            if (team != null)
+            {
+                team.changeCountry(country);
+            }
+            else
+            {
+                throw new Exception("Команды с таким id не существует.");
+            }
+        }
+
         public IEnumerable<Team> getAllTeams()
         {
             return _teamRepository.getAll();

@@ -8,6 +8,7 @@ using BL.Models;
 using BL.Services;
 using BL.RepositoryInterfaces;
 using System.Collections;
+using System.Diagnostics.Metrics;
 
 namespace TestBL.UnitTests
 {
@@ -41,10 +42,13 @@ namespace TestBL.UnitTests
                 teamMock.create(team);
             }
 
-            Tournament tournament = new Tournament("Champions League", 3, 1, 1);
+            var user = new User("login", "hash");
+            var country = new Country("Russia", "UEFA");
+
+            Tournament tournament = new Tournament("Champions League", user.Id, country.Id, 1);
             var createdTournament = tournamentService.createTournament(tournament.Name, 
-                                                                        tournament.UserId, 
-                                                                        tournament.CountryId, 
+                                                                        user, 
+                                                                        country, 
                                                                         teams);
 
             compare(tournament, createdTournament);
@@ -73,10 +77,13 @@ namespace TestBL.UnitTests
                 team
             };
 
+            var user = new User("login", "hash");
+            var country = new Country("Russia", "UEFA");
+
             Tournament tournament = new Tournament("Champions League", 3, 1, 1);
-            Assert.ThrowsException<Exception>(() => tournamentService.createTournament(tournament.Name, 
-                                                                                        tournament.UserId, 
-                                                                                        tournament.CountryId, 
+            Assert.ThrowsException<Exception>(() => tournamentService.createTournament(tournament.Name,
+                                                                                        user,
+                                                                                        country,
                                                                                         teams));
 
         }
@@ -88,14 +95,17 @@ namespace TestBL.UnitTests
             var tournamentMock = new TournamentMock();
             var tournamentService = new TournamentService(tournamentMock, null, null, null);
 
+
+            var user = new User("login", "hash");
+            var country = new Country("Russia", "UEFA");
             Tournament tournament = new Tournament("Champions League", 3, 1, 1);
             var createdTournament = tournamentService.createTournament(tournament.Name,
-                                                                        tournament.UserId,
-                                                                        tournament.CountryId,
+                                                                        user,
+                                                                        country,
                                                                         new List<Team>());
             Assert.ThrowsException<Exception>(() => tournamentService.createTournament(tournament.Name,
-                                                                        tournament.UserId,
-                                                                        tournament.CountryId,
+                                                                        user,
+                                                                        country,
                                                                         new List<Team>()));
         }
 

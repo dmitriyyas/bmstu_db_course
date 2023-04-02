@@ -26,5 +26,10 @@ namespace BL.Models
         {
             return BCrypt.Net.BCrypt.Verify(password, PasswordHash);
         }
+
+        public Tournament createTournament(string name, Country country)
+        {
+            return new Tournament(name, Id, country.Id);
+        }
     }
 }

@@ -18,5 +18,10 @@ namespace BL.Models
             Name = name;
             CountryId = countryId;
         }
+
+        public void changeCountry(Country country)
+        {
+            CountryId = country.Id;
+        }
     }
 }
