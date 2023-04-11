@@ -768,7 +768,7 @@ namespace UI
                     throw new Exception("Турнир должен состоять как минимум из 2 команд.");
                 }
 
-                var tournament = _tournamentService.createTournament(name, currentUser.Id, country.Id, teams);
+                var tournament = _tournamentService.createTournament(name, currentUser, country, teams);
                 _teamService.getAllTeams();
                 _loadTournamentViewProfile(tournament);
             }

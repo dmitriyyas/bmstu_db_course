@@ -7,11 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BL.RepositoryInterfaces;
+using BL.Services;
 
 namespace TestDA.IntegrationTests
 {
     [TestClass]
-    public class CountryIntegrationTest
+    public class ISCountry
     {
         private void compare(Country x, Country y)
         {
@@ -24,11 +25,10 @@ namespace TestDA.IntegrationTests
         {
             var factory = new InMemoryDbContextFactory();
             var repository = new CountryRepository(factory);
+            var service = new CountryService(repository, null, null);
 
             string name = "Russia";
-            var country = new Country(name, "UEFA");
-
-            repository.create(country);
+            var country = service.createCountry(name, "UEFA");
             using (var dbContext = factory.getDbContext())
             {
                 compare(country, dbContext.Countries.FirstOrDefault(c => c.Name == name));
@@ -36,12 +36,13 @@ namespace TestDA.IntegrationTests
         }
 
         [TestMethod]
-        public void TestGetByName()
+        public void TestGet()
         {
             var factory = new InMemoryDbContextFactory();
             var repository = new CountryRepository(factory);
+            var service = new CountryService(repository, null, null);
 
-            var country = new Country("Russia", "UEFA");
+            var country = new Country("Russia", "UEFA", 1);
 
             using (var dbContext = factory.getDbContext())
             {
@@ -49,7 +50,7 @@ namespace TestDA.IntegrationTests
                 dbContext.SaveChanges();
             }
 
-            compare(country, repository.getByName("Russia"));
+            compare(country, service.getCountry(1));
         }
     }
 }

@@ -157,9 +157,11 @@ namespace UI.WinFormViews
             { 
                 _table = value;
                 TableDataGridView.Rows.Clear();
+                int i = 1;
                 foreach (var row in _table)
                 {
-                    TableDataGridView.Rows.Add(row.Name, row.Matches, row.Wins, row.Draws, row.Loses, row.GoalsScored, row.GoalsConceded, row.Points);
+                    TableDataGridView.Rows.Add(i, row.Name, row.Matches, row.Wins, row.Draws, row.Loses, row.GoalsScored, row.GoalsConceded, row.Points);
+                    ++i;
                 }
             }
         }
@@ -239,7 +241,7 @@ namespace UI.WinFormViews
 
         private void TableDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (TableDataGridView.Columns[e.ColumnIndex].Name == "TeamName")
+            if (TableDataGridView.Columns[e.ColumnIndex].Name == "TeamName" && e.RowIndex != -1)
             {
                 string name = (string)TableDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
                 TeamClicked?.Invoke(this, new TeamClickedEventArgs { team = TournamentTeams.FirstOrDefault(t => t.Name == name) });

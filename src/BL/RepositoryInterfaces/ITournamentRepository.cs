@@ -18,5 +18,7 @@ namespace BL.RepositoryInterfaces
         IEnumerable<Tournament> getByCountry(int countryId);
         IEnumerable<Tournament> getByUser(int userId);
         IEnumerable<Tournament> getByTeam(int teamId);
+
+        IEnumerable<TeamStatistics> getTournamentTable(int id);
     }
 }

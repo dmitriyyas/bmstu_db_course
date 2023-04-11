@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -172,6 +173,8 @@ namespace BL.Services
 
                 return 0;
             });
+
+            //return _tournamentRepository.getTournamentTable(tournamentId);
 
             return table;
         }

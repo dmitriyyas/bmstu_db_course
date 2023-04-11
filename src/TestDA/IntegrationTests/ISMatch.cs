@@ -6,11 +6,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BL.Services;
 
 namespace TestDA.IntegrationTests
 {
     [TestClass]
-    public class MatchIntegrationTest
+    public class ISMatch
     {
         private void compare(Match x, Match y)
         {
@@ -26,10 +27,10 @@ namespace TestDA.IntegrationTests
         {
             var factory = new InMemoryDbContextFactory();
             var repository = new MatchRepository(factory);
+            var service = new MatchService(repository);
 
-            var match = new Match(1, 1, 2, 1, 1);
+            var match = service.createMatch(1, 1, 2, 4, 0);
 
-            repository.create(match);
             using (var dbContext = factory.getDbContext())
             {
                 compare(match, dbContext.Matches.FirstOrDefault(u => u.Id == 1));
@@ -41,6 +42,7 @@ namespace TestDA.IntegrationTests
         {
             var factory = new InMemoryDbContextFactory();
             var repository = new MatchRepository(factory);
+            var service = new MatchService(repository);
 
             var match = new Match(1, 1, 2, 1, 1, 1);
 
@@ -51,8 +53,7 @@ namespace TestDA.IntegrationTests
             }
 
             match.HomeGoals = 5;
-
-            repository.update(match);
+            service.updateMatch(1, 5, 1);
             using (var dbContext = factory.getDbContext())
             {
                 compare(match, dbContext.Matches.FirstOrDefault(u => u.Id == 1));
@@ -60,10 +61,11 @@ namespace TestDA.IntegrationTests
         }
 
         [TestMethod]
-        public void TestGetById()
+        public void TestGet()
         {
             var factory = new InMemoryDbContextFactory();
             var repository = new MatchRepository(factory);
+            var service = new MatchService(repository);
 
             var match = new Match(1, 1, 2, 1, 1, 1);
 
@@ -73,7 +75,7 @@ namespace TestDA.IntegrationTests
                 dbContext.SaveChanges();
             }
 
-            compare(match, repository.getById(1));
+            compare(match, service.getMatch(1));
         }
 
         [TestMethod]
@@ -81,6 +83,7 @@ namespace TestDA.IntegrationTests
         {
             var factory = new InMemoryDbContextFactory();
             var repository = new MatchRepository(factory);
+            var service = new MatchService(repository);
 
             var match = new Match(1, 1, 2, 1, 1, 1);
 
@@ -90,7 +93,7 @@ namespace TestDA.IntegrationTests
                 dbContext.SaveChanges();
             }
 
-            repository.delete(1);
+            service.deleteMatch(1);
             using (var dbContext = factory.getDbContext())
             {
                 Assert.IsNull(dbContext.Matches.FirstOrDefault(m => m.Id == 1));

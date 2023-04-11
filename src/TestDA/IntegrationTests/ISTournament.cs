@@ -6,10 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BL.Models;
+using BL.Services;
+using BL.RepositoryInterfaces;
 
 namespace TestDA.IntegrationTests
 {
-    public class TournamentIntegrationTest
+    public class ISTournament
     {
         private void compare(Tournament x, Tournament y)
         {
@@ -22,23 +24,30 @@ namespace TestDA.IntegrationTests
         public void TestCreate()
         {
             var factory = new InMemoryDbContextFactory();
-            var repository = new TournamentRepository(factory);
+            var tournamentRepository = new TournamentRepository(factory);
+            var teamRepository = new TeamRepository(factory);
+            var teamTournamentRepository = new TeamTournamentRepository(factory);
+            var service = new TournamentService(tournamentRepository, teamRepository, null, teamTournamentRepository);
 
-            var tournament = new Tournament("RPL", 1, 1);
+            var teams = new List<Team> { new Team("Dinamo", 1), new Team("Spartak", 2) };
+            var tournament = service.createTournament("RPL", new User("login", "hash"), new Country("Russia", "UEFA"), teams);
 
-            repository.create(tournament);
             using (var dbContext = factory.getDbContext())
             {
                 compare(tournament, dbContext.Tournaments.FirstOrDefault(u => u.Id == 1));
+                foreach(var team in teams)
+                {
+                    Assert.IsNotNull(dbContext.TeamTournaments.FirstOrDefault(t => t.TeamId == team.Id && t.TournamentId == tournament.Id));
+                }
             }
         }
 
         [TestMethod]
-        public void TestGetById()
+        public void TestGet()
         {
             var factory = new InMemoryDbContextFactory();
             var repository = new TournamentRepository(factory);
-
+            var service = new TournamentService(repository, null, null, null);
             var tournament = new Tournament("RPL", 1, 1, 1);
 
             using (var dbContext = factory.getDbContext())
@@ -47,7 +56,7 @@ namespace TestDA.IntegrationTests
                 dbContext.SaveChanges();
             }
 
-            compare(tournament, repository.getById(1));
+            compare(tournament, service.getTournament(1));
         }
 
         [TestMethod]
@@ -55,6 +64,7 @@ namespace TestDA.IntegrationTests
         {
             var factory = new InMemoryDbContextFactory();
             var repository = new TournamentRepository(factory);
+            var service = new TournamentService(repository, null, null, null);
 
             var tournament = new Tournament("RPL", 1, 1, 1);
 
@@ -64,7 +74,7 @@ namespace TestDA.IntegrationTests
                 dbContext.SaveChanges();
             }
 
-            repository.delete(1);
+            service.deleteTournament(1);
             using (var dbContext = factory.getDbContext())
             {
                 Assert.IsNull(dbContext.Matches.FirstOrDefault(m => m.Id == 1));

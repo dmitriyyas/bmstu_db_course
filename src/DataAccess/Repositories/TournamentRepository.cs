@@ -101,5 +101,12 @@ namespace DataAccess.Repositories
 
             return dbContext.Tournaments.Where(t => t.UserId == userId).ToList();
         }
+
+        public IEnumerable<TeamStatistics> getTournamentTable(int id)
+        {
+            using var dbContext = _dbContextFactory.getDbContext();
+
+            return dbContext.TeamStatistics.FromSqlInterpolated($"Select * from GetTable({id})").ToList();
+        }
     }
 }

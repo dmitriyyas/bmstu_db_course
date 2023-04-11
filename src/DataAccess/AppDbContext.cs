@@ -1,13 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BL.Models;
-using Microsoft.Extensions.Options;
-using System.Diagnostics;
 
 namespace DataAccess
 {
@@ -19,6 +11,8 @@ namespace DataAccess
         public DbSet<Tournament> Tournaments { get; set; }
         public DbSet<Match> Matches { get; set; }
         public DbSet<TeamTournament> TeamTournaments { get; set; }
+
+        public DbSet<TeamStatistics> TeamStatistics { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -159,6 +153,20 @@ namespace DataAccess
                 entity.Property(c => c.TournamentId)
                     .IsRequired()
                     .HasColumnName("tournament_id");
+            });
+
+            modelBuilder.Entity<TeamStatistics>(entity =>
+            {
+                entity.HasNoKey();
+                entity.ToFunction("GetTable");
+                entity.Property(t => t.Name).HasColumnName("name");
+                entity.Property(t => t.Matches).HasColumnName("matches");
+                entity.Property(t => t.Wins).HasColumnName("wins");
+                entity.Property(t => t.Draws).HasColumnName("draws");
+                entity.Property(t => t.Loses).HasColumnName("loses");
+                entity.Property(t => t.GoalsScored).HasColumnName("gs");
+                entity.Property(t => t.GoalsConceded).HasColumnName("gc");
+                entity.Property(t => t.Points).HasColumnName("points");
             });
 
             OnModelCreatingPartial(modelBuilder);

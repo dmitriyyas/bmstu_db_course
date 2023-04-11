@@ -6,11 +6,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BL.Services;
 
 namespace TestDA.IntegrationTests
 {
     [TestClass]
-    public class TeamIntegrationTest
+    public class ISTeam
     {
         private void compare(Team x, Team y)
         {
@@ -23,33 +24,9 @@ namespace TestDA.IntegrationTests
         {
             var factory = new InMemoryDbContextFactory();
             var repository = new TeamRepository(factory);
+            var service = new TeamService(repository, null);
 
-            var team = new Team("Dinamo", 1);
-
-            repository.create(team);
-            using (var dbContext = factory.getDbContext())
-            {
-                compare(team, dbContext.Teams.FirstOrDefault(u => u.Name == "Dinamo"));
-            }
-        }
-        [TestMethod]
-
-        public void TestUpdate()
-        {
-            var factory = new InMemoryDbContextFactory();
-            var repository = new TeamRepository(factory);
-
-            var team = new Team("Dinamo", 1);
-
-            using (var dbContext = factory.getDbContext())
-            {
-                dbContext.Teams.Add(team);
-                dbContext.SaveChanges();
-            }
-
-            team.CountryId = 2;
-
-            repository.update(team);
+            var team = service.createTeam("Dinamo", 1);
             using (var dbContext = factory.getDbContext())
             {
                 compare(team, dbContext.Teams.FirstOrDefault(u => u.Name == "Dinamo"));
@@ -57,12 +34,13 @@ namespace TestDA.IntegrationTests
         }
 
         [TestMethod]
-        public void TestGetByName()
+        public void TestGet()
         {
             var factory = new InMemoryDbContextFactory();
             var repository = new TeamRepository(factory);
+            var service = new TeamService(repository, null);
 
-            var team = new Team("Dinamo", 1);
+            var team = new Team("Dinamo", 1, 1);
 
             using (var dbContext = factory.getDbContext())
             {
@@ -70,7 +48,7 @@ namespace TestDA.IntegrationTests
                 dbContext.SaveChanges();
             }
 
-            compare(team, repository.getByName("Dinamo"));
+            compare(team, service.getTeam(1));
         }
     }
 }
