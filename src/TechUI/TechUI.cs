@@ -71,7 +71,7 @@ namespace TechUI
                                 _openUserView();
                                 break;
                             case 4:
-                                //_openCountryView();
+                                _openCountryView();
                                 break;
                             case 5:
                                 _openTeamView();
