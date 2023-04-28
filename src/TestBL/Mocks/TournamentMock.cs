@@ -53,5 +53,10 @@ namespace TestBL.Mocks
         {
             return tournaments.Where(t => t.UserId == userId);
         }
+
+        public IEnumerable<TeamStatistics> getTournamentTable(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

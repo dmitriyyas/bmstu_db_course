@@ -9,7 +9,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Serilog;
 using UI.WinFormViews;
 
 namespace UI
@@ -56,6 +58,19 @@ namespace UI
                 services.AddScoped<TournamentService>();
                 services.AddScoped<MatchService>();
                 services.AddScoped<CountryService>();
+                /*
+                var serilogLogger = new LoggerConfiguration()
+                        .WriteTo.Console()
+                        .WriteTo.File("log-.txt", rollingInterval: RollingInterval.Day)
+                        .CreateLogger();
+                */
+                var serilogLogger = new LoggerConfiguration()
+                        .ReadFrom.Configuration(configuration)
+                        .CreateLogger();
+                services.AddLogging(x =>
+                {
+                    x.AddSerilog(logger: serilogLogger, dispose: true);
+                });
             });
 
             var host = builder.Build();
@@ -65,20 +80,8 @@ namespace UI
                 var services = serviceScope.ServiceProvider;
                 try
                 {
-                    /*
-                    var countryService = services.GetRequiredService<CountryService>();
-                    var userService = services.GetRequiredService<UserService>();
-                    var teamService = services.GetRequiredService<TeamService>();
-                    var tournamentService = services.GetRequiredService<TournamentService>();
-
-                    var country = countryService.createCountry("Russia", "UEFA");
-                    var user = userService.register("test", "test");
-                    var team = teamService.createTeam("Dinamo", country.Id);
-                    var tournament = tournamentService.createTournament("RPL", user.Id, country.Id, new List<Team> { team });
-                    */
                     var presenter = services.GetRequiredService<Presenter>();
                     Application.Run(presenter.AppContext);
-
                 }
                 catch (Exception ex)
                 {

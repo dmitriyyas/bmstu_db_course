@@ -9,6 +9,7 @@ using BL.Services;
 using Microsoft.Extensions.Configuration;
 using UI.ViewInterfaces;
 using UI.Events;
+using Microsoft.Extensions.Logging;
 
 namespace UI
 {
@@ -21,6 +22,7 @@ namespace UI
         private readonly MatchService _matchService;
 
         private readonly IViewFactory _viewFactory;
+        private readonly ILogger<Presenter> _logger;
 
         private IConfiguration _configuration;
 
@@ -35,7 +37,7 @@ namespace UI
 
         public ApplicationContext AppContext { get; set; }
 
-        public Presenter(UserService userService, CountryService countryService, TeamService teamService, TournamentService tournamentService, MatchService matchService, IViewFactory viewFactory, IConfiguration configuration, ApplicationContext context)
+        public Presenter(UserService userService, CountryService countryService, TeamService teamService, TournamentService tournamentService, MatchService matchService, IViewFactory viewFactory, IConfiguration configuration, ApplicationContext context, ILogger<Presenter> logger)
         {
             _userService = userService;
             _countryService = countryService;
@@ -44,9 +46,12 @@ namespace UI
             _matchService = matchService;
             _viewFactory = viewFactory;
             _configuration = configuration;
+            _logger = logger;
             AppContext = context;
 
+
             _configuration["DbConnection"] = "guest";
+            _logger.LogInformation("Presenter started");
 
             OpenMainForm();
         }
@@ -73,18 +78,23 @@ namespace UI
 
         public void LogIn(object sender, EventArgs e)
         {
+            _logger.LogInformation("LogIn clicked");
+
             _mainFormView.StartGroupBoxVisible = false;
             _mainFormView.LogInGroupBoxVisible = true;
         }
 
         public void Register(object sender, EventArgs e)
         {
+            _logger.LogInformation("Register clicked");
+
             _mainFormView.StartGroupBoxVisible = false;
             _mainFormView.RegisterGroupBoxVisible = true;
         }
 
         public void ConfirmLogIn(object sender, EventArgs e)
         {
+            _logger.LogInformation("Confirm login clicked");
             try
             {
                 currentUser = _userService.logIn(_mainFormView.LogInLogin, _mainFormView.LogInPassword);
@@ -96,15 +106,19 @@ namespace UI
 
                 _mainFormView.CurrentUserLogin = currentUser.Login;
                 _mainFormView.LogOutGroupBoxVisible = true;
+
+                _logger.LogInformation("LogIn success");
             }
             catch (Exception ex)
             {
+                _logger.LogError($"LogIn fail: {ex.Message}");
                 MessageBox.Show(ex.Message, "Ошибка");
             }
         }
 
         public void ConfirmRegister(object sender, EventArgs e)
         {
+            _logger.LogInformation("Confirm register clicked");
             try
             {
                 var login = _mainFormView.RegisterLogin;
@@ -136,15 +150,20 @@ namespace UI
 
                 _mainFormView.CurrentUserLogin = currentUser.Login;
                 _mainFormView.LogOutGroupBoxVisible = true;
+
+                _logger.LogInformation("Register success");
             }
             catch (Exception ex)
             {
+                _logger.LogError($"Register error: {ex.Message}");
                 MessageBox.Show(ex.Message, "Ошибка");
             }
         }
 
         public void LogOut(object sender, EventArgs e)
         {
+            _logger.LogInformation("LogOut clicked");
+
             currentUser = null;
             _configuration["DbConnection"] = "guest";
 
@@ -165,6 +184,8 @@ namespace UI
 
         public void LogInBack(object sender, EventArgs e)
         {
+            _logger.LogInformation("LogInBack clicked");
+
             _mainFormView.LogInGroupBoxVisible = false;
             _mainFormView.LogInLogin = "";
             _mainFormView.LogInPassword = "";
@@ -174,6 +195,8 @@ namespace UI
 
         public void RegisterBack(object sender, EventArgs e)
         {
+            _logger.LogInformation("RegisterBack clicked");
+
             _mainFormView.RegisterGroupBoxVisible = false;
             _mainFormView.RegisterLogin = "";
             _mainFormView.RegisterPassword = "";
@@ -184,6 +207,8 @@ namespace UI
 
         public void MainFormClose(object sender, EventArgs e)
         {
+            _logger.LogInformation("MainForm closed");
+
             _mainFormView = null;
             _userView?.Close();
             _countryView?.Close();
@@ -224,14 +249,18 @@ namespace UI
 
         public void ChangePermissions(object sender, EventArgs e)
         {
+            _logger.LogInformation("ChangePermissions clicked");
             try
             {
                 _userService.changeUserPermissions(_userView.UserProfile.Id);
                 _reloadUsers();
                 _loadUserViewProfile(_userView.UserProfile);
+
+                _logger.LogInformation("Permissions successfully changed");
             }
             catch (Exception ex)
             {
+                _logger.LogError($"ChangePermissions error: {ex.Message}");
                 MessageBox.Show(ex.Message, "Ошибка");
             }
 
@@ -239,6 +268,7 @@ namespace UI
 
         public void OpenUserForm(object sender, UserClickedEventArgs e)
         {
+            _logger.LogInformation("OpenUserForm clicked");
             try
             {
                 if (_userView == null)
@@ -261,9 +291,11 @@ namespace UI
 
                 _userView.Show();
                 _userView.BringToFront();
+                _logger.LogInformation("UserForm succesfully opened");
             }
             catch (Exception ex)
             {
+                _logger.LogError($"OpenUserForm error: {ex.Message}");
                 MessageBox.Show(ex.Message, "Ошибка");
             }
         }
@@ -282,6 +314,7 @@ namespace UI
 
         public void UserFormClosed(object sender, EventArgs e)
         {
+            _logger.LogInformation("UserForm closed");
             _userView = null;
         }
 
@@ -350,6 +383,7 @@ namespace UI
 
         public void OpenCountryForm(object sender, CountryClickedEventArgs e)
         {
+            _logger.LogInformation("OpenCountryForm clicked");
             try
             {
                 if (_countryView == null)
@@ -368,20 +402,25 @@ namespace UI
 
                 _countryView.Show();
                 _countryView.BringToFront();
+
+                _logger.LogInformation("CountryForm succesfully opened");
             }
             catch (Exception ex)
             {
+                _logger.LogError($"OpenCountryForm error: {ex.Message}");
                 MessageBox.Show(ex.Message, "Ошибка");
             }
         }
 
         public void AddCountryClicked(object sender, EventArgs e)
         {
+            _logger.LogInformation("AddCountry clicked");
             _loadCountryViewCreating();
         }
 
         public void ConfirmAddCountryClicked(object sender, EventArgs e)
         {
+            _logger.LogInformation("ConfirmAddCountry clicked");
             try
             {
                 string name = _countryView.NewCountryName;
@@ -400,10 +439,11 @@ namespace UI
                 Country country = _countryService.createCountry(name, confederation);
                 _reloadCountries();
                 _loadCountryViewProfile(country);
-
+                _logger.LogInformation("Country successfully added");
             }
             catch (Exception ex)
             {
+                _logger.LogError($"ConfirmAddCountry error: {ex.Message}");
                 MessageBox.Show(ex.Message, "Ошибка");
             }
         }
@@ -478,6 +518,7 @@ namespace UI
 
         public void OpenTeamForm(object sender, TeamClickedEventArgs e)
         {
+            _logger.LogInformation("OpenTeamForm clicked");
             try
             {
                 if (_teamView == null)
@@ -496,20 +537,24 @@ namespace UI
 
                 _teamView.Show();
                 _teamView.BringToFront();
+                _logger.LogInformation("TeamForm successfully opened");
             }
             catch (Exception ex)
             {
+                _logger.LogError($"OpenTeamForm error: {ex.Message}");
                 MessageBox.Show(ex.Message, "Ошибка");
             }
         }
 
         public void AddTeamClicked(object sender, EventArgs e)
         {
+            _logger.LogInformation("AddTeam clicked");
             _loadTeamViewCreating();
         }
 
         public void ConfirmAddTeamClicked(object sender, EventArgs e)
         {
+            _logger.LogInformation("ConfirmAddTeam clicked");
             try
             {
                 string name = _teamView.NewTeamName;
@@ -535,16 +580,18 @@ namespace UI
                 Team team = _teamService.createTeam(name, country.Id);
                 _reloadTeams();
                 _loadTeamViewProfile(team);
-
+                _logger.LogInformation("Team successfully added");
             }
             catch (Exception ex)
             {
+                _logger.LogError($"ConfirmAddTeam error: {ex.Message}");
                 MessageBox.Show(ex.Message, "Ошибка");
             }
         }
 
         public void TeamFormClosed(object sender, EventArgs e)
         {
+            _logger.LogInformation("TeamForm closed");
             _teamView = null;
         }
 
@@ -640,6 +687,7 @@ namespace UI
 
         public void OpenTournamentForm(object sender, TournamentClickedEventArgs e)
         {
+            _logger.LogInformation("OpenTournamentForm clicked");
             try
             {
                 if (_tournamentView == null)
@@ -658,46 +706,55 @@ namespace UI
 
                 _tournamentView.Show();
                 _tournamentView.BringToFront();
+                _logger.LogInformation("TournamentForm successfully opened");
             }
             catch(Exception ex)
             {
+                _logger.LogError($"OpenTournamentForm error: {ex.Message}");
                 MessageBox.Show(ex.Message, "Ошибка");
             }
         }
 
         public void AddTournamentClicked(object sender, EventArgs e)
         {
+            _logger.LogInformation("AddTournament clicked");
             _loadTournamentViewCreating();
         }
 
         public void DeleteTournamentClicked(object sender, EventArgs e)
         {
+            _logger.LogInformation("DeleteTournament clicked");
             try
             {
                 _tournamentService.deleteTournament(_tournamentView.TournamentProfile.Id);
                 _reloadTournaments();
                 _loadTournamentViewEmpty();
+                _logger.LogInformation("Tournament successfully deleted");
             }
             catch (Exception ex)
             {
+                _logger.LogError($"DeleteTournament error: {ex.Message}");
                 MessageBox.Show(ex.Message, "Ошибка");
             }
         }
 
         public void ShowMatchesClicked(object sender, EventArgs e)
         {
+            _logger.LogInformation("ShowMatches clicked");
             _tournamentView.TableVisible = false;
             _tournamentView.MatchesVisible = true;
         }
 
         public void ShowTableClicked(object sender, EventArgs e)
         {
+            _logger.LogInformation("ShowTable clicked");
             _tournamentView.MatchesVisible = false;
             _tournamentView.TableVisible = true;
         }
 
         public void AddTeamToNewClicked(object sender, EventArgs e)
         {
+            _logger.LogInformation("AddTeamToNew clicked");
             try
             {
                 var teams = _tournamentView.NewTournamentTeams;
@@ -712,15 +769,18 @@ namespace UI
                 }
                 teams.Add(team);
                 _tournamentView.NewTournamentTeams = teams;
+                _logger.LogInformation("Team successfully added to new");
             }
             catch (Exception ex)
             {
+                _logger.LogError($"AddTeamToNew error: {ex.Message}");
                 MessageBox.Show(ex.Message, "Ошибка");
             }
         }
 
         public void DeleteTeamFromNewClicked(object sender, EventArgs e)
         {
+            _logger.LogInformation("DeleteTeamFromNew clicked");
             try
             {
                 string? name = _tournamentView.SelectedTeamName;
@@ -731,15 +791,18 @@ namespace UI
                 var team = _tournamentView.Teams.FirstOrDefault(t => t.Name == name);
                 teams.RemoveAll(t => t.Id == team.Id);
                 _tournamentView.NewTournamentTeams = teams;
+                _logger.LogInformation("Team successfully deleted from new");
             }
             catch (Exception ex)
             {
+                _logger.LogError($"DeleteTEamFromNew error: {ex.Message}");
                 MessageBox.Show(ex.Message, "Ошибка");
             }
         }
 
         public void ConfirmAddTournamentClicked(object sender, EventArgs e)
         {
+            _logger.LogInformation("ConfirmAddTournament clicked");
             try
             {
                 string name = _tournamentView.NewTournamentName;
@@ -771,15 +834,18 @@ namespace UI
                 var tournament = _tournamentService.createTournament(name, currentUser, country, teams);
                 _teamService.getAllTeams();
                 _loadTournamentViewProfile(tournament);
+                _logger.LogInformation("Tournament successfully added");
             }
             catch (Exception ex)
             {
+                _logger.LogError($"ConfirmAddTournament error: {ex.Message}");
                 MessageBox.Show(ex.Message, "Ошибка");
             }
         }
 
         public void TournamentFormClosed(object sender, EventArgs e)
         {
+            _logger.LogInformation("TournamentForm closed");
             _tournamentView = null;
         }
 
@@ -847,6 +913,7 @@ namespace UI
 
         public void OpenMatchForm(object sender, MatchClickedEventArgs e)
         {
+            _logger.LogInformation("OpenMatchForm clicked");
             try
             {
                 if (_matchView == null)
@@ -858,15 +925,18 @@ namespace UI
 
                 _matchView.Show();
                 _matchView.BringToFront();
+                _logger.LogInformation("Match form successfully opened");
             }
             catch (Exception ex)
             {
+                _logger.LogError($"OpenMatchForm error: {ex.Message}");
                 MessageBox.Show(ex.Message, "Ошибка");
             }
         }
 
         public void OpenNotExistedMatchForm(object sender, NotExistedMatchEventArgs e)
         {
+            _logger.LogWarning("OpenNotExistedMatchForm clicked");
             try
             {
                 if (_matchView == null)
@@ -878,15 +948,18 @@ namespace UI
                 
                 _matchView.Show();
                 _matchView.BringToFront();
+                _logger.LogInformation("Match form successfully opened");
             }
             catch (Exception ex)
             {
+                _logger.LogError($"OpenNotExistedMatchForm error: {ex.Message}");
                 MessageBox.Show(ex.Message, "Ошибка");
             }
         }
 
         public void CreateMatchClicked(object sender, EventArgs e)
         {
+            _logger.LogInformation("CreateMatch clicked");
             try
             {
                 int homeGoals, guestGoals;
@@ -906,15 +979,19 @@ namespace UI
                 _loadMatchViewProfile(match);
 
                 _reloadMatches();
+
+                _logger.LogInformation("Match successfully created");
             }
             catch (Exception ex)
             {
+                _logger.LogError($"CreateMatch error: {ex.Message}");
                 MessageBox.Show(ex.Message, "Ошибка");
             }
         }
 
         public void UpdateMatchClicked(object sender, EventArgs e)
         {
+            _logger.LogInformation("UpdateMatch clicked");
             try
             {
                 int homeGoals, guestGoals;
@@ -934,15 +1011,18 @@ namespace UI
                 _loadMatchViewProfile(_matchService.getMatch(_matchView.MatchProfile.Id));
 
                 _reloadMatches();
+                _logger.LogInformation("Match successfully updated");
             }
             catch (Exception ex)
             {
+                _logger.LogError($"UpdateMatch error: {ex.Message}");
                 MessageBox.Show(ex.Message, "Ошибка");
             }
         }
 
         public void DeleteMatchClicked(object sender, EventArgs e)
         {
+            _logger.LogInformation("DeleteMatch clicked");
             try
             {
                 var match = _matchView.MatchProfile;
@@ -953,15 +1033,19 @@ namespace UI
                 _matchService.deleteMatch(match.Id);
                 _loadMatchViewEmpty(tournament, home, guest);
                 _reloadMatches();
+
+                _logger.LogInformation("Match successfully deleted");
             }
             catch (Exception ex)
             {
+                _logger.LogError($"DeleteMatch error: {ex.Message}");
                 MessageBox.Show(ex.Message, "Ошибка");
             }
         }
 
         public void MatchFormClosed(object sender, EventArgs e)
         {
+            _logger.LogInformation("MatchForm closed");
             _matchView = null;
         }
     }
