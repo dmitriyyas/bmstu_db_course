@@ -174,7 +174,7 @@ namespace BL.Services
                 return 0;
             });
 
-            //return _tournamentRepository.getTournamentTable(tournamentId);
+            // return _tournamentRepository.getTournamentTable(tournamentId);
 
             return table;
         }
