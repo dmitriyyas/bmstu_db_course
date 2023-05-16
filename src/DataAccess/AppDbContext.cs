@@ -154,10 +154,10 @@ namespace DataAccess
                     .IsRequired()
                     .HasColumnName("tournament_id");
             });
-
             modelBuilder.Entity<TeamStatistics>(entity =>
             {
                 entity.HasNoKey();
+            /*
                 entity.ToFunction("GetTable");
                 entity.Property(t => t.Name).HasColumnName("name");
                 entity.Property(t => t.Matches).HasColumnName("matches");
@@ -167,8 +167,8 @@ namespace DataAccess
                 entity.Property(t => t.GoalsScored).HasColumnName("gs");
                 entity.Property(t => t.GoalsConceded).HasColumnName("gc");
                 entity.Property(t => t.Points).HasColumnName("points");
+            */
             });
-
             OnModelCreatingPartial(modelBuilder);
         }
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

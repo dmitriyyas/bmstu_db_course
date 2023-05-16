@@ -39,7 +39,16 @@ namespace UI
 
             var builder = new HostBuilder().ConfigureServices((hostContext, services) =>
             {
-                services.AddSingleton<IDbContextFactory, PgSQLDbContextFactory>();
+                var db = configuration["Database"];
+                if (db == "postgres")
+                {
+                    services.AddSingleton<IDbContextFactory, PgSQLDbContextFactory>();
+                }
+                else if (db == "mssql")
+                {
+                    services.AddSingleton<IDbContextFactory, MsSqlDbContextFactory>();
+                }
+                
                 services.AddSingleton<IViewFactory, WinFormViewFactory>();
 
                 services.AddSingleton(configuration);
