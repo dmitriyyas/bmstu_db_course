@@ -24,7 +24,7 @@ namespace DataAccess
             string curPerms = _configuration["DbConnection"];
 
             var builder = new DbContextOptionsBuilder<AppDbContext>();
-            builder.UseNpgsql(_configuration.GetConnectionString(curPerms));
+            builder.UseNpgsql(_configuration[$"Connections:postgres:{curPerms}"]);
             var _adminDbContext = new AppDbContext(builder.Options);
 
             return _adminDbContext;
