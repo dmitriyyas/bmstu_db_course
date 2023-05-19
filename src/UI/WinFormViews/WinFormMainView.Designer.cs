@@ -357,6 +357,7 @@
             this.ShowOutfittersButton.TabIndex = 9;
             this.ShowOutfittersButton.Text = "Спонсоры";
             this.ShowOutfittersButton.UseVisualStyleBackColor = true;
+            this.ShowOutfittersButton.Click += new System.EventHandler(this.ShowOutfittersButton_Click);
             // 
             // WinFormMainView
             // 

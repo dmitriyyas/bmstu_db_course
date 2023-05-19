@@ -39,13 +39,14 @@ namespace UI
 
         public ApplicationContext AppContext { get; set; }
 
-        public Presenter(UserService userService, CountryService countryService, TeamService teamService, TournamentService tournamentService, MatchService matchService, IViewFactory viewFactory, IConfiguration configuration, ApplicationContext context, ILogger<Presenter> logger)
+        public Presenter(UserService userService, CountryService countryService, TeamService teamService, TournamentService tournamentService, MatchService matchService, OutfitterService outfitterService, IViewFactory viewFactory, IConfiguration configuration, ApplicationContext context, ILogger<Presenter> logger)
         {
             _userService = userService;
             _countryService = countryService;
             _teamService = teamService;
             _tournamentService = tournamentService;
             _matchService = matchService;
+            _outfitterService = outfitterService;
             _viewFactory = viewFactory;
             _configuration = configuration;
             _logger = logger;
@@ -1151,7 +1152,7 @@ namespace UI
         public void AddOutfitterClicked(object sender, EventArgs e)
         {
             _logger.LogInformation("AddOutfitter clicked");
-            _loadCountryViewCreating();
+            _loadOutfitterViewCreating();
         }
 
         public void ConfirmAddOutfitterClicked(object sender, EventArgs e)
@@ -1192,7 +1193,7 @@ namespace UI
 
         public void OutfitterFormClosed(object sender, EventArgs e)
         {
-            _countryView = null;
+            _outfitterView = null;
         }
     }
 }

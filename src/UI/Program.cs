@@ -49,6 +49,7 @@ namespace UI
                     services.AddScoped<ICountryRepository, DataAccess.Repositories.CountryRepository>();
                     services.AddScoped<ITournamentRepository, DataAccess.Repositories.TournamentRepository>();
                     services.AddScoped<IMatchRepository, DataAccess.Repositories.MatchRepository>();
+                    services.AddScoped<IOutfitterRepository, DataAccess.Repositories.OutfitterRepository>();
                 }
                 else if (db == "mssql")
                 {
@@ -59,6 +60,7 @@ namespace UI
                     services.AddScoped<ICountryRepository, MsSqlDataAccess.Repositories.CountryRepository>();
                     services.AddScoped<ITournamentRepository, MsSqlDataAccess.Repositories.TournamentRepository>();
                     services.AddScoped<IMatchRepository, MsSqlDataAccess.Repositories.MatchRepository>();
+                    services.AddScoped<IOutfitterRepository, MsSqlDataAccess.Repositories.OutfitterRepository>();
                 }
                 
                 services.AddSingleton<IViewFactory, WinFormViewFactory>();
@@ -72,6 +74,7 @@ namespace UI
                 services.AddScoped<TournamentService>();
                 services.AddScoped<MatchService>();
                 services.AddScoped<CountryService>();
+                services.AddScoped<OutfitterService>();
                 /*
                 var serilogLogger = new LoggerConfiguration()
                         .WriteTo.Console()

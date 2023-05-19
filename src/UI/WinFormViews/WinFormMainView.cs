@@ -103,5 +103,10 @@ namespace UI.WinFormViews
         {
             TournamentClicked.Invoke(this, new TournamentClickedEventArgs());
         }
+
+        private void ShowOutfittersButton_Click(object sender, EventArgs e)
+        {
+            OutfitterClicked.Invoke(this, new OutfitterClickedEventArgs());
+        }
     }
 }

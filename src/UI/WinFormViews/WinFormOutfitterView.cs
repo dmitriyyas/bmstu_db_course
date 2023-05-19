@@ -96,15 +96,6 @@ namespace UI.WinFormViews
             AddOutfitterClicked.Invoke(this, e);
         }
 
-        private void OutfitterDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (OutfitterDataGridView.Columns[e.ColumnIndex].Name == "OutfitterName")
-            {
-                string name = (string)OutfitterDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
-                OutfitterClicked.Invoke(this, new OutfitterClickedEventArgs { outfitter = Outfitters.FirstOrDefault(t => t.Name == name) });
-            }
-        }
-
         private void ConfirmAddOutfitterButton_Click(object sender, EventArgs e)
         {
             ConfirmAddOutfitterClicked.Invoke(this, e);
@@ -115,7 +106,16 @@ namespace UI.WinFormViews
             OutfitterFormClosed?.Invoke(this, new EventArgs());
         }
 
-        private void TeamDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void OutfitterDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (OutfitterDataGridView.Columns[e.ColumnIndex].Name == "OutfitterName")
+            {
+                string name = (string)OutfitterDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+                OutfitterClicked.Invoke(this, new OutfitterClickedEventArgs { outfitter = Outfitters.FirstOrDefault(t => t.Name == name) });
+            }
+        }
+
+        private void TeamDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             string name = (string)TeamDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
             TeamClicked.Invoke(this, new TeamClickedEventArgs { team = OutfitterTeams.FirstOrDefault(t => t.Name == name) });

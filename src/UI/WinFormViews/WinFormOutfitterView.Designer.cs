@@ -34,19 +34,19 @@
             this.label1 = new System.Windows.Forms.Label();
             this.AddOutfitterButton = new System.Windows.Forms.Button();
             this.OutfitterProfileGroupBox = new System.Windows.Forms.GroupBox();
+            this.OutfitterYearLabel = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.TeamDataGridView = new System.Windows.Forms.DataGridView();
             this.TournamentName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label3 = new System.Windows.Forms.Label();
             this.OutfitterNameLabel = new System.Windows.Forms.Label();
             this.AddOutfitterGroupBox = new System.Windows.Forms.GroupBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.OutfitterYearLabel = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.ConfirmAddOutfitterButton = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.YearTextBox = new System.Windows.Forms.TextBox();
             this.NameTextBox = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.OutfitterDataGridView)).BeginInit();
             this.OutfitterProfileGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TeamDataGridView)).BeginInit();
@@ -69,7 +69,7 @@
             this.OutfitterDataGridView.RowTemplate.Height = 29;
             this.OutfitterDataGridView.Size = new System.Drawing.Size(279, 344);
             this.OutfitterDataGridView.TabIndex = 2;
-            this.OutfitterDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OutfitterDataGridView_CellContentClick);
+            this.OutfitterDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OutfitterDataGridView_CellClick);
             // 
             // OutfitterName
             // 
@@ -121,6 +121,26 @@
             this.OutfitterProfileGroupBox.TabStop = false;
             this.OutfitterProfileGroupBox.Visible = false;
             // 
+            // OutfitterYearLabel
+            // 
+            this.OutfitterYearLabel.AutoSize = true;
+            this.OutfitterYearLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.OutfitterYearLabel.Location = new System.Drawing.Point(175, 113);
+            this.OutfitterYearLabel.Name = "OutfitterYearLabel";
+            this.OutfitterYearLabel.Size = new System.Drawing.Size(75, 28);
+            this.OutfitterYearLabel.TabIndex = 7;
+            this.OutfitterYearLabel.Text = "NoYear";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label4.Location = new System.Drawing.Point(16, 113);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(153, 28);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "Год основания:";
+            // 
             // TeamDataGridView
             // 
             this.TeamDataGridView.AllowUserToAddRows = false;
@@ -136,7 +156,7 @@
             this.TeamDataGridView.RowTemplate.Height = 29;
             this.TeamDataGridView.Size = new System.Drawing.Size(129, 239);
             this.TeamDataGridView.TabIndex = 5;
-            this.TeamDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.TeamDataGridView_CellContentClick);
+            this.TeamDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.TeamDataGridView_CellClick);
             // 
             // TournamentName
             // 
@@ -181,36 +201,6 @@
             this.AddOutfitterGroupBox.TabStop = false;
             this.AddOutfitterGroupBox.Visible = false;
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label4.Location = new System.Drawing.Point(16, 113);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(153, 28);
-            this.label4.TabIndex = 6;
-            this.label4.Text = "Год основания:";
-            // 
-            // OutfitterYearLabel
-            // 
-            this.OutfitterYearLabel.AutoSize = true;
-            this.OutfitterYearLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.OutfitterYearLabel.Location = new System.Drawing.Point(175, 113);
-            this.OutfitterYearLabel.Name = "OutfitterYearLabel";
-            this.OutfitterYearLabel.Size = new System.Drawing.Size(75, 28);
-            this.OutfitterYearLabel.TabIndex = 7;
-            this.OutfitterYearLabel.Text = "NoYear";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label5.Location = new System.Drawing.Point(144, 23);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(177, 28);
-            this.label5.TabIndex = 1;
-            this.label5.Text = "Создать спонсора";
-            // 
             // ConfirmAddOutfitterButton
             // 
             this.ConfirmAddOutfitterButton.Location = new System.Drawing.Point(147, 178);
@@ -252,6 +242,16 @@
             this.NameTextBox.Name = "NameTextBox";
             this.NameTextBox.Size = new System.Drawing.Size(125, 27);
             this.NameTextBox.TabIndex = 6;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label5.Location = new System.Drawing.Point(144, 23);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(177, 28);
+            this.label5.TabIndex = 1;
+            this.label5.Text = "Создать спонсора";
             // 
             // WinFormOutfitterView
             // 

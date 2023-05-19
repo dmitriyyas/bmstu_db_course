@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             this.UsersDataGridView = new System.Windows.Forms.DataGridView();
-            this.Login = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Права = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label1 = new System.Windows.Forms.Label();
             this.UserProfileGroupBox = new System.Windows.Forms.GroupBox();
             this.TournamentsDataGridView = new System.Windows.Forms.DataGridView();
@@ -40,6 +38,8 @@
             this.PermsLabel = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.LoginLabel = new System.Windows.Forms.Label();
+            this.Login = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Perms = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.UsersDataGridView)).BeginInit();
             this.UserProfileGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TournamentsDataGridView)).BeginInit();
@@ -52,7 +52,7 @@
             this.UsersDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.UsersDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Login,
-            this.Права});
+            this.Perms});
             this.UsersDataGridView.Location = new System.Drawing.Point(12, 42);
             this.UsersDataGridView.Name = "UsersDataGridView";
             this.UsersDataGridView.ReadOnly = true;
@@ -62,22 +62,6 @@
             this.UsersDataGridView.Size = new System.Drawing.Size(253, 457);
             this.UsersDataGridView.TabIndex = 0;
             this.UsersDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.UsersDataGridView_CellClick);
-            // 
-            // Login
-            // 
-            this.Login.HeaderText = "Логин";
-            this.Login.MinimumWidth = 6;
-            this.Login.Name = "Login";
-            this.Login.ReadOnly = true;
-            this.Login.Width = 125;
-            // 
-            // Права
-            // 
-            this.Права.HeaderText = "Perms";
-            this.Права.MinimumWidth = 6;
-            this.Права.Name = "Права";
-            this.Права.ReadOnly = true;
-            this.Права.Width = 125;
             // 
             // label1
             // 
@@ -179,6 +163,22 @@
             this.LoginLabel.TabIndex = 0;
             this.LoginLabel.Text = "NoUser";
             // 
+            // Login
+            // 
+            this.Login.HeaderText = "Логин";
+            this.Login.MinimumWidth = 6;
+            this.Login.Name = "Login";
+            this.Login.ReadOnly = true;
+            this.Login.Width = 125;
+            // 
+            // Perms
+            // 
+            this.Perms.HeaderText = "Права";
+            this.Perms.MinimumWidth = 6;
+            this.Perms.Name = "Perms";
+            this.Perms.ReadOnly = true;
+            this.Perms.Width = 125;
+            // 
             // WinFormUserView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -202,8 +202,6 @@
         #endregion
 
         private DataGridView UsersDataGridView;
-        private DataGridViewTextBoxColumn Login;
-        private DataGridViewTextBoxColumn Права;
         private Label label1;
         private GroupBox UserProfileGroupBox;
         private DataGridView TournamentsDataGridView;
@@ -213,5 +211,7 @@
         private Label label2;
         private Label LoginLabel;
         private DataGridViewTextBoxColumn TournamentName;
+        private DataGridViewTextBoxColumn Login;
+        private DataGridViewTextBoxColumn Perms;
     }
 }
