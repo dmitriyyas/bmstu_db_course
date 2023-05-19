@@ -12,6 +12,8 @@ namespace MsSqlDataAccess
         public DbSet<Match> Matches { get; set; }
         public DbSet<TeamTournament> TeamTournaments { get; set; }
 
+        public DbSet<Outfitter> Outfitters { get; set; }
+
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
 
@@ -82,6 +84,9 @@ namespace MsSqlDataAccess
 
                 entity.Property(c => c.CountryId)
                     .HasColumnName("country_id");
+
+                entity.Property(c => c.OutfitterId)
+                    .HasColumnName("outfitter_id");
             });
 
             modelBuilder.Entity<Tournament>(entity =>
@@ -151,6 +156,24 @@ namespace MsSqlDataAccess
                 entity.Property(c => c.TournamentId)
                     .IsRequired()
                     .HasColumnName("tournament_id");
+            });
+
+            modelBuilder.Entity<Outfitter>(entity =>
+            {
+                entity.ToTable("outfitters");
+
+                entity.HasKey(o => o.Id);
+
+                entity.Property(o => o.Id)
+                    .IsRequired()
+                    .HasColumnName("id");
+
+                entity.Property(o => o.Name)
+                    .IsRequired()
+                    .HasColumnName("name");
+
+                entity.Property(o => o.Year)
+                    .HasColumnName("year");
             });
 
             OnModelCreatingPartial(modelBuilder);

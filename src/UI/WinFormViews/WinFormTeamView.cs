@@ -19,6 +19,7 @@ namespace UI.WinFormViews
         private Team _teamProfile;
         private IEnumerable<Tournament> _teamTournaments;
         private IEnumerable<Country> _countries;
+        private IEnumerable<Outfitter> _outfitters;
         public WinFormTeamView()
         {
             InitializeComponent();
@@ -46,6 +47,12 @@ namespace UI.WinFormViews
                 _teamProfile = value;
                 TeamNameLabel.Text = value.Name;
                 TeamCountryLinkLabel.Text = Countries.FirstOrDefault(c => c.Id == _teamProfile.CountryId)?.Name;
+                if (value.OutfitterId != null)
+                {
+                    TeamOutfitterLinkLabel.Text = Outfitters.FirstOrDefault(o => o.Id == _teamProfile.OutfitterId)?.Name;
+                }
+                else
+                    TeamOutfitterLinkLabel.Text = "";
             }
         }
         public IEnumerable<Tournament> TeamTournaments
@@ -74,15 +81,32 @@ namespace UI.WinFormViews
                 }
             }
         }
+
+        public IEnumerable<Outfitter> Outfitters
+        {
+            get => _outfitters;
+            set
+            {
+                _outfitters = value.OrderBy(t => t.Name);
+                OutfitterComboBox.Items.Clear();
+                foreach (var outfitter in _outfitters)
+                {
+                    OutfitterComboBox.Items.Add(outfitter.Name);
+                }
+            }
+        }
+
         public bool TeamProfileVisible { get => TeamProfileGroupBox.Visible; set => TeamProfileGroupBox.Visible = value; }
         public bool AddTeamGroupBoxVisible { get => AddTeamGroupBox.Visible; set => AddTeamGroupBox.Visible = value; }
         public bool AddTeamVisible { get => AddTeamButton.Visible; set => AddTeamButton.Visible = value; }
         public string NewTeamName { get => NameTextBox.Text; set => NameTextBox.Text = value; }
         public string NewTeamCountry { get => CountryComboBox.Text; set => CountryComboBox.Text = value; }
+        public string NewTeamOutfitter { get => OutfitterComboBox.Text; set => OutfitterComboBox.Text = value; }
 
         public event EventHandler<TeamClickedEventArgs> TeamClicked;
         public event EventHandler<TournamentClickedEventArgs> TournamentClicked;
         public event EventHandler<CountryClickedEventArgs> CountryClicked;
+        public event EventHandler<OutfitterClickedEventArgs> OutfitterClicked;
         public event EventHandler AddTeamClicked;
         public event EventHandler ConfirmTeamClicked;
         public event EventHandler TeamFormClosed;
@@ -126,6 +150,11 @@ namespace UI.WinFormViews
         private void WinFormTeamView_FormClosing(object sender, FormClosingEventArgs e)
         {
             TeamFormClosed?.Invoke(this, new EventArgs());
+        }
+
+        private void TeamOutfitterLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            OutfitterClicked.Invoke(this, new OutfitterClickedEventArgs { outfitter = Outfitters.FirstOrDefault(c => c.Name == TeamOutfitterLinkLabel.Text) });
         }
     }
 }

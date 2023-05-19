@@ -15,6 +15,8 @@ namespace BL.RepositoryInterfaces
         Team getByName (string name);
         IEnumerable<Team> getByCountry(int countryId);
         IEnumerable<Team> getByTournament(int tournamentId);
+
+        IEnumerable<Team> getByOutfitter(int outfitterId);
         IEnumerable<Team> getAll();
 
     }

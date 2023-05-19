@@ -64,6 +64,13 @@ namespace DataAccess.Repositories
             return dbContext.Teams.FirstOrDefault(t => t.Name == name);
         }
 
+        public IEnumerable<Team> getByOutfitter(int outfitterId)
+        {
+            using var dbContext = _dbContextFactory.getDbContext();
+
+            return dbContext.Teams.Where(t => t.OutfitterId == outfitterId).ToList();
+        }
+
         public IEnumerable<Team> getByTournament(int tournamentId)
         {
             using var dbContext = _dbContextFactory.getDbContext();

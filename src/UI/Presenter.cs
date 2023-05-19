@@ -20,6 +20,7 @@ namespace UI
         private readonly TeamService _teamService;
         private readonly TournamentService _tournamentService;
         private readonly MatchService _matchService;
+        private readonly OutfitterService _outfitterService;
 
         private readonly IViewFactory _viewFactory;
         private readonly ILogger<Presenter> _logger;
@@ -34,6 +35,7 @@ namespace UI
         private ITeamView? _teamView;
         private ITournamentView? _tournamentView;
         private IMatchView? _matchView;
+        private IOutfitterView? _outfitterView;
 
         public ApplicationContext AppContext { get; set; }
 
@@ -72,6 +74,7 @@ namespace UI
             _mainFormView.CountryClicked += OpenCountryForm;
             _mainFormView.TeamClicked += OpenTeamForm;
             _mainFormView.TournamentClicked += OpenTournamentForm;
+            _mainFormView.OutfitterClicked += OpenOutfitterForm;
 
             _mainFormView.Show();
         }
@@ -177,6 +180,8 @@ namespace UI
             _tournamentView = null;
             _matchView?.Close();
             _matchView = null;
+            _outfitterView?.Close();
+            _outfitterView = null;
 
             _mainFormView.LogOutGroupBoxVisible = false;
             _mainFormView.StartGroupBoxVisible = true;
@@ -215,6 +220,7 @@ namespace UI
             _teamView?.Close();
             _tournamentView?.Close();
             _matchView?.Close();
+            _outfitterView?.Close();
 
             AppContext.ExitThread();
         }
@@ -463,8 +469,10 @@ namespace UI
             _teamView.ConfirmTeamClicked += ConfirmAddTeamClicked;
             _teamView.TeamFormClosed += TeamFormClosed;
             _teamView.TournamentClicked += OpenTournamentForm;
+            _teamView.OutfitterClicked += OpenOutfitterForm;
 
             _teamView.Countries = _countryService.getAllCountries();
+            _teamView.Outfitters = _outfitterService.getAllOutfitters();
             _teamView.Teams = _teamService.getAllTeams();
         }
 
@@ -559,6 +567,7 @@ namespace UI
             {
                 string name = _teamView.NewTeamName;
                 string countryName = _teamView.NewTeamCountry;
+                string outfitterName = _teamView.NewTeamOutfitter;
 
                 if (name.Length == 0)
                 {
@@ -577,7 +586,9 @@ namespace UI
                     throw new Exception("Такой страны нет!");
                 }
 
-                Team team = _teamService.createTeam(name, country.Id);
+                Outfitter outfitter = _outfitterService.getAllOutfitters().FirstOrDefault(o => o.Name == outfitterName);
+
+                Team team = _teamService.createTeam(name, country.Id, outfitter?.Id);
                 _reloadTeams();
                 _loadTeamViewProfile(team);
                 _logger.LogInformation("Team successfully added");
@@ -1047,6 +1058,141 @@ namespace UI
         {
             _logger.LogInformation("MatchForm closed");
             _matchView = null;
+        }
+
+        private void _loadOutfitterViewEmpty()
+        {
+            if (currentUser?.Permission == "admin")
+            {
+                _outfitterView.AddOutfitterVisible = true;
+            }
+            _outfitterView.AddOutfitterGroupBoxVisible = false;
+            _outfitterView.OutfitterProfileVisible = false;
+        }
+
+        private void _loadOutfitterViewProfile(Outfitter outfitter)
+        {
+            if (currentUser?.Permission == "admin")
+            {
+                _outfitterView.AddOutfitterVisible = true;
+            }
+            _outfitterView.OutfitterProfile = outfitter;
+            _outfitterView.OutfitterTeams = _outfitterService.getOutfitterTeams(outfitter.Id);
+            _outfitterView.AddOutfitterGroupBoxVisible = false;
+            _outfitterView.OutfitterProfileVisible = true;
+        }
+
+        private void _loadOutfitterViewCreating()
+        {
+            _outfitterView.AddOutfitterVisible = false;
+            _outfitterView.OutfitterProfileVisible = false;
+            _outfitterView.AddOutfitterGroupBoxVisible = true;
+
+            _outfitterView.NewOutfitterName = "";
+            _outfitterView.NewOutfitterYear = "";
+        }
+
+        private void _createOutfitterForm()
+        {
+            _outfitterView = _viewFactory.createOutfitterView();
+
+            _outfitterView.OutfitterClicked += OpenOutfitterForm;
+            _outfitterView.AddOutfitterClicked += AddOutfitterClicked;
+            _outfitterView.ConfirmAddOutfitterClicked += ConfirmAddOutfitterClicked;
+            _outfitterView.OutfitterFormClosed += OutfitterFormClosed;
+            _outfitterView.TeamClicked += OpenTeamForm;
+
+            _outfitterView.Outfitters = _outfitterService.getAllOutfitters();
+        }
+
+        private void _reloadOutfitters()
+        {
+            if (_outfitterView != null)
+            {
+                _outfitterView.Outfitters = _outfitterService.getAllOutfitters();
+            }
+            if (_teamView != null)
+            {
+                _teamView.Outfitters = _outfitterService.getAllOutfitters();
+            }
+        }
+
+        public void OpenOutfitterForm(object sender, OutfitterClickedEventArgs e)
+        {
+            _logger.LogInformation("OpenOutfitterForm clicked");
+            try
+            {
+                if (_outfitterView == null)
+                {
+                    _createOutfitterForm();
+                }
+
+                if (e.outfitter != null)
+                {
+                    _loadOutfitterViewProfile(e.outfitter);
+                }
+                else
+                {
+                    _loadOutfitterViewEmpty();
+                }
+
+                _outfitterView.Show();
+                _outfitterView.BringToFront();
+
+                _logger.LogInformation("OutfitterForm succesfully opened");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"OpenOutfitterForm error: {ex.Message}");
+                MessageBox.Show(ex.Message, "Ошибка");
+            }
+        }
+
+        public void AddOutfitterClicked(object sender, EventArgs e)
+        {
+            _logger.LogInformation("AddOutfitter clicked");
+            _loadCountryViewCreating();
+        }
+
+        public void ConfirmAddOutfitterClicked(object sender, EventArgs e)
+        {
+            _logger.LogInformation("ConfirmAddOutfitter clicked");
+            try
+            {
+                string name = _outfitterView.NewOutfitterName;
+                string yearStr = _outfitterView.NewOutfitterYear;
+
+                if (name.Length == 0)
+                {
+                    throw new Exception("Вы не ввели название производителя!");
+                }
+
+                if (yearStr.Length == 0)
+                {
+                    throw new Exception("Вы не ввели год основания!");
+                }
+
+                int year;
+                if (!int.TryParse(yearStr, out year) || year <= 0)
+                {
+                    throw new Exception("Некорректный год основания.");
+                }
+
+                Outfitter outfitter = _outfitterService.createOutfitter(name, year);
+                _reloadOutfitters();
+                _loadOutfitterViewProfile(outfitter);
+                _logger.LogInformation("Outfitter successfully added");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"ConfirmAddOutfitter error: {ex.Message}");
+                MessageBox.Show(ex.Message, "Ошибка");
+            }
+        }
+
+        public void OutfitterFormClosed(object sender, EventArgs e)
+        {
+            _countryView = null;
         }
     }
 }

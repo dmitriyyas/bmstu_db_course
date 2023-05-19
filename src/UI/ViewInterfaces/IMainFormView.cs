@@ -35,6 +35,7 @@ namespace UI.ViewInterfaces
         event EventHandler<CountryClickedEventArgs> CountryClicked;
         event EventHandler<TeamClickedEventArgs> TeamClicked;
         event EventHandler<TournamentClickedEventArgs> TournamentClicked;
+        event EventHandler<OutfitterClickedEventArgs> OutfitterClicked;
 
     }
 }

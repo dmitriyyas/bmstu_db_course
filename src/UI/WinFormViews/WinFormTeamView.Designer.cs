@@ -34,6 +34,8 @@
             this.CountryName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AddTeamButton = new System.Windows.Forms.Button();
             this.TeamProfileGroupBox = new System.Windows.Forms.GroupBox();
+            this.TeamOutfitterLinkLabel = new System.Windows.Forms.LinkLabel();
+            this.label7 = new System.Windows.Forms.Label();
             this.TournamentDataGridView = new System.Windows.Forms.DataGridView();
             this.TournamentName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label3 = new System.Windows.Forms.Label();
@@ -41,6 +43,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.TeamNameLabel = new System.Windows.Forms.Label();
             this.AddTeamGroupBox = new System.Windows.Forms.GroupBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.OutfitterComboBox = new System.Windows.Forms.ComboBox();
             this.ConfirmAddTeamButton = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.CountryComboBox = new System.Windows.Forms.ComboBox();
@@ -109,6 +113,8 @@
             // 
             // TeamProfileGroupBox
             // 
+            this.TeamProfileGroupBox.Controls.Add(this.TeamOutfitterLinkLabel);
+            this.TeamProfileGroupBox.Controls.Add(this.label7);
             this.TeamProfileGroupBox.Controls.Add(this.TournamentDataGridView);
             this.TeamProfileGroupBox.Controls.Add(this.label3);
             this.TeamProfileGroupBox.Controls.Add(this.TeamCountryLinkLabel);
@@ -120,6 +126,28 @@
             this.TeamProfileGroupBox.TabIndex = 3;
             this.TeamProfileGroupBox.TabStop = false;
             this.TeamProfileGroupBox.Visible = false;
+            // 
+            // TeamOutfitterLinkLabel
+            // 
+            this.TeamOutfitterLinkLabel.AutoSize = true;
+            this.TeamOutfitterLinkLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.TeamOutfitterLinkLabel.Location = new System.Drawing.Point(126, 106);
+            this.TeamOutfitterLinkLabel.Name = "TeamOutfitterLinkLabel";
+            this.TeamOutfitterLinkLabel.Size = new System.Drawing.Size(114, 28);
+            this.TeamOutfitterLinkLabel.TabIndex = 6;
+            this.TeamOutfitterLinkLabel.TabStop = true;
+            this.TeamOutfitterLinkLabel.Text = "NoOutfitter";
+            this.TeamOutfitterLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.TeamOutfitterLinkLabel_LinkClicked);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label7.Location = new System.Drawing.Point(23, 106);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(97, 28);
+            this.label7.TabIndex = 5;
+            this.label7.Text = "Спонсор:";
             // 
             // TournamentDataGridView
             // 
@@ -150,7 +178,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label3.Location = new System.Drawing.Point(23, 134);
+            this.label3.Location = new System.Drawing.Point(23, 141);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(94, 28);
             this.label3.TabIndex = 3;
@@ -160,7 +188,7 @@
             // 
             this.TeamCountryLinkLabel.AutoSize = true;
             this.TeamCountryLinkLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.TeamCountryLinkLabel.Location = new System.Drawing.Point(109, 85);
+            this.TeamCountryLinkLabel.Location = new System.Drawing.Point(109, 68);
             this.TeamCountryLinkLabel.Name = "TeamCountryLinkLabel";
             this.TeamCountryLinkLabel.Size = new System.Drawing.Size(109, 28);
             this.TeamCountryLinkLabel.TabIndex = 2;
@@ -172,7 +200,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label2.Location = new System.Drawing.Point(23, 85);
+            this.label2.Location = new System.Drawing.Point(23, 68);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(80, 28);
             this.label2.TabIndex = 1;
@@ -182,7 +210,7 @@
             // 
             this.TeamNameLabel.AutoSize = true;
             this.TeamNameLabel.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.TeamNameLabel.Location = new System.Drawing.Point(23, 23);
+            this.TeamNameLabel.Location = new System.Drawing.Point(23, 11);
             this.TeamNameLabel.Name = "TeamNameLabel";
             this.TeamNameLabel.Size = new System.Drawing.Size(144, 46);
             this.TeamNameLabel.TabIndex = 0;
@@ -190,6 +218,8 @@
             // 
             // AddTeamGroupBox
             // 
+            this.AddTeamGroupBox.Controls.Add(this.label8);
+            this.AddTeamGroupBox.Controls.Add(this.OutfitterComboBox);
             this.AddTeamGroupBox.Controls.Add(this.ConfirmAddTeamButton);
             this.AddTeamGroupBox.Controls.Add(this.label6);
             this.AddTeamGroupBox.Controls.Add(this.CountryComboBox);
@@ -203,9 +233,28 @@
             this.AddTeamGroupBox.TabStop = false;
             this.AddTeamGroupBox.Visible = false;
             // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(32, 197);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(73, 20);
+            this.label8.TabIndex = 7;
+            this.label8.Text = "Спонсор:";
+            // 
+            // OutfitterComboBox
+            // 
+            this.OutfitterComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.OutfitterComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.OutfitterComboBox.FormattingEnabled = true;
+            this.OutfitterComboBox.Location = new System.Drawing.Point(143, 189);
+            this.OutfitterComboBox.Name = "OutfitterComboBox";
+            this.OutfitterComboBox.Size = new System.Drawing.Size(151, 28);
+            this.OutfitterComboBox.TabIndex = 6;
+            // 
             // ConfirmAddTeamButton
             // 
-            this.ConfirmAddTeamButton.Location = new System.Drawing.Point(143, 180);
+            this.ConfirmAddTeamButton.Location = new System.Drawing.Point(143, 245);
             this.ConfirmAddTeamButton.Name = "ConfirmAddTeamButton";
             this.ConfirmAddTeamButton.Size = new System.Drawing.Size(151, 29);
             this.ConfirmAddTeamButton.TabIndex = 5;
@@ -266,8 +315,8 @@
             this.Controls.Add(this.AddTeamButton);
             this.Controls.Add(this.TeamDataGridView);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.AddTeamGroupBox);
             this.Controls.Add(this.TeamProfileGroupBox);
+            this.Controls.Add(this.AddTeamGroupBox);
             this.Name = "WinFormTeamView";
             this.Text = "Команды";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WinFormTeamView_FormClosing);
@@ -303,5 +352,9 @@
         private ComboBox CountryComboBox;
         private Label label5;
         private Button ConfirmAddTeamButton;
+        private LinkLabel TeamOutfitterLinkLabel;
+        private Label label7;
+        private Label label8;
+        private ComboBox OutfitterComboBox;
     }
 }

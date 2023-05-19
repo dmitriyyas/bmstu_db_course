@@ -57,6 +57,7 @@
             this.ShowCountriesButton = new System.Windows.Forms.Button();
             this.ShowTeamsButton = new System.Windows.Forms.Button();
             this.ShowTournamentsButton = new System.Windows.Forms.Button();
+            this.ShowOutfittersButton = new System.Windows.Forms.Button();
             this.LogInGroupBox.SuspendLayout();
             this.RegisterGroupBox.SuspendLayout();
             this.StartGroupBox.SuspendLayout();
@@ -348,11 +349,21 @@
             this.ShowTournamentsButton.UseVisualStyleBackColor = true;
             this.ShowTournamentsButton.Click += new System.EventHandler(this.ShowTournamentsButton_Click);
             // 
+            // ShowOutfittersButton
+            // 
+            this.ShowOutfittersButton.Location = new System.Drawing.Point(157, 446);
+            this.ShowOutfittersButton.Name = "ShowOutfittersButton";
+            this.ShowOutfittersButton.Size = new System.Drawing.Size(127, 29);
+            this.ShowOutfittersButton.TabIndex = 9;
+            this.ShowOutfittersButton.Text = "Спонсоры";
+            this.ShowOutfittersButton.UseVisualStyleBackColor = true;
+            // 
             // WinFormMainView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(440, 475);
+            this.ClientSize = new System.Drawing.Size(440, 487);
+            this.Controls.Add(this.ShowOutfittersButton);
             this.Controls.Add(this.ShowTournamentsButton);
             this.Controls.Add(this.ShowTeamsButton);
             this.Controls.Add(this.ShowCountriesButton);
@@ -406,5 +417,6 @@
         private Button ShowTournamentsButton;
         private Button RegisterBackButton;
         private Button LogInBackButton;
+        private Button ShowOutfittersButton;
     }
 }

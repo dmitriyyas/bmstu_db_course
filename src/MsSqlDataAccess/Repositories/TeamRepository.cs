@@ -50,6 +50,13 @@ namespace MsSqlDataAccess.Repositories
             return dbContext.Teams.Where(t => t.CountryId == countryId).ToList();
         }
 
+        public IEnumerable<Team> getByOutfitter(int outfitterId)
+        {
+            using var dbContext = _dbContextFactory.getDbContext();
+
+            return dbContext.Teams.Where(t => t.OutfitterId == outfitterId).ToList();
+        }
+
         public Team getById(int id)
         {
             using var dbContext = _dbContextFactory.getDbContext();

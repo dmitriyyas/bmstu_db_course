@@ -883,7 +883,7 @@ namespace TechUI
                     throw new Exception("Ошибка ввода.");
                 }
 
-                _teamService.createTeam(name, countryId);
+                _teamService.createTeam(name, countryId, null);
             }
             catch (Exception ex)
             {

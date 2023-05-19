@@ -37,6 +37,7 @@ namespace UI.WinFormViews
         public event EventHandler<CountryClickedEventArgs> CountryClicked;
         public event EventHandler<TeamClickedEventArgs> TeamClicked;
         public event EventHandler<TournamentClickedEventArgs> TournamentClicked;
+        public event EventHandler<OutfitterClickedEventArgs> OutfitterClicked;
 
         public WinFormMainView()
         {

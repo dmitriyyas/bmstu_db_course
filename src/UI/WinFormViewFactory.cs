@@ -40,5 +40,10 @@ namespace UI
         { 
             return new WinFormMatchView(); 
         }
+
+        public IOutfitterView createOutfitterView()
+        {
+            return new WinFormOutfitterView();
+        }
     }
 }

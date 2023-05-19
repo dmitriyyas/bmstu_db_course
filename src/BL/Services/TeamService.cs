@@ -19,12 +19,12 @@ namespace BL.Services
             _tournamentRepository = tournamentRepository;
         }
 
-        public Team createTeam(string name, int countryId)
+        public Team createTeam(string name, int countryId, int? outfitterId)
         {
             Team team = _teamRepository.getByName(name);
             if (team == null)
             {
-                team = new Team(name, countryId);
+                team = new Team(name, countryId, outfitterId);
                 _teamRepository.create(team);
             }
             else

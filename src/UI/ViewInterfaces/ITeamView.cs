@@ -14,6 +14,7 @@ namespace UI.ViewInterfaces
         Team TeamProfile { get; set; }
         IEnumerable<Tournament> TeamTournaments { get; set; }
         IEnumerable<Country> Countries { get; set; }
+        IEnumerable<Outfitter> Outfitters { get; set; }
 
         bool TeamProfileVisible { get; set; }
         bool AddTeamGroupBoxVisible { get; set; }
@@ -21,10 +22,12 @@ namespace UI.ViewInterfaces
 
         string NewTeamName { get; set; }
         string NewTeamCountry { get; set; }
+        string NewTeamOutfitter { get; set; }
 
         event EventHandler<TeamClickedEventArgs> TeamClicked;
         event EventHandler<TournamentClickedEventArgs> TournamentClicked;
         event EventHandler<CountryClickedEventArgs> CountryClicked;
+        event EventHandler<OutfitterClickedEventArgs> OutfitterClicked;
         event EventHandler AddTeamClicked;
         event EventHandler ConfirmTeamClicked;
         event EventHandler TeamFormClosed;
