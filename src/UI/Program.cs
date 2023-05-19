@@ -3,8 +3,6 @@ using System.Diagnostics;
 using BL.Models;
 using BL.RepositoryInterfaces;
 using BL.Services;
-using DataAccess;
-using DataAccess.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,6 +11,8 @@ using Serilog.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Serilog;
 using UI.WinFormViews;
+using DataAccess.Repositories;
+using MsSqlDataAccess.Repositories;
 
 namespace UI
 {
@@ -42,11 +42,23 @@ namespace UI
                 var db = configuration["Database"];
                 if (db == "postgres")
                 {
-                    services.AddSingleton<IDbContextFactory, PgSQLDbContextFactory>();
+                    services.AddSingleton<DataAccess.IDbContextFactory, DataAccess.PgSQLDbContextFactory>();
+                    services.AddScoped<IUserRepository, DataAccess.Repositories.UserRepository>();
+                    services.AddScoped<ITeamTournamentRepository, DataAccess.Repositories.TeamTournamentRepository>();
+                    services.AddScoped<ITeamRepository, DataAccess.Repositories.TeamRepository>();
+                    services.AddScoped<ICountryRepository, DataAccess.Repositories.CountryRepository>();
+                    services.AddScoped<ITournamentRepository, DataAccess.Repositories.TournamentRepository>();
+                    services.AddScoped<IMatchRepository, DataAccess.Repositories.MatchRepository>();
                 }
                 else if (db == "mssql")
                 {
-                    services.AddSingleton<IDbContextFactory, MsSqlDbContextFactory>();
+                    services.AddSingleton<MsSqlDataAccess.IDbContextFactory, MsSqlDataAccess.MsSqlDbContextFactory>();
+                    services.AddScoped<IUserRepository, MsSqlDataAccess.Repositories.UserRepository>();
+                    services.AddScoped<ITeamTournamentRepository, MsSqlDataAccess.Repositories.TeamTournamentRepository>();
+                    services.AddScoped<ITeamRepository, MsSqlDataAccess.Repositories.TeamRepository>();
+                    services.AddScoped<ICountryRepository, MsSqlDataAccess.Repositories.CountryRepository>();
+                    services.AddScoped<ITournamentRepository, MsSqlDataAccess.Repositories.TournamentRepository>();
+                    services.AddScoped<IMatchRepository, MsSqlDataAccess.Repositories.MatchRepository>();
                 }
                 
                 services.AddSingleton<IViewFactory, WinFormViewFactory>();
@@ -54,13 +66,6 @@ namespace UI
                 services.AddSingleton(configuration);
                 services.AddSingleton(appContext);
                 services.AddSingleton<Presenter>();
-
-                services.AddScoped<IUserRepository, UserRepository>();
-                services.AddScoped<ITeamTournamentRepository, TeamTournamentRepository>();
-                services.AddScoped<ITeamRepository, TeamRepository>();
-                services.AddScoped<ICountryRepository, CountryRepository>();
-                services.AddScoped<ITournamentRepository, TournamentRepository>();
-                services.AddScoped<IMatchRepository, MatchRepository>();
 
                 services.AddScoped<UserService>();
                 services.AddScoped<TeamService>();

@@ -7,7 +7,7 @@ using BL.Models;
 using BL.RepositoryInterfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace DataAccess.Repositories
+namespace MsSqlDataAccess.Repositories
 {
     public class TournamentRepository : ITournamentRepository
     {

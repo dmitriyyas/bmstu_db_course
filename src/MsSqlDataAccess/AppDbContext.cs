@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using BL.Models;
 
-namespace DataAccess
+namespace MsSqlDataAccess
 {
     public partial class AppDbContext : DbContext
     {
