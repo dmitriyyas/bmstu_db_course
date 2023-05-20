@@ -13,8 +13,8 @@ namespace MongoDbDataAccess
         public CollectionsFactory(IConfiguration configuration)
         {
             _configuration = configuration;
-            var client = new MongoClient(_configuration["Connections:mongodb"]);
-            _database = client.GetDatabase("ppo");
+            var client = new MongoClient(_configuration["Connections:mongodb:server"]);
+            _database = client.GetDatabase(_configuration["Connections:mongodb:db"]);
         }
 
         public IMongoCollection<User> getUserCollection()
