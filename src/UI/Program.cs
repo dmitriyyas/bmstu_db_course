@@ -12,7 +12,6 @@ using Microsoft.Extensions.Options;
 using Serilog;
 using UI.WinFormViews;
 using DataAccess.Repositories;
-using MsSqlDataAccess.Repositories;
 
 namespace UI
 {
@@ -51,16 +50,16 @@ namespace UI
                     services.AddScoped<IMatchRepository, DataAccess.Repositories.MatchRepository>();
                     services.AddScoped<IOutfitterRepository, DataAccess.Repositories.OutfitterRepository>();
                 }
-                else if (db == "mssql")
+                else if (db == "mongodb")
                 {
-                    services.AddSingleton<MsSqlDataAccess.IDbContextFactory, MsSqlDataAccess.MsSqlDbContextFactory>();
-                    services.AddScoped<IUserRepository, MsSqlDataAccess.Repositories.UserRepository>();
-                    services.AddScoped<ITeamTournamentRepository, MsSqlDataAccess.Repositories.TeamTournamentRepository>();
-                    services.AddScoped<ITeamRepository, MsSqlDataAccess.Repositories.TeamRepository>();
-                    services.AddScoped<ICountryRepository, MsSqlDataAccess.Repositories.CountryRepository>();
-                    services.AddScoped<ITournamentRepository, MsSqlDataAccess.Repositories.TournamentRepository>();
-                    services.AddScoped<IMatchRepository, MsSqlDataAccess.Repositories.MatchRepository>();
-                    services.AddScoped<IOutfitterRepository, MsSqlDataAccess.Repositories.OutfitterRepository>();
+                    services.AddSingleton<MongoDbDataAccess.CollectionsFactory>();
+                    services.AddScoped<IUserRepository, MongoDbDataAccess.Repositories.UserRepository>();
+                    services.AddScoped<ITeamTournamentRepository, MongoDbDataAccess.Repositories.TeamTournamentRepository>();
+                    services.AddScoped<ITeamRepository, MongoDbDataAccess.Repositories.TeamRepository>();
+                    services.AddScoped<ICountryRepository, MongoDbDataAccess.Repositories.CountryRepository>();
+                    services.AddScoped<ITournamentRepository, MongoDbDataAccess.Repositories.TournamentRepository>();
+                    services.AddScoped<IMatchRepository, MongoDbDataAccess.Repositories.MatchRepository>();
+                    services.AddScoped<IOutfitterRepository, MongoDbDataAccess.Repositories.OutfitterRepository>();
                 }
                 
                 services.AddSingleton<IViewFactory, WinFormViewFactory>();

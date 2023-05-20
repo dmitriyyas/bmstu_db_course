@@ -20,7 +20,7 @@
   <ItemGroup>
     <ProjectReference Include="..\BL\BL.csproj" />
     <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
-    <ProjectReference Include="..\MsSqlDataAccess\MsSqlDataAccess.csproj" />
+    <ProjectReference Include="..\MongoDbDataAccess\MongoDbDataAccess.csproj" />
   </ItemGroup>
 
   <ItemGroup>

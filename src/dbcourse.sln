@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestDA", "TestDA\TestDA.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TechUI", "TechUI\TechUI.csproj", "{4413350D-47EC-4E43-9618-6638E56ED7BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MsSqlDataAccess", "MsSqlDataAccess\MsSqlDataAccess.csproj", "{F3339BDA-555F-4AC6-92B8-C8FEDA9B9759}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongoDbDataAccess", "MongoDbDataAccess\MongoDbDataAccess.csproj", "{BEC06595-C91E-403A-B3F5-B173F97FB6EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,10 +47,10 @@ Global
 		{4413350D-47EC-4E43-9618-6638E56ED7BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4413350D-47EC-4E43-9618-6638E56ED7BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4413350D-47EC-4E43-9618-6638E56ED7BE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F3339BDA-555F-4AC6-92B8-C8FEDA9B9759}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F3339BDA-555F-4AC6-92B8-C8FEDA9B9759}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F3339BDA-555F-4AC6-92B8-C8FEDA9B9759}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F3339BDA-555F-4AC6-92B8-C8FEDA9B9759}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEC06595-C91E-403A-B3F5-B173F97FB6EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEC06595-C91E-403A-B3F5-B173F97FB6EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEC06595-C91E-403A-B3F5-B173F97FB6EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEC06595-C91E-403A-B3F5-B173F97FB6EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
