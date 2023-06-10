@@ -98,8 +98,11 @@ namespace BL.Services
             return _teamRepository.getByTournament(id);
         }
 
-        public IEnumerable<TeamStatistics> getTournamentTable(int tournamentId)
+        public IEnumerable<TeamStatistics> getTournamentTable(int tournamentId, bool db = true)
         {
+            if (db)
+                return _tournamentRepository.getTournamentTable(tournamentId);
+
             List<TeamStatistics> table = new List<TeamStatistics>();
             IEnumerable<Team> teams = getTournamentTeams(tournamentId);
             foreach(var team in teams)
@@ -174,7 +177,7 @@ namespace BL.Services
                 return 0;
             });
 
-            //return _tournamentRepository.getTournamentTable(tournamentId);
+            
 
             return table;
         }

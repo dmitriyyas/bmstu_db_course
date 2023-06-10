@@ -1,0 +1,53 @@
+\documentclass[diploma]{BMSTU-IU8}
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+
+\lstdefinestyle{IU7}{
+    frame=single,
+    backgroundcolor=\color{white},
+    commentstyle=\color{blue},
+    keywordstyle=\color{magenta},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=tl,
+    keepspaces=false,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,         
+    extendedchars=\true,         
+    tabsize=2,
+}
+\lstset{style=IU7}
+
+\include{contents/glossary}
+\include{contents/terms}
+\usepackage{pdfpages}
+\usepackage{tikz}
+\usepackage{pgfplots}
+
+\addbibresource{main.bib}
+    
+\begin{document}
+
+    % % \inlineimg{example.png}{\img}
+    %\maketitle % Титульный лист
+
+    \includepdf[pages=1]{inc/title}
+    \setcounter{page}{3} % Устанавливает счётчик страниц
+
+    \include{contents/0-abstract} % Реферат
+
+    \tableofcontents % Содержание 
+ 
+    \include{contents/02-intro} % Введение
+
+    \include{contents/10-analysis}
+    \include{contents/20-design}
+    \include{contents/30-impl}
+    \include{contents/40-research}
+
+    \include{contents/50-conclusion}
+    \printbibliography
+    \include{contents/appendix}
+\end{document}

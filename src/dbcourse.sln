@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestBL", "TestBL\TestBL.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestDA", "TestDA\TestDA.csproj", "{20E51796-EB11-47F4-8CCE-77B513EF8328}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TechUI", "TechUI\TechUI.csproj", "{4413350D-47EC-4E43-9618-6638E56ED7BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TechUI", "TechUI\TechUI.csproj", "{4413350D-47EC-4E43-9618-6638E56ED7BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Research", "Research\Research.csproj", "{948E7158-13CF-4668-8D0F-624ED8814844}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{4413350D-47EC-4E43-9618-6638E56ED7BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4413350D-47EC-4E43-9618-6638E56ED7BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4413350D-47EC-4E43-9618-6638E56ED7BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{948E7158-13CF-4668-8D0F-624ED8814844}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{948E7158-13CF-4668-8D0F-624ED8814844}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{948E7158-13CF-4668-8D0F-624ED8814844}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{948E7158-13CF-4668-8D0F-624ED8814844}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

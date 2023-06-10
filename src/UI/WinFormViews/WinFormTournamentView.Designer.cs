@@ -44,6 +44,15 @@
             this.ShowMatchesButton = new System.Windows.Forms.Button();
             this.ShowTableButton = new System.Windows.Forms.Button();
             this.TableDataGridView = new System.Windows.Forms.DataGridView();
+            this.Place = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TeamName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Games = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Wins = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Draws = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Loses = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GoalsScored = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GoalsConceded = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Points = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MatchesDataGridView = new System.Windows.Forms.DataGridView();
             this.AddTournamentGroupBox = new System.Windows.Forms.GroupBox();
             this.ConfirmAddTournamentButton = new System.Windows.Forms.Button();
@@ -58,15 +67,6 @@
             this.NameTextBox = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.Place = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TeamName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Games = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Wins = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Draws = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Loses = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GoalsScored = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GoalsConceded = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Points = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.TournamentsDataGridView)).BeginInit();
             this.TournamentProfileGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TableDataGridView)).BeginInit();
@@ -152,7 +152,7 @@
             this.TournamentProfileGroupBox.Controls.Add(this.MatchesDataGridView);
             this.TournamentProfileGroupBox.Location = new System.Drawing.Point(442, 21);
             this.TournamentProfileGroupBox.Name = "TournamentProfileGroupBox";
-            this.TournamentProfileGroupBox.Size = new System.Drawing.Size(733, 641);
+            this.TournamentProfileGroupBox.Size = new System.Drawing.Size(773, 641);
             this.TournamentProfileGroupBox.TabIndex = 3;
             this.TournamentProfileGroupBox.TabStop = false;
             this.TournamentProfileGroupBox.Visible = false;
@@ -258,15 +258,87 @@
             this.GoalsScored,
             this.GoalsConceded,
             this.Points});
-            this.TableDataGridView.Location = new System.Drawing.Point(12, 212);
+            this.TableDataGridView.Location = new System.Drawing.Point(6, 212);
             this.TableDataGridView.Name = "TableDataGridView";
             this.TableDataGridView.ReadOnly = true;
             this.TableDataGridView.RowHeadersVisible = false;
             this.TableDataGridView.RowHeadersWidth = 51;
             this.TableDataGridView.RowTemplate.Height = 29;
-            this.TableDataGridView.Size = new System.Drawing.Size(715, 423);
+            this.TableDataGridView.Size = new System.Drawing.Size(743, 423);
             this.TableDataGridView.TabIndex = 5;
             this.TableDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.TableDataGridView_CellClick);
+            // 
+            // Place
+            // 
+            this.Place.HeaderText = "Место";
+            this.Place.MinimumWidth = 6;
+            this.Place.Name = "Place";
+            this.Place.ReadOnly = true;
+            this.Place.Width = 60;
+            // 
+            // TeamName
+            // 
+            this.TeamName.HeaderText = "Название";
+            this.TeamName.MinimumWidth = 6;
+            this.TeamName.Name = "TeamName";
+            this.TeamName.ReadOnly = true;
+            this.TeamName.Width = 110;
+            // 
+            // Games
+            // 
+            this.Games.HeaderText = "Игры";
+            this.Games.MinimumWidth = 6;
+            this.Games.Name = "Games";
+            this.Games.ReadOnly = true;
+            this.Games.Width = 55;
+            // 
+            // Wins
+            // 
+            this.Wins.HeaderText = "Победы";
+            this.Wins.MinimumWidth = 6;
+            this.Wins.Name = "Wins";
+            this.Wins.ReadOnly = true;
+            this.Wins.Width = 70;
+            // 
+            // Draws
+            // 
+            this.Draws.HeaderText = "Ничьи";
+            this.Draws.MinimumWidth = 6;
+            this.Draws.Name = "Draws";
+            this.Draws.ReadOnly = true;
+            this.Draws.Width = 65;
+            // 
+            // Loses
+            // 
+            this.Loses.HeaderText = "Поражения";
+            this.Loses.MinimumWidth = 6;
+            this.Loses.Name = "Loses";
+            this.Loses.ReadOnly = true;
+            this.Loses.Width = 125;
+            // 
+            // GoalsScored
+            // 
+            this.GoalsScored.HeaderText = "Забито";
+            this.GoalsScored.MinimumWidth = 6;
+            this.GoalsScored.Name = "GoalsScored";
+            this.GoalsScored.ReadOnly = true;
+            this.GoalsScored.Width = 60;
+            // 
+            // GoalsConceded
+            // 
+            this.GoalsConceded.HeaderText = "Пропущено";
+            this.GoalsConceded.MinimumWidth = 6;
+            this.GoalsConceded.Name = "GoalsConceded";
+            this.GoalsConceded.ReadOnly = true;
+            this.GoalsConceded.Width = 110;
+            // 
+            // Points
+            // 
+            this.Points.HeaderText = "Очки";
+            this.Points.MinimumWidth = 6;
+            this.Points.Name = "Points";
+            this.Points.ReadOnly = true;
+            this.Points.Width = 60;
             // 
             // MatchesDataGridView
             // 
@@ -423,78 +495,6 @@
             this.label4.Size = new System.Drawing.Size(181, 28);
             this.label4.TabIndex = 0;
             this.label4.Text = "Создание турнира";
-            // 
-            // Place
-            // 
-            this.Place.HeaderText = "Место";
-            this.Place.MinimumWidth = 6;
-            this.Place.Name = "Place";
-            this.Place.ReadOnly = true;
-            this.Place.Width = 60;
-            // 
-            // TeamName
-            // 
-            this.TeamName.HeaderText = "Название";
-            this.TeamName.MinimumWidth = 6;
-            this.TeamName.Name = "TeamName";
-            this.TeamName.ReadOnly = true;
-            this.TeamName.Width = 110;
-            // 
-            // Games
-            // 
-            this.Games.HeaderText = "Игры";
-            this.Games.MinimumWidth = 6;
-            this.Games.Name = "Games";
-            this.Games.ReadOnly = true;
-            this.Games.Width = 55;
-            // 
-            // Wins
-            // 
-            this.Wins.HeaderText = "Победы";
-            this.Wins.MinimumWidth = 6;
-            this.Wins.Name = "Wins";
-            this.Wins.ReadOnly = true;
-            this.Wins.Width = 70;
-            // 
-            // Draws
-            // 
-            this.Draws.HeaderText = "Ничьи";
-            this.Draws.MinimumWidth = 6;
-            this.Draws.Name = "Draws";
-            this.Draws.ReadOnly = true;
-            this.Draws.Width = 65;
-            // 
-            // Loses
-            // 
-            this.Loses.HeaderText = "Поражения";
-            this.Loses.MinimumWidth = 6;
-            this.Loses.Name = "Loses";
-            this.Loses.ReadOnly = true;
-            this.Loses.Width = 115;
-            // 
-            // GoalsScored
-            // 
-            this.GoalsScored.HeaderText = "Забито";
-            this.GoalsScored.MinimumWidth = 6;
-            this.GoalsScored.Name = "GoalsScored";
-            this.GoalsScored.ReadOnly = true;
-            this.GoalsScored.Width = 60;
-            // 
-            // GoalsConceded
-            // 
-            this.GoalsConceded.HeaderText = "Пропущено";
-            this.GoalsConceded.MinimumWidth = 6;
-            this.GoalsConceded.Name = "GoalsConceded";
-            this.GoalsConceded.ReadOnly = true;
-            this.GoalsConceded.Width = 110;
-            // 
-            // Points
-            // 
-            this.Points.HeaderText = "Очки";
-            this.Points.MinimumWidth = 6;
-            this.Points.Name = "Points";
-            this.Points.ReadOnly = true;
-            this.Points.Width = 60;
             // 
             // WinFormTournamentView
             // 
